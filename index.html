@@ -528,102 +528,99 @@
       </div>
     </section>
 
-    <!-- Feature 03: Personalized Learning Chatbot (SyncBuddy) -->
+    <!-- Feature 03: Personalized Learning Chatbot & AI Teacher -->
     <section class="section companion-section" id="chat">
       <div class="container">
         <div class="section-header reveal-on-scroll">
           <span class="section-tag teal">Feature 03</span>
-          <h2 class="section-title">Stuck? Just ask.</h2>
+          <h2 class="section-title">Stuck? Ask your AI Teacher.</h2>
           <p class="section-subtitle">
-            Your personal learning companion explains things in a way that makes sense to you.
+            An intelligent, patient companion that turns complex textbook confusion into crystal-clear everyday intuition.
           </p>
         </div>
 
         <div class="companion-grid">
-          <!-- Left: Narrative & Prompt Explanations -->
+          <!-- Left: Narrative & Teacher Explanations -->
           <div class="reveal-on-scroll">
             <span class="section-tag yellow">Safe & Child-Friendly</span>
             <h3 style="font-size: 2.1rem; line-height: 1.2; margin-bottom: 16px;">
-              Not generic AI. A patient learning buddy.
+              Not generic AI. A dedicated teacher & buddy.
             </h3>
             <p style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: 24px;">
-              SyncBuddy is specially calibrated for children. It avoids intimidating academic jargon, uses relatable everyday metaphors, and encourages curiosity at every step.
+              Calibrated specifically for young minds. Switch between gentle primary storytelling with <strong>Teacher Maya</strong>, thrilling STEM experiments with <strong>Coach Leo</strong>, or peer tutoring with <strong>SyncBuddy</strong>.
             </p>
 
             <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div class="feature-icon-badge teal">✓</div>
-                <span style="font-weight: 700; color: var(--color-navy);">No complex jargon — pure intuition</span>
+                <span style="font-weight: 700; color: var(--color-navy);">Visual analogies (pizzas, LEGO bricks, solar models)</span>
               </div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div class="feature-icon-badge yellow">✓</div>
-                <span style="font-weight: 700; color: var(--color-navy);">Visual analogies (pizzas, clocks, chocolate bars)</span>
+                <span style="font-weight: 700; color: var(--color-navy);">🔊 Real-time "Read Aloud" voice for early readers</span>
               </div>
               <div style="display: flex; align-items: center; gap: 12px;">
                 <div class="feature-icon-badge coral">✓</div>
-                <span style="font-weight: 700; color: var(--color-navy);">Praise and positive reinforcement</span>
+                <span style="font-weight: 700; color: var(--color-navy);">6 Subject domains with instant prompt exploration</span>
               </div>
             </div>
 
             <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
-              👉 <em>Try clicking the prompt chips on the chat interface to see how SyncBuddy responds!</em>
+              👉 <em>Try selecting a teacher persona or tapping any question below to see the interactive explanation!</em>
             </p>
           </div>
 
-          <!-- Right: Interactive Companion Chat Device (Not ChatGPT) -->
+          <!-- Right: Interactive Teacher Chat Console -->
           <div class="companion-chat-device reveal-on-scroll delay-1">
+            <!-- Persona Switcher Bar -->
+            <div class="teacher-persona-bar">
+              <button class="teacher-persona-btn active" data-persona="maya" type="button">
+                <span>🧑‍🏫</span> Teacher Maya
+              </button>
+              <button class="teacher-persona-btn" data-persona="leo" type="button">
+                <span>🚀</span> Coach Leo
+              </button>
+              <button class="teacher-persona-btn" data-persona="syncbuddy" type="button">
+                <span>✨</span> SyncBuddy AI
+              </button>
+            </div>
+
             <!-- Header -->
             <div class="companion-chat-header">
               <div class="companion-header-identity">
-                <div class="companion-pulse-avatar">✨</div>
+                <div class="companion-pulse-avatar">🧑‍🏫</div>
                 <div class="companion-header-meta">
-                  <h4>SyncBuddy <span class="companion-mode-tag">Learning Companion</span></h4>
+                  <h4 class="companion-name-title">Teacher Maya <span class="companion-mode-tag">Visual & Socratic Guide</span></h4>
                   <div class="companion-status">
                     <span class="status-indicator"></span>
-                    <span>Ready to help with Fractions</span>
+                    <span class="companion-status-text">Primary Educator & Storyteller</span>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- Subject Category Tabs -->
+            <div class="chat-subject-nav" role="tablist" aria-label="Subject Exploration">
+              <button class="chat-subject-tab active" data-subject="nutrition" type="button">🍎 Nutrition</button>
+              <button class="chat-subject-tab" data-subject="math" type="button">📐 Math</button>
+              <button class="chat-subject-tab" data-subject="language" type="button">📏 Grammar</button>
+              <button class="chat-subject-tab" data-subject="physics" type="button">🚀 Physics</button>
+              <button class="chat-subject-tab" data-subject="nature" type="button">🌿 Nature</button>
+              <button class="chat-subject-tab" data-subject="lifeskills" type="button">🛡️ Safety</button>
+            </div>
+
             <!-- Messages Stream -->
             <div class="companion-chat-body">
-              <!-- Initial Student message -->
-              <div class="chat-bubble-row student-row">
-                <div class="chat-avatar-mini">🎒</div>
-                <div class="chat-message-bubble">
-                  I don't understand fractions.
-                </div>
-              </div>
-
-              <!-- Initial Companion response -->
+              <!-- Initial Welcome Message -->
               <div class="chat-bubble-row companion-row">
-                <div class="chat-avatar-mini">✨</div>
+                <div class="chat-avatar-mini">🧑‍🏫</div>
                 <div class="chat-message-bubble">
-                  <p>No problem! Imagine you have one pizza divided into two equal pieces…</p>
-                  <div class="chat-visual-card">
-                    <div class="pizza-icon">🍕</div>
-                    <div class="chat-visual-card-text">
-                      <strong>1 of 2 slices = 1/2</strong><br>
-                      You get a whole half-pizza!
-                    </div>
+                  <p>Hello there, curious learner! 🌟 I’m Teacher Maya. What wondrous concept would you like to explore today?</p>
+                  <div class="chat-msg-actions">
+                    <button class="chat-action-btn read-aloud-btn" type="button">🔊 Read Aloud</button>
+                    <button class="chat-action-btn simpler-btn" type="button">🌱 Simpler</button>
+                    <button class="chat-action-btn example-btn" type="button">💡 Another Example</button>
                   </div>
-                </div>
-              </div>
-
-              <!-- Follow up student message -->
-              <div class="chat-bubble-row student-row">
-                <div class="chat-avatar-mini">🎒</div>
-                <div class="chat-message-bubble">
-                  Ohh, so 1/2 means half?
-                </div>
-              </div>
-
-              <!-- Follow up companion response -->
-              <div class="chat-bubble-row companion-row">
-                <div class="chat-avatar-mini">✨</div>
-                <div class="chat-message-bubble">
-                  <p>Exactly! You nailed it. 🎉 What else would you like to explore?</p>
                 </div>
               </div>
 
@@ -637,17 +634,13 @@
 
             <!-- Suggested Prompts Chips Bar -->
             <div class="companion-prompt-chips">
-              <button class="prompt-chip" data-prompt="fruits" type="button">🍎 Colorful fruits</button>
-              <button class="prompt-chip" data-prompt="adjectives" type="button">📏 Short vs Shortest</button>
-              <button class="prompt-chip" data-prompt="pizza" type="button">🍕 Explain with pizza</button>
-              <button class="prompt-chip" data-prompt="another-way" type="button">🍫 Chocolate math</button>
-              <button class="prompt-chip" data-prompt="challenge" type="button">🚀 Fun challenge</button>
+              <!-- Dynamically populated by companionChat.js based on active subject -->
             </div>
 
             <!-- Interactive Input Bar -->
             <div class="companion-input-bar">
-              <input type="text" class="companion-input" placeholder="Ask your learning buddy anything..." aria-label="Type your question">
-              <button class="companion-send-btn" aria-label="Send message">
+              <input type="text" class="companion-input" placeholder="Ask Teacher Maya anything (e.g. why is the sky blue?)..." aria-label="Type your question">
+              <button class="companion-send-btn" aria-label="Send message" type="button">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
