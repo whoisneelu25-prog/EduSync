@@ -1,0 +1,76 @@
+/* ==========================================================================
+   EDUSYNC DESIGN SYSTEM TOKENS & VARIABLES
+   Strict Compliance: ZERO purple, ZERO neon. Warm, intelligent, child-friendly & premium.
+   ========================================================================== */
+
+:root {
+  /* Brand Color Palette */
+  --color-navy: #17324D;
+  --color-navy-dark: #0E2033;
+  --color-navy-light: #23486C;
+  --color-navy-subtle: rgba(23, 50, 77, 0.06);
+
+  --color-teal: #4FA6A0;
+  --color-teal-dark: #3D8883;
+  --color-teal-light: #EBF6F5;
+  --color-teal-glow: rgba(79, 166, 160, 0.25);
+
+  --color-yellow: #F4C95D;
+  --color-yellow-dark: #DFA935;
+  --color-yellow-light: #FEF8E7;
+  --color-yellow-glow: rgba(244, 201, 93, 0.35);
+
+  --color-coral: #E98B73;
+  --color-coral-dark: #D46F55;
+  --color-coral-light: #FDF1EE;
+  --color-coral-glow: rgba(233, 139, 115, 0.28);
+
+  /* Backgrounds & Surface Neutrals */
+  --color-cream: #FFF9F0;
+  --color-cream-alt: #FBF4E6;
+  --color-white: #FFFFFF;
+  --color-surface-card: #FFFFFF;
+  --color-surface-glass: rgba(255, 255, 255, 0.85);
+
+  /* Typography Colors */
+  --color-text-primary: #17212B;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-text-inverted: #FFFFFF;
+
+  /* Borders & Dividers */
+  --color-border: #E5E7EB;
+  --color-border-light: #F1F3F5;
+  --color-border-hover: #CBD5E1;
+
+  /* Typography Fonts */
+  --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Shadows - Layered & Tactile */
+  --shadow-sm: 0 2px 6px rgba(23, 50, 77, 0.04);
+  --shadow-md: 0 8px 24px rgba(23, 50, 77, 0.08);
+  --shadow-lg: 0 16px 36px rgba(23, 50, 77, 0.12);
+  --shadow-xl: 0 24px 52px rgba(23, 50, 77, 0.16);
+  --shadow-floating: 0 20px 40px rgba(23, 50, 77, 0.14), 0 6px 12px rgba(23, 50, 77, 0.08);
+  --shadow-glow-teal: 0 8px 30px rgba(79, 166, 160, 0.3);
+  --shadow-glow-coral: 0 8px 30px rgba(233, 139, 115, 0.28);
+
+  /* Border Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Layout Spacing */
+  --container-max-width: 1240px;
+  --section-padding-y: 110px;
+  --section-padding-mobile-y: 68px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-spring: 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

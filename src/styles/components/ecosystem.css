@@ -1,0 +1,166 @@
+/* ==========================================================================
+   THREE FEATURES TOGETHER — THE ADAPTIVE LEARNING LOOP
+   "Three simple tools. One smarter learning journey."
+   QUICKS → QUIZ → PERSONALIZED CHAT → BETTER UNDERSTANDING
+   ========================================================================== */
+
+.ecosystem-section {
+  background-color: var(--color-white);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ecosystem-loop-wrapper {
+  position: relative;
+  margin-top: 48px;
+}
+
+.ecosystem-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Connected Line Across Desktop */
+.ecosystem-track::before {
+  content: '';
+  position: absolute;
+  top: 50px;
+  left: 12%;
+  right: 12%;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--color-teal) 0, var(--color-teal) 10px, transparent 10px, transparent 18px);
+  z-index: 1;
+}
+
+.ecosystem-step-card {
+  background: var(--color-cream);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  transition: all var(--transition-smooth);
+}
+
+.ecosystem-step-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--color-teal);
+  box-shadow: var(--shadow-lg);
+  background-color: #FFFFFF;
+}
+
+.step-node-badge {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.step-card-01 .step-node-badge {
+  background-color: var(--color-yellow-light);
+  border: 2px solid var(--color-yellow);
+  color: var(--color-yellow-dark);
+}
+
+.step-card-02 .step-node-badge {
+  background-color: var(--color-coral-light);
+  border: 2px solid var(--color-coral);
+  color: var(--color-coral);
+}
+
+.step-card-03 .step-node-badge {
+  background-color: var(--color-teal-light);
+  border: 2px solid var(--color-teal);
+  color: var(--color-teal);
+}
+
+.step-card-04 .step-node-badge {
+  background-color: var(--color-navy);
+  border: 2px solid var(--color-navy);
+  color: var(--color-yellow);
+}
+
+.step-node-number {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ecosystem-step-card h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--color-navy);
+}
+
+.ecosystem-step-card p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+/* Ecosystem Banner */
+.ecosystem-summary-pill {
+  margin-top: 48px;
+  background: linear-gradient(135deg, rgba(79, 166, 160, 0.08) 0%, rgba(244, 201, 93, 0.1) 100%);
+  border: 1px solid rgba(79, 166, 160, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.summary-pill-text h4 {
+  font-size: 1.125rem;
+  color: var(--color-navy);
+  margin-bottom: 4px;
+}
+
+.summary-pill-text p {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 960px) {
+  .ecosystem-track {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ecosystem-track::before {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .ecosystem-track {
+    grid-template-columns: 1fr;
+  }
+  .ecosystem-summary-pill {
+    flex-direction: column;
+    text-align: center;
+  }
+}

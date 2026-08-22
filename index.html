@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduSync — Learning that adapts to every child</title>
+  <meta name="description" content="EduSync is a personalized learning platform for children. Combining short video Quicks, understanding-based quizzes, and an adaptive learning chatbot companion.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%2317324D'/><path d='M30 50 L45 65 L70 35' stroke='%23F4C95D' stroke-width='12' fill='none' stroke-linecap='round'/></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Nunito Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..900;1,6..12,300..900&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/src/styles/variables.css">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/components/navbar.css">
+  <link rel="stylesheet" href="/src/styles/components/hero.css">
+  <link rel="stylesheet" href="/src/styles/components/story.css">
+  <link rel="stylesheet" href="/src/styles/components/quicks.css">
+  <link rel="stylesheet" href="/src/styles/components/quiz.css">
+  <link rel="stylesheet" href="/src/styles/components/chatbot.css">
+  <link rel="stylesheet" href="/src/styles/components/ecosystem.css">
+  <link rel="stylesheet" href="/src/styles/components/topics.css">
+  <link rel="stylesheet" href="/src/styles/components/footer.css">
+  <link rel="stylesheet" href="/src/styles/animations.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       STICKY NAVBAR
+       ========================================================================== -->
+  <header class="site-header" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" aria-label="EduSync Home">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        EduSync<span class="dot">•</span>
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="#quicks" class="nav-link">Quicks</a></li>
+          <li><a href="#quiz" class="nav-link">Quiz</a></li>
+          <li><a href="#chat" class="nav-link">Learning Chat</a></li>
+          <li><a href="#ecosystem" class="nav-link">How It Works</a></li>
+          <li><a href="#topics" class="nav-link">Topics</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#quicks" class="btn btn-primary nav-cta btn-desktop">Start Learning</a>
+        <button class="mobile-toggle" aria-label="Open Navigation Menu" id="mobileMenuBtn">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+    <ul class="mobile-nav-links">
+      <li><a href="#quicks" class="mobile-nav-link">Quicks <span class="arrow">→</span></a></li>
+      <li><a href="#quiz" class="mobile-nav-link">Quiz <span class="arrow">→</span></a></li>
+      <li><a href="#chat" class="mobile-nav-link">Learning Chat <span class="arrow">→</span></a></li>
+      <li><a href="#ecosystem" class="mobile-nav-link">How It Works <span class="arrow">→</span></a></li>
+      <li><a href="#topics" class="mobile-nav-link">Beyond Academics <span class="arrow">→</span></a></li>
+    </ul>
+    <div class="mobile-drawer-bottom">
+      <a href="#quicks" class="btn btn-primary" style="width: 100%;">Start Learning</a>
+    </div>
+  </div>
+
+  <main id="main-content">
+    <!-- ==========================================================================
+         HERO SECTION
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container hero-grid">
+        <!-- Hero Text Content -->
+        <div class="hero-content reveal-on-scroll">
+          <div class="hero-badge">
+            <span class="sparkle">✦</span>
+            <span>Personalized Learning for Every Child</span>
+          </div>
+
+          <h1 class="hero-title">
+            Learning that adapts to <span class="highlight">YOU.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Learn with Quicks. Test what you understand. Ask questions with your personal learning companion.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#quicks" class="btn btn-primary">Start Learning</a>
+            <a href="#story" class="btn btn-secondary">Explore EduSync</a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-avatars">
+              <div class="trust-avatar">👦</div>
+              <div class="trust-avatar">👧</div>
+              <div class="trust-avatar">🧑</div>
+            </div>
+            <p class="trust-text">
+              <strong>Built for Curious Minds</strong><br>
+              Tailored for children, trusted by parents & teachers.
+            </p>
+          </div>
+        </div>
+
+        <!-- Hero 3D Floating Interactive Product Composite -->
+        <div class="hero-visual-wrapper reveal-on-scroll delay-1">
+          <div class="hero-composite-stage">
+            <div class="hero-ambient-glow"></div>
+
+            <!-- 1. QUIZ CARD (Top Right) -->
+            <div class="hero-floating-card hero-card-quiz" id="heroQuizCard">
+              <div class="hero-card-header">
+                <span class="hero-card-tag">Concept Quiz</span>
+                <span style="font-size: 0.8rem; color: var(--color-text-muted);">Step 2</span>
+              </div>
+              <h4 class="hero-card-title">Which fraction is larger?</h4>
+              <div class="quiz-hero-options">
+                <button class="quiz-hero-opt selected" type="button">1/2</button>
+                <button class="quiz-hero-opt" type="button">1/4</button>
+              </div>
+            </div>
+
+            <!-- 2. QUICK REEL CARD (Left Center) -->
+            <div class="hero-floating-card hero-card-quick" id="heroQuickCard">
+              <div class="quick-hero-preview">
+                <span class="quick-duration-pill">⚡ 30 sec</span>
+                <div class="fraction-hero-visual">
+                  <div class="fraction-circle"></div>
+                </div>
+              </div>
+              <div class="quick-hero-info">
+                <div>
+                  <h4>Understanding Fractions</h4>
+                  <p>Bite-sized visual concept</p>
+                </div>
+                <div class="quick-play-btn">▶</div>
+              </div>
+            </div>
+
+            <!-- 3. CHAT COMPANION CARD (Bottom Right) -->
+            <div class="hero-floating-card hero-card-chat" id="heroChatCard">
+              <div class="chat-companion-header">
+                <div class="companion-avatar-sm">✨</div>
+                <div class="companion-info-sm">
+                  <h5>EduSync Companion</h5>
+                  <span><span class="status-dot"></span> Active & Ready</span>
+                </div>
+              </div>
+              <div class="hero-chat-messages">
+                <div class="hero-chat-msg student">
+                  "I don't understand fractions."
+                </div>
+                <div class="hero-chat-msg companion">
+                  "Let's try it with a simple example 🍕"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STORY SECTION: ADAPTIVE LEARNING PATHWAYS
+         "Every child learns differently."
+         ========================================================================== -->
+    <section class="section story-section" id="story">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag coral">The Core Philosophy</span>
+          <h2 class="section-title">Every child learns differently.</h2>
+          <p class="section-subtitle">
+            Same classroom. Same lesson. Different understanding. See how EduSync dynamically adapts in real-time.
+          </p>
+        </div>
+
+        <!-- Interactive Switcher -->
+        <div class="story-control-bar reveal-on-scroll">
+          <div class="story-toggle-group">
+            <button class="story-toggle-btn active" data-target="student-a" type="button">
+              <span>Student A</span>
+              <span class="toggle-badge">Needs Foundations</span>
+            </button>
+            <button class="story-toggle-btn" data-target="student-b" type="button">
+              <span>Student B</span>
+              <span class="toggle-badge">Ready for Challenge</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Pathways Comparison Grid -->
+        <div class="pathways-grid reveal-on-scroll delay-1">
+          <!-- STUDENT A PATHWAY -->
+          <div class="pathway-card student-a active-pathway">
+            <div class="pathway-header">
+              <div class="pathway-avatar">🎒</div>
+              <div class="pathway-title-meta">
+                <h3>Student A</h3>
+                <span class="pathway-tag">“Needs a little more help”</span>
+              </div>
+            </div>
+            <div class="pathway-steps">
+              <div class="path-step">
+                <div class="step-num">1</div>
+                <div class="step-info">
+                  <h4>Simple Explanation</h4>
+                  <p>Breaks fraction concept down using relatable pizza slice visuals.</p>
+                </div>
+              </div>
+              <div class="path-step">
+                <div class="step-num">2</div>
+                <div class="step-info">
+                  <h4>Guided Example</h4>
+                  <p>Interactive companion steps in to walk through the problem together.</p>
+                </div>
+              </div>
+              <div class="path-step">
+                <div class="step-num">3</div>
+                <div class="step-info">
+                  <h4>Confidence Practice</h4>
+                  <p>Reinforcing mini-quizzes that build mastery without stress.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STUDENT B PATHWAY -->
+          <div class="pathway-card student-b">
+            <div class="pathway-header">
+              <div class="pathway-avatar">🚀</div>
+              <div class="pathway-title-meta">
+                <h3>Student B</h3>
+                <span class="pathway-tag">“Ready for a challenge”</span>
+              </div>
+            </div>
+            <div class="pathway-steps">
+              <div class="path-step">
+                <div class="step-num">1</div>
+                <div class="step-info">
+                  <h4>Deeper Concept</h4>
+                  <p>Fast-tracks past basics into ratios and proportional thinking.</p>
+                </div>
+              </div>
+              <div class="path-step">
+                <div class="step-num">2</div>
+                <div class="step-info">
+                  <h4>Real-World Application</h4>
+                  <p>Applies fractions to architecture scale models and baking recipes.</p>
+                </div>
+              </div>
+              <div class="path-step">
+                <div class="step-num">3</div>
+                <div class="step-info">
+                  <h4>Stretch Challenge</h4>
+                  <p>Complex multi-step problems designed to spark deep critical thought.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Conclusion -->
+        <div class="story-conclusion reveal-on-scroll delay-2">
+          <span class="conclusion-icon">✨</span>
+          <span class="conclusion-text">EduSync adapts to the learner — not just the grade.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE 01 — QUICKS (REELS-STYLE MICRO-LEARNING)
+         ========================================================================== -->
+    <section class="section quicks-section" id="quicks">
+      <div class="container quicks-container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag yellow">Feature 01</span>
+          <h2 class="section-title">Meet Quicks.</h2>
+          <p class="section-subtitle">
+            Small lessons. Real understanding. Bite-sized vertical reels designed for young, curious minds.
+          </p>
+        </div>
+
+        <!-- Quicks Showcase Grid -->
+        <div class="quicks-grid reveal-on-scroll delay-1">
+          <!-- Quick 1: Fruits -->
+          <div class="quick-reel-card" data-reel-id="fruits">
+            <div class="quick-card-bg" style="background: radial-gradient(circle, #23486C 0%, #17324D 100%);"></div>
+            <div class="quick-card-gradient"></div>
+            
+            <div class="quick-card-top">
+              <span class="quick-badge-time">⚡ 30s</span>
+              <span class="quick-topic-tag">Learning</span>
+            </div>
+
+            <div class="quick-visual-graphic">
+              <span style="font-size: 3.5rem;">🍎</span>
+            </div>
+
+            <div class="quick-play-overlay">▶</div>
+
+            <div class="quick-card-bottom">
+              <h3 class="quick-card-title">Fun Way to Learn Fruits!</h3>
+              <p class="quick-card-desc">Discover delicious fruits with fun, interactive rhymes.</p>
+              <div class="quick-card-action">
+                <span>Watch Quick</span>
+                <span class="arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick 2: Gravity -->
+          <div class="quick-reel-card" data-reel-id="gravity">
+            <div class="quick-card-bg" style="background: radial-gradient(circle, #2a415a 0%, #17324D 100%);"></div>
+            <div class="quick-card-gradient"></div>
+
+            <div class="quick-card-top">
+              <span class="quick-badge-time">⚡ 28s</span>
+              <span class="quick-topic-tag">Physics</span>
+            </div>
+
+            <div class="quick-visual-graphic">
+              <svg viewBox="0 0 100 100" width="80" height="80">
+                <circle cx="50" cy="75" r="30" fill="#17324D" stroke="#4FA6A0" stroke-width="2"/>
+                <circle cx="50" cy="25" r="10" fill="#E98B73"/>
+              </svg>
+            </div>
+
+            <div class="quick-play-overlay">▶</div>
+
+            <div class="quick-card-bottom">
+              <h3 class="quick-card-title">Why Do Objects Fall?</h3>
+              <p class="quick-card-desc">Mass, gravitational pull, and why we don't float into space.</p>
+              <div class="quick-card-action">
+                <span>Watch Quick</span>
+                <span class="arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick 3: Angles -->
+          <div class="quick-reel-card" data-reel-id="angles">
+            <div class="quick-card-bg" style="background: radial-gradient(circle, #1e3c5a 0%, #17324D 100%);"></div>
+            <div class="quick-card-gradient"></div>
+
+            <div class="quick-card-top">
+              <span class="quick-badge-time">⚡ 25s</span>
+              <span class="quick-topic-tag">Geometry</span>
+            </div>
+
+            <div class="quick-visual-graphic">
+              <svg viewBox="0 0 100 100" width="80" height="80">
+                <line x1="20" y1="80" x2="80" y2="80" stroke="#FFFFFF" stroke-width="3"/>
+                <line x1="20" y1="80" x2="70" y2="30" stroke="#F4C95D" stroke-width="3"/>
+              </svg>
+            </div>
+
+            <div class="quick-play-overlay">▶</div>
+
+            <div class="quick-card-bottom">
+              <h3 class="quick-card-title">Acute vs Right Angles</h3>
+              <p class="quick-card-desc">Spotting corners, sharp angles, and geometric shapes in nature.</p>
+              <div class="quick-card-action">
+                <span>Watch Quick</span>
+                <span class="arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick 4: Photosynthesis -->
+          <div class="quick-reel-card" data-reel-id="photosynthesis">
+            <div class="quick-card-bg" style="background: radial-gradient(circle, #254b56 0%, #17324D 100%);"></div>
+            <div class="quick-card-gradient"></div>
+
+            <div class="quick-card-top">
+              <span class="quick-badge-time">⚡ 32s</span>
+              <span class="quick-topic-tag">Nature</span>
+            </div>
+
+            <div class="quick-visual-graphic">
+              <svg viewBox="0 0 100 100" width="80" height="80">
+                <circle cx="50" cy="50" r="35" fill="#4FA6A0" opacity="0.3"/>
+                <circle cx="50" cy="50" r="16" fill="#F4C95D"/>
+              </svg>
+            </div>
+
+            <div class="quick-play-overlay">▶</div>
+
+            <div class="quick-card-bottom">
+              <h3 class="quick-card-title">How Plants Eat Sunlight</h3>
+              <p class="quick-card-desc">Chlorophyll magic, water conversion, and oxygen release.</p>
+              <div class="quick-card-action">
+                <span>Watch Quick</span>
+                <span class="arrow">→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quicks Reel Prompt Banner -->
+        <div class="quicks-cta-banner reveal-on-scroll delay-2">
+          <div class="quicks-banner-content">
+            <h3>Swipe through lessons like your favorite reels.</h3>
+            <p>You can drop <code>1.mp4</code>, <code>2.mp4</code>, <code>3.mp4</code> into <code>public/videos/</code> or choose a video file directly.</p>
+          </div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-teal" onclick="document.querySelector('.quick-reel-card').click()">
+              <span>▶</span> Open Reels Player
+            </button>
+            <button class="btn btn-secondary" id="bannerUploadVideoBtn" style="background: rgba(255,255,255,0.15); color: #fff; border-color: rgba(255,255,255,0.3);">
+              <span>📁</span> Choose Local Video
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE 02 — QUIZ (UNDERSTANDING-BASED ADAPTIVE ENGINE)
+         ========================================================================== -->
+    <section class="section quiz-section" id="quiz">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag coral">Feature 02</span>
+          <h2 class="section-title">Don’t just answer. Show what you understand.</h2>
+          <p class="section-subtitle">
+            EduSync quizzes test mental models, not rote memory. Diagnosing why an answer was chosen shapes the next step.
+          </p>
+        </div>
+
+        <div class="quiz-showcase-grid">
+          <!-- Left: Interactive Quiz Component -->
+          <div class="quiz-engine-card reveal-on-scroll">
+            <div class="quiz-card-header">
+              <span class="quiz-topic-badge"><span>📐</span> Fractions & Proportions</span>
+              <div class="quiz-live-indicator">
+                <span class="quiz-pulse-dot"></span>
+                <span>Adaptive Engine</span>
+              </div>
+            </div>
+
+            <div class="quiz-question-box">
+              <div class="quiz-question-num">Understanding Challenge</div>
+              <h3 class="quiz-question-title">Which fraction represents the larger amount?</h3>
+            </div>
+
+            <!-- Interactive Choices -->
+            <div class="quiz-options-container">
+              <!-- Dynamically populated by quizEngine.js -->
+            </div>
+
+            <!-- Dynamic Feedback Box -->
+            <div class="quiz-feedback-box">
+              <div class="feedback-icon">✓</div>
+              <div class="feedback-text">
+                <h4 class="feedback-title-text">Nice! You understood the idea.</h4>
+                <p class="feedback-desc-text">When you divide into 2 parts (1/2), each piece is twice as large as dividing into 4 parts (1/4).</p>
+              </div>
+            </div>
+
+            <div class="quiz-action-bar">
+              <span style="font-size: 0.8125rem; color: var(--color-text-muted);">Instant conceptual diagnosis</span>
+              <button class="quiz-reset-btn" type="button">
+                <span>🔄</span> Try Another Question
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Narrative Flow (ANSWER → UNDERSTAND → ADAPT) -->
+          <div class="quiz-narrative-content reveal-on-scroll delay-1">
+            <div>
+              <span class="section-tag navy">How Quizzes Work</span>
+              <h3 style="font-size: 1.85rem; margin-bottom: 12px;">Adaptive Diagnosis in Action</h3>
+              <p>Every response gives insight into how the child processes concepts. EduSync immediately pivots based on the reasoning.</p>
+            </div>
+
+            <div class="adaptive-flow-visual">
+              <div class="adaptive-flow-card">
+                <div class="flow-step-icon yellow">🎯</div>
+                <div class="flow-card-info">
+                  <h4>1. ANSWER</h4>
+                  <p>Child makes a visual choice based on intuitive reasoning.</p>
+                </div>
+              </div>
+
+              <div class="adaptive-flow-card">
+                <div class="flow-step-icon coral">🧠</div>
+                <div class="flow-card-info">
+                  <h4>2. UNDERSTAND</h4>
+                  <p>The system reveals why the concept works using tactile analogies.</p>
+                </div>
+              </div>
+
+              <div class="adaptive-flow-card">
+                <div class="flow-step-icon teal">🔄</div>
+                <div class="flow-card-info">
+                  <h4>3. ADAPT</h4>
+                  <p>Next lessons adjust difficulty, pace, and presentation style automatically.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE 03 — PERSONALIZED LEARNING CHATBOT ("Stuck? Just ask.")
+         ========================================================================== -->
+    <section class="section companion-section" id="chat">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag teal">Feature 03</span>
+          <h2 class="section-title">Stuck? Just ask.</h2>
+          <p class="section-subtitle">
+            Your personal learning companion explains things in a way that makes sense to you.
+          </p>
+        </div>
+
+        <div class="companion-grid">
+          <!-- Left: Narrative & Prompt Explanations -->
+          <div class="reveal-on-scroll">
+            <span class="section-tag yellow">Safe & Child-Friendly</span>
+            <h3 style="font-size: 2.1rem; line-height: 1.2; margin-bottom: 16px;">
+              Not generic AI. A patient learning buddy.
+            </h3>
+            <p style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: 24px;">
+              SyncBuddy is specially calibrated for children. It avoids intimidating academic jargon, uses relatable everyday metaphors, and encourages curiosity at every step.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="feature-icon-badge teal">✓</div>
+                <span style="font-weight: 700; color: var(--color-navy);">No complex jargon — pure intuition</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="feature-icon-badge yellow">✓</div>
+                <span style="font-weight: 700; color: var(--color-navy);">Visual analogies (pizzas, clocks, chocolate bars)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="feature-icon-badge coral">✓</div>
+                <span style="font-weight: 700; color: var(--color-navy);">Praise and positive reinforcement</span>
+              </div>
+            </div>
+
+            <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
+              👉 <em>Try clicking the prompt chips on the chat interface to see how SyncBuddy responds!</em>
+            </p>
+          </div>
+
+          <!-- Right: Interactive Companion Chat Device (Not ChatGPT) -->
+          <div class="companion-chat-device reveal-on-scroll delay-1">
+            <!-- Header -->
+            <div class="companion-chat-header">
+              <div class="companion-header-identity">
+                <div class="companion-pulse-avatar">✨</div>
+                <div class="companion-header-meta">
+                  <h4>SyncBuddy <span class="companion-mode-tag">Learning Companion</span></h4>
+                  <div class="companion-status">
+                    <span class="status-indicator"></span>
+                    <span>Ready to help with Fractions</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Messages Stream -->
+            <div class="companion-chat-body">
+              <!-- Initial Student message -->
+              <div class="chat-bubble-row student-row">
+                <div class="chat-avatar-mini">🎒</div>
+                <div class="chat-message-bubble">
+                  I don't understand fractions.
+                </div>
+              </div>
+
+              <!-- Initial Companion response -->
+              <div class="chat-bubble-row companion-row">
+                <div class="chat-avatar-mini">✨</div>
+                <div class="chat-message-bubble">
+                  <p>No problem! Imagine you have one pizza divided into two equal pieces…</p>
+                  <div class="chat-visual-card">
+                    <div class="pizza-icon">🍕</div>
+                    <div class="chat-visual-card-text">
+                      <strong>1 of 2 slices = 1/2</strong><br>
+                      You get a whole half-pizza!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Follow up student message -->
+              <div class="chat-bubble-row student-row">
+                <div class="chat-avatar-mini">🎒</div>
+                <div class="chat-message-bubble">
+                  Ohh, so 1/2 means half?
+                </div>
+              </div>
+
+              <!-- Follow up companion response -->
+              <div class="chat-bubble-row companion-row">
+                <div class="chat-avatar-mini">✨</div>
+                <div class="chat-message-bubble">
+                  <p>Exactly! You nailed it. 🎉 What else would you like to explore?</p>
+                </div>
+              </div>
+
+              <!-- Live typing dots placeholder -->
+              <div class="typing-indicator">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+              </div>
+            </div>
+
+            <!-- Suggested Prompts Chips Bar -->
+            <div class="companion-prompt-chips">
+              <button class="prompt-chip" data-prompt="pizza" type="button">🍕 Explain with pizza</button>
+              <button class="prompt-chip" data-prompt="another-way" type="button">🔄 Explain another way</button>
+              <button class="prompt-chip" data-prompt="example" type="button">💡 Give me an example</button>
+              <button class="prompt-chip" data-prompt="easier" type="button">🌱 Make it easier</button>
+              <button class="prompt-chip" data-prompt="challenge" type="button">🚀 Challenge me</button>
+            </div>
+
+            <!-- Interactive Input Bar -->
+            <div class="companion-input-bar">
+              <input type="text" class="companion-input" placeholder="Ask your learning buddy anything..." aria-label="Type your question">
+              <button class="companion-send-btn" aria-label="Send message">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         THREE FEATURES TOGETHER: THE ADAPTIVE LOOP
+         ========================================================================== -->
+    <section class="section ecosystem-section" id="ecosystem">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag navy">Connected Ecosystem</span>
+          <h2 class="section-title">Three simple tools. One smarter learning journey.</h2>
+          <p class="section-subtitle">
+            How Quicks, Quizzes, and Personalized Chat combine into a continuous cycle of mastery.
+          </p>
+        </div>
+
+        <div class="ecosystem-loop-wrapper reveal-on-scroll delay-1">
+          <div class="ecosystem-track">
+            <!-- Step 1: Quicks -->
+            <div class="ecosystem-step-card step-card-01">
+              <div class="step-node-badge">
+                <span>⚡</span>
+                <span class="step-node-number">1</span>
+              </div>
+              <h3>QUICKS</h3>
+              <p>Spark curiosity with 30-second conceptual video lessons that explain the core idea.</p>
+            </div>
+
+            <!-- Step 2: Quiz -->
+            <div class="ecosystem-step-card step-card-02">
+              <div class="step-node-badge">
+                <span>🎯</span>
+                <span class="step-node-number">2</span>
+              </div>
+              <h3>QUIZ</h3>
+              <p>Check understanding with intuitive choices to diagnose what was grasped.</p>
+            </div>
+
+            <!-- Step 3: Chatbot -->
+            <div class="ecosystem-step-card step-card-03">
+              <div class="step-node-badge">
+                <span>💬</span>
+                <span class="step-node-number">3</span>
+              </div>
+              <h3>PERSONALIZED CHAT</h3>
+              <p>Clarify sticky doubts instantly with patient, illustrated companion dialogues.</p>
+            </div>
+
+            <!-- Step 4: Better Understanding -->
+            <div class="ecosystem-step-card step-card-04">
+              <div class="step-node-badge">
+                <span>🌟</span>
+                <span class="step-node-number">4</span>
+              </div>
+              <h3>BETTER MASTERY</h3>
+              <p>Build lasting intuition and self-confidence that transcends the classroom grade.</p>
+            </div>
+          </div>
+
+          <div class="ecosystem-summary-pill reveal-on-scroll delay-2">
+            <div class="summary-pill-text">
+              <h4>Continuous Adaptive Feedback Loop</h4>
+              <p>Every interaction informs the next step so no child is left behind or held back.</p>
+            </div>
+            <a href="#quicks" class="btn btn-teal">Experience the Loop</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BEYOND ACADEMICS
+         ========================================================================== -->
+    <section class="section topics-section" id="topics">
+      <div class="container">
+        <div class="section-header reveal-on-scroll">
+          <span class="section-tag coral">Holistic Learning</span>
+          <h2 class="section-title">Learning goes beyond the textbook.</h2>
+          <p class="section-subtitle">
+            EduSync can grow with the child — helping them build knowledge and skills beyond academics.
+          </p>
+        </div>
+
+        <div class="topics-grid reveal-on-scroll delay-1">
+          <!-- 1. Academics -->
+          <div class="topic-card">
+            <div class="topic-icon-box navy">📐</div>
+            <div class="topic-details">
+              <h3>Academics</h3>
+              <p>Foundational Math, Science, Language, and Critical Reasoning made intuitive.</p>
+            </div>
+          </div>
+
+          <!-- 2. Life Skills -->
+          <div class="topic-card">
+            <div class="topic-icon-box yellow">🧭</div>
+            <div class="topic-details">
+              <h3>Life Skills</h3>
+              <p>Problem-solving, emotional regulation, curiosity, and smart time management.</p>
+            </div>
+          </div>
+
+          <!-- 3. Health & Fitness -->
+          <div class="topic-card">
+            <div class="topic-icon-box teal">🍎</div>
+            <div class="topic-details">
+              <h3>Health & Fitness</h3>
+              <p>Nutrition basics, movement fun, healthy sleep habits, and body wellness.</p>
+            </div>
+          </div>
+
+          <!-- 4. Cyber Safety -->
+          <div class="topic-card">
+            <div class="topic-icon-box coral">🛡️</div>
+            <div class="topic-details">
+              <h3>Cyber Safety</h3>
+              <p>Safe browsing rules, password strength, and identifying online scams.</p>
+            </div>
+          </div>
+
+          <!-- 5. Digital Responsibility -->
+          <div class="topic-card">
+            <div class="topic-icon-box yellow">📱</div>
+            <div class="topic-details">
+              <h3>Digital Responsibility</h3>
+              <p>Healthy screen time balance, positive digital footprint, and digital kindness.</p>
+            </div>
+          </div>
+
+          <!-- 6. Child Safety -->
+          <div class="topic-card">
+            <div class="topic-icon-box teal">🤝</div>
+            <div class="topic-details">
+              <h3>Child Safety</h3>
+              <p>Personal boundaries, trusted adults, emergency awareness, and self-advocacy.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FINAL EMOTIONAL CTA SECTION
+         ========================================================================== -->
+    <section class="closing-cta-section">
+      <div class="container closing-cta-content reveal-on-scroll">
+        <div class="closing-badge">
+          <span>✨</span>
+          <span>Start Your Child's Journey</span>
+        </div>
+
+        <h2 class="closing-title">
+          Don't learn just for the grade.
+        </h2>
+
+        <p class="closing-subtitle">
+          Learn to understand. Learn to grow.
+        </p>
+
+        <div class="closing-actions">
+          <a href="#quicks" class="btn btn-yellow" style="background-color: var(--color-yellow); color: var(--color-navy); box-shadow: 0 4px 18px rgba(244, 201, 93, 0.4);">
+            Start Learning
+          </a>
+          <a href="#hero" class="btn btn-secondary" style="background: rgba(255, 255, 255, 0.12); color: #fff; border-color: rgba(255, 255, 255, 0.25);">
+            Back to Top
+          </a>
+        </div>
+
+        <div class="closing-tagline-quote">
+          “Learn Beyond Books. Grow Beyond Grades.”
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <!-- Brand Info -->
+        <div class="footer-brand-col">
+          <a href="#" class="brand-logo">
+            <div class="brand-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+            </div>
+            EduSync<span class="dot">•</span>
+          </a>
+          <p class="footer-brand-desc">
+            Personalized learning that adapts to every child. Short lessons, understanding quizzes, and intelligent companionship.
+          </p>
+          <div class="footer-safety-pledge">
+            <span>🛡️</span> Safe, Child-First Environment
+          </div>
+        </div>
+
+        <!-- Col 1: Features -->
+        <div class="footer-col">
+          <h4>Core Features</h4>
+          <ul>
+            <li><a href="#quicks">Quicks Micro-Lessons</a></li>
+            <li><a href="#quiz">Adaptive Quizzes</a></li>
+            <li><a href="#chat">Learning Chat Companion</a></li>
+            <li><a href="#ecosystem">The Learning Loop</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 2: Topics -->
+        <div class="footer-col">
+          <h4>Topics</h4>
+          <ul>
+            <li><a href="#topics">Academics & STEM</a></li>
+            <li><a href="#topics">Life Skills</a></li>
+            <li><a href="#topics">Health & Fitness</a></li>
+            <li><a href="#topics">Cyber Safety</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Principles -->
+        <div class="footer-col">
+          <h4>Philosophy</h4>
+          <ul>
+            <li><a href="#story">Adaptive Pathways</a></li>
+            <li><a href="#story">Student-First Design</a></li>
+            <li><a href="#quiz">Concept Diagnosis</a></li>
+            <li><a href="#hero">Beyond Grades</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>© 2026 EduSync. All rights reserved. “Learn Beyond Books. Grow Beyond Grades.”</p>
+        <div class="footer-bottom-links">
+          <a href="#hero">Privacy Safe</a>
+          <a href="#hero">Terms of Service</a>
+          <a href="#hero">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       FULLSCREEN / MODAL REELS PLAYER (TIKTOK/REELS-STYLE)
+       ========================================================================== -->
+  <div class="reels-modal" id="reelsModal" role="dialog" aria-modal="true" aria-label="Quicks Reel Player">
+    <!-- Close Button -->
+    <button class="reels-close-btn" aria-label="Close Reels Player">✕</button>
+
+    <!-- Navigation Arrows for Desktop -->
+    <button class="reels-nav-btn reels-prev-btn" aria-label="Previous Reel">↑</button>
+    <button class="reels-nav-btn reels-next-btn" aria-label="Next Reel">↓</button>
+
+    <!-- Mobile Viewport Frame -->
+    <div class="reels-viewport">
+      <!-- Stories/Reels Segmented Top Progress Bars -->
+      <div class="reels-progress-bars">
+        <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
+        <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
+        <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
+        <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
+      </div>
+
+      <!-- Top Header in Reel -->
+      <div class="reels-top-header">
+        <div class="reels-author-info">
+          <div class="reels-author-avatar">M</div>
+          <span class="reels-author-name">Ms. Maya & SyncBuddy</span>
+        </div>
+        <div class="reels-top-controls">
+          <button class="reel-control-btn reel-upload-trigger-btn" title="Choose/Upload video for this reel" aria-label="Upload video">📁</button>
+          <button class="reel-control-btn reel-play-pause-btn" aria-label="Play or Pause">⏸</button>
+          <button class="reel-control-btn reel-mute-btn" aria-label="Mute or Unmute">🔇</button>
+        </div>
+      </div>
+
+      <!-- Hidden file input for instant local video loading -->
+      <input type="file" id="reelVideoFileInput" accept="video/mp4,video/webm,video/quicktime" style="display: none;">
+
+      <!-- Media Stage (Video or Animated SVG Canvas Fallback) -->
+      <div class="reel-media-stage">
+        <video class="reel-video-element" playsinline loop></video>
+        <div class="reel-animated-canvas-fallback">
+          <div class="canvas-anim-visual">
+            <!-- Dynamic SVG animation rendered here -->
+          </div>
+          <div style="font-family: var(--font-heading); color: var(--color-yellow); font-size: 0.95rem; font-weight: 800; text-align: center;">
+            ✦ Micro-Lesson Visual Preview ✦
+          </div>
+          <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.75rem; margin-top: 4px; text-align: center;">
+            Drop .mp4 files directly into public/videos/
+          </div>
+        </div>
+      </div>
+
+      <!-- Side Action Buttons (Like, Save, Quiz) -->
+      <div class="reels-side-actions">
+        <div class="reel-side-btn reel-like-btn" role="button" aria-label="Like this lesson">
+          <div class="side-btn-icon">❤️</div>
+          <span class="side-btn-label like-count">1.2k</span>
+        </div>
+
+        <div class="reel-side-btn reel-save-btn" role="button" aria-label="Save this lesson">
+          <div class="side-btn-icon">🔖</div>
+          <span class="side-btn-label">Save</span>
+        </div>
+      </div>
+
+      <!-- Bottom Information & Quiz Bridge -->
+      <div class="reels-bottom-info">
+        <div class="reels-tag-pill">
+          <span>⚡</span> Math Fundamentals • 30s
+        </div>
+        <h3 class="reels-title-text">Understanding Fractions</h3>
+        <p class="reels-caption-text">
+          Why is 1/2 bigger than 1/4? Think of slicing a fresh pizza into equal pieces!
+        </p>
+        <button class="reels-quiz-bridge-btn" type="button">
+          <span>Test Understanding</span>
+          <span>→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Entry Point -->
+  <script type="module" src="/src/scripts/main.js"></script>
+</body>
+</html>

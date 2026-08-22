@@ -1,0 +1,508 @@
+/* ==========================================================================
+   HERO SECTION & 3D FLOATING PRODUCT COMPOSITE
+   ========================================================================== */
+
+.hero-section {
+  position: relative;
+  padding-top: 150px;
+  padding-bottom: 90px;
+  overflow: hidden;
+  background: radial-gradient(circle at 80% 20%, rgba(79, 166, 160, 0.09) 0%, transparent 50%),
+              radial-gradient(circle at 15% 85%, rgba(244, 201, 93, 0.12) 0%, transparent 45%),
+              var(--color-cream);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1.15fr;
+  align-items: center;
+  gap: 56px;
+}
+
+/* Hero Content */
+.hero-content {
+  max-width: 580px;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-badge .sparkle {
+  color: var(--color-yellow-dark);
+  font-size: 1.1rem;
+  animation: pulseRotate 4s ease-in-out infinite;
+}
+
+.hero-title {
+  font-size: clamp(2.6rem, 4.8vw, 4.1rem);
+  font-weight: 800;
+  color: var(--color-navy);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  margin-bottom: 22px;
+}
+
+.hero-title .highlight {
+  color: var(--color-teal);
+  position: relative;
+  display: inline-block;
+}
+
+.hero-title .highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 8px;
+  background-color: rgba(79, 166, 160, 0.22);
+  border-radius: var(--radius-full);
+  z-index: -1;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.125rem, 1.4vw, 1.3rem);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 36px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+}
+
+/* Trust Indicators */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(229, 231, 235, 0.9);
+}
+
+.trust-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.trust-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  border: 2.5px solid var(--color-cream);
+  margin-left: -10px;
+  background-color: var(--color-teal-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+.trust-avatar:first-child {
+  margin-left: 0;
+  background-color: var(--color-yellow-light);
+}
+.trust-avatar:last-child {
+  background-color: var(--color-coral-light);
+}
+
+.trust-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  line-height: 1.35;
+}
+.trust-text strong {
+  color: var(--color-navy);
+}
+
+/* ==========================================================================
+   HERO 3D FLOATING PRODUCT COMPOSITE
+   ========================================================================== */
+.hero-visual-wrapper {
+  position: relative;
+  perspective: 1200px;
+  padding: 30px 10px;
+}
+
+.hero-composite-stage {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ambient glow */
+.hero-ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  height: 90%;
+  background: radial-gradient(circle, rgba(79, 166, 160, 0.16) 0%, rgba(244, 201, 93, 0.12) 45%, transparent 70%);
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Floating Card Base */
+.hero-floating-card {
+  position: absolute;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-floating);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.hero-floating-card:hover {
+  box-shadow: var(--shadow-xl);
+  z-index: 10;
+}
+
+/* 1. QUIZ CARD (Top Right) */
+.hero-card-quiz {
+  top: 10px;
+  right: 0;
+  width: 290px;
+  padding: 18px;
+  background: #FFFFFF;
+  border-left: 4px solid var(--color-coral);
+  animation: floatCardSlow 7s ease-in-out infinite;
+}
+
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.hero-card-tag {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-coral-light);
+  color: var(--color-coral-dark);
+}
+
+.hero-card-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 12px;
+}
+
+.quiz-hero-options {
+  display: flex;
+  gap: 8px;
+}
+
+.quiz-hero-opt {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 6px;
+  background-color: var(--color-cream);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.125rem;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quiz-hero-opt.selected {
+  border-color: var(--color-teal);
+  background-color: var(--color-teal-light);
+  color: var(--color-teal-dark);
+  position: relative;
+}
+
+.quiz-hero-opt.selected::after {
+  content: '✓ Correct';
+  position: absolute;
+  bottom: -18px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-teal-dark);
+  letter-spacing: 0.02em;
+}
+
+/* 2. QUICK REEL CARD (Left Center) */
+.hero-card-quick {
+  top: 90px;
+  left: 0;
+  width: 280px;
+  background: var(--color-navy);
+  color: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 45px rgba(23, 50, 77, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 18px;
+  animation: floatCardReverse 8s ease-in-out infinite 0.8s;
+}
+
+.quick-hero-preview {
+  position: relative;
+  height: 140px;
+  background: linear-gradient(135deg, #1d3f60 0%, #17324d 100%);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fraction-hero-visual {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fraction-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: conic-gradient(var(--color-yellow) 0deg 180deg, rgba(255, 255, 255, 0.15) 180deg 360deg);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.quick-duration-pill {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  color: var(--color-white);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.quick-hero-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.quick-hero-info h4 {
+  color: var(--color-white);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.quick-hero-info p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+}
+
+.quick-play-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: var(--color-yellow);
+  color: var(--color-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 10px rgba(244, 201, 93, 0.4);
+}
+
+/* 3. CHAT COMPANION CARD (Bottom Center-Right) */
+.hero-card-chat {
+  bottom: 0;
+  right: 30px;
+  width: 320px;
+  padding: 18px;
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  animation: floatCardSlow 9s ease-in-out infinite 1.5s;
+}
+
+.chat-companion-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.companion-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-teal);
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px var(--color-teal-glow);
+}
+
+.companion-info-sm h5 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.companion-info-sm span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: var(--color-teal);
+  font-weight: 600;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-teal);
+  box-shadow: 0 0 6px var(--color-teal);
+}
+
+.hero-chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hero-chat-msg {
+  padding: 9px 13px;
+  border-radius: 14px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  max-width: 90%;
+}
+
+.hero-chat-msg.student {
+  align-self: flex-end;
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  border-bottom-right-radius: 4px;
+}
+
+.hero-chat-msg.companion {
+  align-self: flex-start;
+  background-color: var(--color-teal-light);
+  color: var(--color-navy);
+  border: 1px solid rgba(79, 166, 160, 0.2);
+  border-bottom-left-radius: 4px;
+}
+
+/* Floating Animations */
+@keyframes floatCardSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0.8deg);
+  }
+}
+
+@keyframes floatCardReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(10px) rotate(-1deg);
+  }
+}
+
+@keyframes pulseRotate {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(15deg) scale(1.15);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+  .hero-content {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero-trust {
+    justify-content: center;
+  }
+  .hero-composite-stage {
+    min-height: 480px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding-top: 110px;
+    padding-bottom: 60px;
+  }
+  .hero-composite-stage {
+    min-height: 440px;
+  }
+  .hero-card-quiz {
+    width: 250px;
+    right: 5px;
+    top: 0;
+  }
+  .hero-card-quick {
+    width: 240px;
+    left: 0;
+    top: 70px;
+  }
+  .hero-card-chat {
+    width: 270px;
+    right: 5px;
+    bottom: -10px;
+  }
+}
