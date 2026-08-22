@@ -2125,6 +2125,16 @@ export function initQuizEngine() {
       selectedBtn.classList.add('state-correct');
       if (streakText) streakText.textContent = `${currentStreak}🔥`;
 
+      // Sync progress to Google Cloud
+      window.dispatchEvent(new CustomEvent('edusync_update_progress', {
+        detail: {
+          streak: currentStreak,
+          addStars: 1,
+          addPoints: 50,
+          completedQuestionId: question.id
+        }
+      }));
+
       if (feedbackBox) {
         feedbackBox.className = 'quiz-feedback-box show feedback-correct';
         if (feedbackIcon) feedbackIcon.textContent = '🌟';
@@ -2136,6 +2146,11 @@ export function initQuizEngine() {
       currentStreak = 0;
       selectedBtn.classList.add('state-incorrect');
       if (streakText) streakText.textContent = `0🔥`;
+
+      // Sync reset streak to Google Cloud
+      window.dispatchEvent(new CustomEvent('edusync_update_progress', {
+        detail: { streak: 0 }
+      }));
 
       if (feedbackBox) {
         feedbackBox.className = 'quiz-feedback-box show feedback-incorrect';
