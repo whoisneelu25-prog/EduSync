@@ -432,23 +432,26 @@
           <!-- Left: Interactive Quiz Component -->
           <div class="quiz-engine-card reveal-on-scroll">
             <div class="quiz-card-header">
-              <span class="quiz-topic-badge"><span>🍎</span> Fruits & Nutrition</span>
-              <div class="quiz-live-indicator">
-                <span class="quiz-pulse-dot"></span>
-                <span>Adaptive Engine</span>
+              <div class="quiz-header-left">
+                <span class="quiz-topic-badge"><span>🍎</span> Fruits & Nutrition</span>
+                <span class="quiz-difficulty-badge">Level 1: Foundation</span>
+              </div>
+              <div class="quiz-header-right">
+                <span class="quiz-streak-badge">Streak: <strong class="quiz-streak-count">0🔥</strong></span>
+                <div class="quiz-live-indicator">
+                  <span class="quiz-pulse-dot"></span>
+                  <span>Adaptive Engine</span>
+                </div>
               </div>
             </div>
 
-            <!-- Interactive Topic Switcher -->
-            <div class="quiz-topic-nav">
-              <button class="quiz-topic-tab active" data-q-idx="0" type="button">🍎 Fruits</button>
-              <button class="quiz-topic-tab" data-q-idx="1" type="button">📏 Adjectives</button>
-              <button class="quiz-topic-tab" data-q-idx="2" type="button">🍕 Fractions</button>
-              <button class="quiz-topic-tab" data-q-idx="3" type="button">📐 Angles</button>
+            <!-- Multi-Theme Filter Pills -->
+            <div class="quiz-theme-pills" role="tablist" aria-label="Quiz Themes">
+              <!-- Dynamically rendered by quizEngine.js -->
             </div>
 
             <div class="quiz-question-box">
-              <div class="quiz-question-num">Understanding Challenge</div>
+              <div class="quiz-question-num">Question 1 of 18</div>
               <h3 class="quiz-question-title">Which of these is packed with Vitamin C and grows on trees?</h3>
             </div>
 
@@ -459,17 +462,30 @@
 
             <!-- Dynamic Feedback Box -->
             <div class="quiz-feedback-box">
-              <div class="feedback-icon">✓</div>
-              <div class="feedback-text">
-                <h4 class="feedback-title-text">Nice! You understood the idea.</h4>
-                <p class="feedback-desc-text">When you divide into 2 parts (1/2), each piece is twice as large as dividing into 4 parts (1/4).</p>
+              <div class="feedback-top-row">
+                <div class="feedback-icon">🌟</div>
+                <div class="feedback-text">
+                  <h4 class="feedback-title-text">Super Job! Oranges are Citrus Superstars! 🍊</h4>
+                  <p class="feedback-desc-text">Oranges are full of natural Vitamin C to keep your immune system strong.</p>
+                </div>
+              </div>
+              <div class="feedback-next-concept">
+                <strong>Next Adaptive Step:</strong> Spotting Berries vs Citrus Fruits
               </div>
             </div>
 
+            <!-- Quiz Controls Action Bar -->
             <div class="quiz-action-bar">
-              <span style="font-size: 0.8125rem; color: var(--color-text-muted);">Instant conceptual diagnosis</span>
-              <button class="quiz-reset-btn" type="button">
-                <span>🔄</span> Try Another Question
+              <div class="quiz-nav-group">
+                <button class="quiz-control-btn quiz-prev-btn" type="button" aria-label="Previous Question">
+                  <span>←</span> Prev
+                </button>
+                <button class="quiz-control-btn quiz-shuffle-btn" type="button" aria-label="Shuffle Question">
+                  <span>🔀</span> Shuffle
+                </button>
+              </div>
+              <button class="quiz-control-btn primary quiz-next-btn" type="button" aria-label="Next Question">
+                <span>Next Question</span> <span>→</span>
               </button>
             </div>
           </div>
