@@ -5,14 +5,100 @@
 
 export const quizQuestions = [
   {
+    id: 'fruits',
+    topic: 'Fruits & Healthy Nutrition',
+    tag: '🍎 Fruit Discovery',
+    question: 'Which of these is packed with Vitamin C and grows on trees in sunny groves?',
+    options: [
+      {
+        id: 'opt-orange',
+        value: 'Orange 🍊',
+        sublabel: 'Juicy, sweet & full of Vitamin C',
+        isCorrect: true,
+        graphic: `
+          <svg viewBox="0 0 80 80" width="60" height="60">
+            <circle cx="40" cy="40" r="30" fill="#FEF8E7" stroke="#F4C95D" stroke-width="2.5"/>
+            <circle cx="40" cy="40" r="22" fill="#F4C95D" opacity="0.85"/>
+            <path d="M 40 12 Q 46 8 50 12" stroke="#4FA6A0" stroke-width="3" fill="none"/>
+          </svg>
+        `
+      },
+      {
+        id: 'opt-cookie',
+        value: 'Cookie 🍪',
+        sublabel: 'A baked sweet snack (not a fruit)',
+        isCorrect: false,
+        graphic: `
+          <svg viewBox="0 0 80 80" width="60" height="60">
+            <circle cx="40" cy="40" r="28" fill="#FDF1EE" stroke="#E98B73" stroke-width="2.5"/>
+            <circle cx="32" cy="34" r="3" fill="#D46F55"/>
+            <circle cx="46" cy="38" r="3" fill="#D46F55"/>
+            <circle cx="38" cy="48" r="3" fill="#D46F55"/>
+          </svg>
+        `
+      }
+    ],
+    feedbackCorrect: {
+      title: 'Super Job! Oranges are Citrus Superstars! 🍊',
+      explanation: 'Oranges are full of Vitamin C to keep your immune system strong, and they grow on sweet orange trees!'
+    },
+    feedbackIncorrect: {
+      title: 'Almost! Cookies are tasty treats, but not fruits!',
+      explanation: 'Fruits grow on plants and trees from flowers! Oranges are the citrus fruit packed with natural vitamins.'
+    },
+    nextConcept: 'Identifying Berries vs Citrus'
+  },
+  {
+    id: 'adjectives',
+    topic: 'Grammar & Comparisons',
+    tag: '📏 Degrees of Comparison',
+    question: 'When comparing THREE pencils of different lengths, the smallest one is the:',
+    options: [
+      {
+        id: 'opt-shortest',
+        value: 'Shortest 📏',
+        sublabel: 'Superlative (-est) for 3 or more items',
+        isCorrect: true,
+        graphic: `
+          <svg viewBox="0 0 80 80" width="60" height="60">
+            <rect x="25" y="32" width="30" height="16" rx="4" fill="#EBF6F5" stroke="#4FA6A0" stroke-width="2.5"/>
+            <text x="40" y="44" fill="#3D8883" font-size="12" font-weight="bold" text-anchor="middle">-EST</text>
+          </svg>
+        `
+      },
+      {
+        id: 'opt-shorter',
+        value: 'Shorter ✏️',
+        sublabel: 'Comparative (-er) for only TWO items',
+        isCorrect: false,
+        graphic: `
+          <svg viewBox="0 0 80 80" width="60" height="60">
+            <rect x="18" y="32" width="44" height="16" rx="4" fill="#FDF1EE" stroke="#E98B73" stroke-width="2.5"/>
+            <text x="40" y="44" fill="#D46F55" font-size="12" font-weight="bold" text-anchor="middle">-ER</text>
+          </svg>
+        `
+      }
+    ],
+    feedbackCorrect: {
+      title: 'Bingo! -EST is for the most extreme of 3+ items! 🌟',
+      explanation: 'When comparing 2 items we use -ER (shorter), but when comparing 3 or more, we crown the winner with -EST (shortest)!'
+    },
+    feedbackIncorrect: {
+      title: 'Close! -ER is only for comparing 2 items.',
+      explanation: 'Remember the rule: Short (1 item) ➔ Shorter (2 items) ➔ Shortest (3 or more items)!'
+    },
+    nextConcept: 'Irregular Adjectives (Good ➔ Better ➔ Best)'
+  },
+  {
     id: 'fractions',
     topic: 'Fractions & Proportions',
-    question: 'Which fraction represents the larger amount?',
+    tag: '📐 Math Logic',
+    question: 'Which fraction represents the larger amount of a whole pizza?',
     options: [
       {
         id: 'opt-half',
         value: '1/2',
-        sublabel: 'One of two equal parts',
+        sublabel: 'One of two equal parts (Half)',
         isCorrect: true,
         graphic: `
           <svg viewBox="0 0 80 80" width="60" height="60">
@@ -24,7 +110,7 @@ export const quizQuestions = [
       {
         id: 'opt-quarter',
         value: '1/4',
-        sublabel: 'One of four equal parts',
+        sublabel: 'One of four equal parts (Quarter)',
         isCorrect: false,
         graphic: `
           <svg viewBox="0 0 80 80" width="60" height="60">
@@ -35,7 +121,7 @@ export const quizQuestions = [
       }
     ],
     feedbackCorrect: {
-      title: 'Nice! You understood the idea.',
+      title: 'Nice! You understood the idea. 🍕',
       explanation: 'When you divide a whole into 2 parts (1/2), each piece is twice as large as when you divide it into 4 parts (1/4).'
     },
     feedbackIncorrect: {
@@ -47,12 +133,13 @@ export const quizQuestions = [
   {
     id: 'angles',
     topic: 'Geometry & Angles',
+    tag: '📐 Shape Geometry',
     question: 'An angle measuring 45° is known as:',
     options: [
       {
         id: 'opt-acute',
-        value: 'Acute',
-        sublabel: 'Less than 90° (Sharp)',
+        value: 'Acute Angle',
+        sublabel: 'Less than 90° (Sharp & compact)',
         isCorrect: true,
         graphic: `
           <svg viewBox="0 0 80 80" width="60" height="60">
@@ -63,8 +150,8 @@ export const quizQuestions = [
       },
       {
         id: 'opt-obtuse',
-        value: 'Obtuse',
-        sublabel: 'Greater than 90° (Wide)',
+        value: 'Obtuse Angle',
+        sublabel: 'Greater than 90° (Wide opening)',
         isCorrect: false,
         graphic: `
           <svg viewBox="0 0 80 80" width="60" height="60">
@@ -75,7 +162,7 @@ export const quizQuestions = [
       }
     ],
     feedbackCorrect: {
-      title: 'Spot on! Acute angles are sharp.',
+      title: 'Spot on! Acute angles are sharp. 📐',
       explanation: 'Any angle between 0° and 90° is an acute angle. A right angle is exactly 90°.'
     },
     feedbackIncorrect: {
@@ -157,6 +244,28 @@ export function initQuizEngine() {
       }
     }
   }
+
+  // Topic tabs switcher
+  const topicTabs = document.querySelectorAll('.quiz-topic-tab');
+  topicTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const idx = parseInt(tab.dataset.qIdx || '0', 10);
+      renderQuestion(idx);
+    });
+  });
+
+  function updateActiveTab(index) {
+    topicTabs.forEach((tab, i) => {
+      tab.classList.toggle('active', i === index);
+    });
+  }
+
+  // Update renderQuestion to sync tabs
+  const originalRender = renderQuestion;
+  renderQuestion = function(index) {
+    originalRender(index);
+    updateActiveTab(index);
+  };
 
   // Next / Reset button
   resetBtn?.addEventListener('click', () => {

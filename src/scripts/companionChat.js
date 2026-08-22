@@ -4,6 +4,20 @@
  */
 
 export const promptResponses = {
+  'fruits': {
+    studentText: 'Why are fruits so colorful and sweet?',
+    companionText: 'Nature is super clever! 🍎 Fruits have vibrant colors like bright red strawberries and sunny yellow bananas so birds and friendly animals notice them. The natural sweetness comes from gentle fruit sugars (fructose) packed with energy and vitamins for growing bodies!',
+    hasVisual: true,
+    visualIcon: '🍓',
+    visualDesc: '<strong>Nature Power:</strong> Bright colors = Vitamins + Minerals + Fiber!'
+  },
+  'adjectives': {
+    studentText: 'How do I know when to use -er vs -est?',
+    companionText: 'Here is the easy rule! 📏 Compare <strong>2 things</strong>? Use <strong>-ER</strong>: <em>"My pencil is short<strong>er</strong> than yours."</em> Compare <strong>3 or more</strong>? Use <strong>-EST</strong>: <em>"This is the short<strong>est</strong> pencil in the whole class!"</em>',
+    hasVisual: true,
+    visualIcon: '✏️',
+    visualDesc: '<strong>Comparison Formula:</strong> 2 items = -ER | 3+ items = -EST!'
+  },
   'pizza': {
     studentText: 'Can you explain fractions with a pizza?',
     companionText: 'Imagine a warm cheesy pizza fresh out of the oven! 🍕 If you share it with one best friend, you cut it down the center into 2 equal slices. You get 1 out of 2 pieces — that is <strong>1/2</strong>! If two more friends join, you cut it into 4 slices. You now get 1 out of 4 — that is <strong>1/4</strong>.',
@@ -17,20 +31,6 @@ export const promptResponses = {
     hasVisual: true,
     visualIcon: '🍫',
     visualDesc: '<strong>Chocolate rule:</strong> Half the bar (4 blocks) > Quarter the bar (2 blocks).'
-  },
-  'example': {
-    studentText: 'Give me a real-life example.',
-    companionText: 'Look at a clock face ⏰! When 30 minutes pass, the minute hand has traveled <strong>1/2</strong> around the circle (half past). When only 15 minutes pass, it has traveled <strong>1/4</strong> of the circle (quarter past). Half an hour is twice as long as a quarter hour!',
-    hasVisual: true,
-    visualIcon: '⏰',
-    visualDesc: '<strong>Clock rule:</strong> 30 min (1/2 hour) is longer than 15 min (1/4 hour).'
-  },
-  'easier': {
-    studentText: 'Can we make it even easier?',
-    companionText: 'Totally! Just remember this magical rule: <strong>The bottom number (Denominator)</strong> tells you how many pieces to cut something into. The more pieces you cut, the smaller each piece has to be!',
-    hasVisual: true,
-    visualIcon: '✂️',
-    visualDesc: '<strong>Easy rule:</strong> More cuts = smaller slices.'
   },
   'challenge': {
     studentText: 'Can you challenge me with a puzzle?',
