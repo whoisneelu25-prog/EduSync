@@ -26,18 +26,24 @@ export const quicksData = [
     customBlobUrl: null
   },
   {
-    id: 'gravity',
-    title: 'Why Do Objects Fall?',
-    category: 'Physics & Space',
+    id: 'adjectives',
+    title: 'Short, Shorter, Shortest!',
+    category: 'Grammar & Comparisons',
     duration: '28s',
-    videoSources: ['/videos/2.mp4', '/videos/quick2.mp4', '/videos/quick-gravity.mp4'],
-    author: 'Coach Leo',
-    caption: 'Mass bends the fabric around it. Earth pulls everything toward its center with 9.8 m/s²!',
-    likes: 980,
+    videoSources: [
+      '/videos/YTDown.com_Shorts_Short-Shorter-Shortest-ER-_-EST-Adjectiv_Media_r2PljdVPixo_002_720p.mp4',
+      '/videos/2.mp4',
+      '/videos/quick2.mp4',
+      '/videos/quick-adjectives.mp4',
+      '/videos/quick-gravity.mp4'
+    ],
+    author: 'Coach Leo & SyncBuddy',
+    caption: 'Learn degrees of comparison with fun visuals: -er vs -est adjectives made simple!',
+    likes: 2120,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'gravity',
-    visualType: 'gravity',
+    quizTarget: 'adjectives',
+    visualType: 'adjectives',
     customBlobUrl: null
   },
   {
