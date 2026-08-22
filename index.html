@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="/src/styles/components/ecosystem.css">
   <link rel="stylesheet" href="/src/styles/components/topics.css">
   <link rel="stylesheet" href="/src/styles/components/footer.css">
+  <link rel="stylesheet" href="/src/styles/components/auth.css">
   <link rel="stylesheet" href="/src/styles/animations.css">
 </head>
 <body>
@@ -53,6 +54,7 @@
       </nav>
 
       <div class="nav-actions">
+        <div class="nav-auth-container"></div>
         <a href="#quicks" class="btn btn-primary nav-cta btn-desktop">Start Learning</a>
         <button class="mobile-toggle" aria-label="Open Navigation Menu" id="mobileMenuBtn">
           <span class="hamburger-line"></span>
@@ -391,6 +393,32 @@
             <div class="quick-card-bottom">
               <h3 class="quick-card-title">How Plants Eat Sunlight</h3>
               <p class="quick-card-desc">Chlorophyll magic, water conversion, and oxygen release.</p>
+              <div class="quick-card-action">
+                <span>Watch Quick</span>
+                <span class="arrow">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick 5: Space Leap -->
+          <div class="quick-reel-card" data-reel-id="space">
+            <div class="quick-card-bg" style="background: radial-gradient(circle, #192d42 0%, #0d1b2a 100%);"></div>
+            <div class="quick-card-gradient"></div>
+
+            <div class="quick-card-top">
+              <span class="quick-badge-time">⚡ 29s</span>
+              <span class="quick-topic-tag">Physics</span>
+            </div>
+
+            <div class="quick-visual-graphic">
+              <span style="font-size: 3.5rem;">🌕</span>
+            </div>
+
+            <div class="quick-play-overlay">▶</div>
+
+            <div class="quick-card-bottom">
+              <h3 class="quick-card-title">Gravity & The Moon Leap</h3>
+              <p class="quick-card-desc">Why astronauts can leap 6 times higher on the Moon!</p>
               <div class="quick-card-action">
                 <span>Watch Quick</span>
                 <span class="arrow">→</span>
@@ -897,8 +925,9 @@
 
     <!-- Mobile Viewport Frame -->
     <div class="reels-viewport">
-      <!-- Stories/Reels Segmented Top Progress Bars -->
+      <!-- Stories/Reels Segmented Top Progress Bars (5 Segments) -->
       <div class="reels-progress-bars">
+        <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
         <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
         <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
         <div class="reel-progress-seg"><div class="reel-progress-fill"></div></div>
@@ -963,6 +992,73 @@
           <span>Test Understanding</span>
           <span>→</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Authentication Modal -->
+  <div class="auth-modal" id="googleAuthModal" role="dialog" aria-modal="true" aria-label="Google Authentication">
+    <div class="auth-modal-dialog">
+      <div class="auth-modal-header">
+        <button class="auth-close-btn" aria-label="Close modal">✕</button>
+        <div class="auth-brand-logo">
+          <span>🎓</span> EduSync Profile
+        </div>
+        <h3>Sign In to EduSync</h3>
+        <p>Sync your quiz streaks, bookmarked reels, and companion chats.</p>
+      </div>
+
+      <div class="auth-modal-body">
+        <!-- 1. Official Google Continue Button -->
+        <button class="btn-google-primary" id="googleContinueBtn" type="button">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+
+        <div class="auth-separator">or select quick demo profile</div>
+
+        <!-- 2. Quick Demo Profiles -->
+        <div class="quick-accounts-list">
+          <div class="quick-account-card">
+            <div class="quick-account-avatar">👦</div>
+            <div class="quick-account-info">
+              <strong>Alex Rivera</strong>
+              <span>alex.rivera@gmail.com • Student (Grade 4)</span>
+            </div>
+            <div class="quick-account-arrow">→</div>
+          </div>
+
+          <div class="quick-account-card">
+            <div class="quick-account-avatar">👧</div>
+            <div class="quick-account-info">
+              <strong>Maya Chen</strong>
+              <span>maya.chen@gmail.com • Student (Grade 3)</span>
+            </div>
+            <div class="quick-account-arrow">→</div>
+          </div>
+
+          <div class="quick-account-card">
+            <div class="quick-account-avatar">👩‍💼</div>
+            <div class="quick-account-info">
+              <strong>Sarah Rivera</strong>
+              <span>sarah.rivera.parent@gmail.com • Parent Portal</span>
+            </div>
+            <div class="quick-account-arrow">→</div>
+          </div>
+        </div>
+
+        <div class="auth-separator">or custom google email</div>
+
+        <!-- 3. Custom Google Email -->
+        <div class="custom-email-row">
+          <input type="email" id="customGoogleEmail" class="custom-email-input" placeholder="your.name@gmail.com">
+          <button type="button" id="customGoogleSubmitBtn" class="custom-email-btn">Sign In</button>
+        </div>
       </div>
     </div>
   </div>

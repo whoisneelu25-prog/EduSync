@@ -11,15 +11,14 @@ export const quicksData = [
       '/videos/YTDown.com_Shorts_Fun-Way-to-Learn-Fruits-Kids-Learning-fu_Media_tk3fCn3bG2E_002_720p.mp4',
       '/videos/1.mp4',
       '/videos/quick1.mp4',
-      '/videos/quick-fruits.mp4',
-      '/videos/quick-fractions.mp4'
+      '/videos/quick-fruits.mp4'
     ],
     author: 'Ms. Lily & SyncBuddy',
     caption: 'Discover delicious, healthy fruits with fun rhymes and colorful shapes!',
     likes: 1890,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'fruits',
+    quizTarget: 'fruits-vitc',
     visualType: 'fruits',
     customBlobUrl: null
   },
@@ -32,30 +31,34 @@ export const quicksData = [
       '/videos/YTDown.com_Shorts_Short-Shorter-Shortest-ER-_-EST-Adjectiv_Media_r2PljdVPixo_002_720p.mp4',
       '/videos/2.mp4',
       '/videos/quick2.mp4',
-      '/videos/quick-adjectives.mp4',
-      '/videos/quick-gravity.mp4'
+      '/videos/quick-adjectives.mp4'
     ],
     author: 'Coach Leo & SyncBuddy',
     caption: 'Learn degrees of comparison with fun visuals: -er vs -est adjectives made simple!',
     likes: 2120,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'adjectives',
+    quizTarget: 'lang-01',
     visualType: 'adjectives',
     customBlobUrl: null
   },
   {
     id: 'angles',
     title: 'Acute vs Right Angles',
-    category: 'Geometry',
+    category: 'Geometry & Math',
     duration: '25s',
-    videoSources: ['/videos/3.mp4', '/videos/quick3.mp4', '/videos/quick-angles.mp4'],
-    author: 'SyncBuddy AI',
+    videoSources: [
+      '/videos/3.mp4',
+      '/videos/WhatsApp Video 2026-08-23 at 05.07.13.mp4',
+      '/videos/quick3.mp4',
+      '/videos/quick-angles.mp4'
+    ],
+    author: 'Teacher Maya & SyncBuddy',
     caption: 'Less than 90° is Acute (sharp & cute!). Exactly 90° makes a perfect corner square.',
-    likes: 830,
+    likes: 1340,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'angles',
+    quizTarget: 'math-03',
     visualType: 'angles',
     customBlobUrl: null
   },
@@ -64,14 +67,39 @@ export const quicksData = [
     title: 'How Plants Eat Sunlight',
     category: 'Nature & Biology',
     duration: '32s',
-    videoSources: ['/videos/4.mp4', '/videos/quick4.mp4', '/videos/quick-photosynthesis.mp4'],
-    author: 'Dr. Sarah',
+    videoSources: [
+      '/videos/4.mp4',
+      '/videos/WhatsApp Video 2026-08-23 at 05.07.13 (1).mp4',
+      '/videos/quick4.mp4',
+      '/videos/quick-photosynthesis.mp4'
+    ],
+    author: 'Dr. Sarah & SyncBuddy',
     caption: 'Chlorophyll traps sunlight photons, mixes with water and CO₂ to bake glucose sugar!',
-    likes: 1450,
+    likes: 1650,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'photosynthesis',
+    quizTarget: 'nat-01',
     visualType: 'photosynthesis',
+    customBlobUrl: null
+  },
+  {
+    id: 'space',
+    title: 'Gravity & The Moon Leap',
+    category: 'Physics & Space',
+    duration: '29s',
+    videoSources: [
+      '/videos/5.mp4',
+      '/videos/WhatsApp Video 2026-08-23 at 05.08.19.mp4',
+      '/videos/quick5.mp4',
+      '/videos/quick-gravity.mp4'
+    ],
+    author: 'Coach Leo & SyncBuddy',
+    caption: '1/6th Moon gravity lets astronauts bounce 6 times higher than Earth!',
+    likes: 2480,
+    isLiked: false,
+    isSaved: false,
+    quizTarget: 'phys-01',
+    visualType: 'gravity',
     customBlobUrl: null
   }
 ];

@@ -6,6 +6,7 @@ import { initQuicksPlayer } from './quicksPlayer.js';
 import { initQuizEngine } from './quizEngine.js';
 import { initCompanionChat } from './companionChat.js';
 import { initStoryToggle } from './storyToggle.js';
+import { initAuth } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize all interactive modules
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuizEngine();
   initCompanionChat();
   initStoryToggle();
+  initAuth();
 
   // Scroll reveal observer for subtle entrance animations
   const revealElements = document.querySelectorAll('.reveal-on-scroll');
