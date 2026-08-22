@@ -1,6 +1,5 @@
-/**
- * EduSync - Main Application Initializer
- */
+// Main App Entry
+
 
 import { initNavbar } from './navbar.js';
 import { initQuicksPlayer } from './quicksPlayer.js';

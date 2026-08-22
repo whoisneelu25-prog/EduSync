@@ -1,7 +1,5 @@
-/**
- * EduSync - Story Section Adaptive Pathway Switcher
- * Interactive demonstration of Student A vs Student B adaptive pathways
- */
+// Adaptive pathway switcher
+
 
 export function initStoryToggle() {
   const toggleBtns = document.querySelectorAll('.story-toggle-btn');

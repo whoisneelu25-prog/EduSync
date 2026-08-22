@@ -1,7 +1,5 @@
-/**
- * EduSync - Personalized Learning Companion Chatbot
- * Child-friendly, warm pedagogical interactive companion
- */
+// SyncBuddy Learning Companion Chat Controller
+
 
 export const promptResponses = {
   'fruits': {

@@ -1,7 +1,5 @@
-/**
- * EduSync - Quicks (Reels-style Micro-Learning Player)
- * Supports swipeable/scrollable vertical reels with direct drop-in video support & rich fallbacks
- */
+// Quicks Reels Player Controller
+
 
 export const quicksData = [
   {

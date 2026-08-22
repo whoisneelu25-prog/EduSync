@@ -1,7 +1,5 @@
-/**
- * EduSync - Understanding-Based Quiz Engine
- * Diagnoses conceptual gaps and visually adapts learning
- */
+// Adaptive Quiz Engine
+
 
 export const quizQuestions = [
   {

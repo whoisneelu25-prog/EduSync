@@ -1,6 +1,5 @@
-/**
- * EduSync - Navbar & Navigation Controller
- */
+// Navigation bar interactions & scroll tracking
+
 
 export function initNavbar() {
   const header = document.querySelector('.site-header');
