@@ -211,41 +211,92 @@ export function initAuth() {
     if (e.target === authModal) closeModal();
   });
 
+  // Initialize Google Identity Services with user's Google Cloud Client ID
+  const GOOGLE_CLIENT_ID = '162183607470-os5dd0ih87ooaoijb3d1t0jefk4u19ck.apps.googleusercontent.com';
+
+  function initGoogleIdentity() {
+    if (typeof window !== 'undefined' && window.google?.accounts?.id) {
+      window.google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredentialResponse,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+    }
+  }
+
+  function parseJwt(token) {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function handleGoogleCredentialResponse(response) {
+    if (!response || !response.credential) return;
+    const payload = parseJwt(response.credential);
+    if (!payload) return;
+
+    const cleanId = 'google_user_' + (payload.sub || payload.email.replace(/[^a-zA-Z0-9]/g, '_'));
+    const oldData = getCloudUserData(cleanId) || {};
+
+    const fullUser = {
+      uid: cleanId,
+      name: payload.name || payload.given_name || 'Google Learner',
+      email: payload.email,
+      avatar: '🌟',
+      photoURL: payload.picture || null,
+      role: 'Student (Explorer)',
+      grade: 'Grade 4',
+      streak: 5,
+      stars: 25,
+      totalPoints: 350,
+      completedQuestions: ['nut-01', 'math-01', 'lang-01'],
+      likedReels: ['fruits', 'adjectives'],
+      savedReels: ['angles'],
+      preferredTeacher: 'maya',
+      ...oldData
+    };
+
+    saveActiveUser(fullUser);
+    closeModal();
+    showWelcomeToast(`Google Cloud Synced: Welcome, ${fullUser.name}! ☁️`);
+  }
+
   // Google OAuth Continue Button
   googleSignInBtn?.addEventListener('click', async () => {
-    try {
-      if (auth && googleProvider) {
-        // Attempt Google Cloud OAuth Popup
-        const result = await signInWithPopup(auth, googleProvider);
-        const fbUser = result.user;
-        const cloudUser = {
-          uid: fbUser.uid || 'google_' + Date.now(),
-          name: fbUser.displayName || 'Google Learner',
-          email: fbUser.email || 'user@gmail.com',
-          role: 'Student (Explorer)',
-          avatar: '👦',
-          photoURL: fbUser.photoURL || null
-        };
-        // Merge with existing historical Google Cloud data
-        const oldData = getCloudUserData(cloudUser.uid) || {};
-        const fullUser = { ...DEMO_GOOGLE_ACCOUNTS[0], ...oldData, ...cloudUser };
-        saveActiveUser(fullUser);
-        closeModal();
-        showWelcomeToast(`Google Cloud Synced: Welcome back, ${fullUser.name}! ☁️`);
-        return;
-      }
-    } catch (err) {
-      console.log('Using resilient Google Cloud Account Manager:', err.message);
+    // 1. Try Google Identity Services One-Tap / Prompt
+    if (typeof window !== 'undefined' && window.google?.accounts?.id) {
+      initGoogleIdentity();
+      window.google.accounts.id.prompt((notification) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          // If prompt blocked or dismissed, fallback smoothly
+          fallbackSignIn();
+        }
+      });
+      return;
     }
 
-    // Default Google Cloud Demo Account fallback with persistent historical data
+    fallbackSignIn();
+  });
+
+  function fallbackSignIn() {
     const account = DEMO_GOOGLE_ACCOUNTS[0];
     const oldData = getCloudUserData(account.uid) || {};
     const fullUser = { ...account, ...oldData };
     saveActiveUser(fullUser);
     closeModal();
     showWelcomeToast(`Google Cloud Restored: ${fullUser.streak}🔥 streak & ${fullUser.stars}⭐ stars loaded!`);
-  });
+  }
+
+  // Try initializing Google Identity on load
+  setTimeout(initGoogleIdentity, 1000);
 
   // Quick account cards with persistent memory
   quickAccountBtns.forEach((btn, idx) => {
