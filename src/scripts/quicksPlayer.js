@@ -352,6 +352,14 @@ export function initQuicksPlayer() {
       reel.likes += reel.isLiked ? 1 : -1;
       likeBtn.classList.toggle('liked', reel.isLiked);
       if (likeCount) likeCount.textContent = reel.likes.toLocaleString();
+
+      // Sync to Google Cloud store
+      window.dispatchEvent(new CustomEvent('edusync_update_progress', {
+        detail: {
+          addPoints: reel.isLiked ? 25 : 0,
+          likedReelId: reel.id
+        }
+      }));
     }
   });
 
@@ -361,6 +369,13 @@ export function initQuicksPlayer() {
     if (reel) {
       reel.isSaved = !reel.isSaved;
       saveBtn.classList.toggle('saved', reel.isSaved);
+
+      // Sync to Google Cloud store
+      window.dispatchEvent(new CustomEvent('edusync_update_progress', {
+        detail: {
+          savedReelId: reel.id
+        }
+      }));
     }
   });
 

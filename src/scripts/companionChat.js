@@ -341,6 +341,11 @@ export function initCompanionChat() {
       } else {
         addTeacherMessage(`That is a fantastic question! 🌟 Let's explore how this concept connects to the world around us. What part would you like to dive into first?`);
       }
+
+      // Sync chat curiosity point to Google Cloud
+      window.dispatchEvent(new CustomEvent('edusync_update_progress', {
+        detail: { addPoints: 15, preferredTeacher: activePersona }
+      }));
     }, 700);
   }
 
@@ -358,6 +363,11 @@ export function initCompanionChat() {
       showTypingIndicator(false);
       isTyping = false;
       generateAIResponse(text);
+
+      // Sync user question to Google Cloud
+      window.dispatchEvent(new CustomEvent('edusync_update_progress', {
+        detail: { addPoints: 20, preferredTeacher: activePersona }
+      }));
     }, 800);
   }
 
