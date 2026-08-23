@@ -1,4 +1,5 @@
 // SyncBuddy & AI Teacher Companion Chat Controller
+import { askGeminiTeacher, getStoredGeminiKey, saveStoredGeminiKey } from './geminiAI.js';
 
 export const teacherPersonas = {
   'maya': {
@@ -349,7 +350,7 @@ export function initCompanionChat() {
     }, 700);
   }
 
-  function handleUserSubmit() {
+  async function handleUserSubmit() {
     if (!chatInput || isTyping) return;
     const text = chatInput.value.trim();
     if (!text) return;
@@ -359,16 +360,31 @@ export function initCompanionChat() {
     isTyping = true;
     showTypingIndicator(true);
 
-    setTimeout(() => {
+    try {
+      // 1. Try Google Gemini Flash AI
+      const geminiReply = await askGeminiTeacher(text, activePersona);
       showTypingIndicator(false);
       isTyping = false;
-      generateAIResponse(text);
 
-      // Sync user question to Google Cloud
+      if (geminiReply) {
+        addTeacherMessage(geminiReply, {
+          icon: '⚡',
+          desc: `<strong>Google Gemini 1.5 Flash AI:</strong> Real-time child-friendly pedagogical response.`
+        });
+      } else {
+        // 2. Fallback to rich built-in pedagogical knowledge engine
+        generateAIResponse(text);
+      }
+
+      // Sync user question points to Google Cloud
       window.dispatchEvent(new CustomEvent('edusync_update_progress', {
         detail: { addPoints: 20, preferredTeacher: activePersona }
       }));
-    }, 800);
+    } catch (err) {
+      showTypingIndicator(false);
+      isTyping = false;
+      generateAIResponse(text);
+    }
   }
 
   function generateAIResponse(query) {

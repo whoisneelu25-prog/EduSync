@@ -2112,12 +2112,53 @@ export function initQuizEngine() {
     }
   }
 
+  // Audio synthesis helper for tactile learning feedback
+  function playAudioChime(isCorrect) {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+
+      if (isCorrect) {
+        // Joyful 3-note harmonic chime (C5 -> E5 -> G5)
+        const notes = [523.25, 659.25, 783.99];
+        notes.forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.12, ctx.currentTime + i * 0.1);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.1 + 0.3);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.1);
+          osc.stop(ctx.currentTime + i * 0.1 + 0.3);
+        });
+      } else {
+        // Soft, gentle tone
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.25);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      }
+    } catch {}
+  }
+
   function handleOptionClick(selectedBtn, isCorrect, question) {
     const allBtns = optionsContainer?.querySelectorAll('.quiz-interactive-opt');
     allBtns?.forEach(b => {
       b.classList.remove('state-correct', 'state-incorrect');
       b.style.pointerEvents = 'none';
     });
+
+    playAudioChime(isCorrect);
 
     if (isCorrect) {
       currentStreak++;
