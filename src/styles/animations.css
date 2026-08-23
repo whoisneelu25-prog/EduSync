@@ -1,56 +1,205 @@
 /* ==========================================================================
-   ANIMATIONS & SCROLL REVEAL UTILITIES
-   Subtle, intentional, premium transitions (Zero neon, Zero chaotic effects)
+   ANIMATIONS & MICRO-INTERACTIONS (WORLD-CLASS EDTECH SUITE)
+   Fluid, tactile, physics-based transitions adhering to brand aesthetics
    ========================================================================== */
 
-/* Scroll Reveal Elements */
+/* 1. Scroll Reveal Engine */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(28px) scale(0.98);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .reveal-on-scroll.is-revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Stagger Delays */
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
+.delay-1 { transition-delay: 0.08s; }
+.delay-2 { transition-delay: 0.16s; }
+.delay-3 { transition-delay: 0.24s; }
+.delay-4 { transition-delay: 0.32s; }
+.delay-5 { transition-delay: 0.40s; }
 
-/* Micro-interaction Hover Utilities */
+/* 2. Global Tactile Click Feedback */
+button:active,
+.btn:active,
+.quiz-interactive-opt:active,
+.quick-reel-card:active,
+.kidcircle-rx-btn:active,
+.teacher-persona-btn:active,
+.chat-subject-tab:active,
+.topic-card:active {
+  transform: scale(0.96) !important;
+  transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+/* 3. Floating Ambient Animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes floatReverse {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-1deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(244, 201, 93, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(244, 201, 93, 0.6);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes streakFlame {
+  0%, 100% {
+    transform: scale(1) rotate(-3deg);
+  }
+  50% {
+    transform: scale(1.15) rotate(4deg);
+  }
+}
+
+@keyframes starTwinkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 2px rgba(244, 201, 93, 0.6));
+  }
+  50% {
+    transform: scale(1.25) rotate(12deg);
+    filter: drop-shadow(0 0 8px rgba(244, 201, 93, 0.9));
+  }
+}
+
+/* 4. Button Sheen & Shimmer */
+.btn:hover::after {
+  left: 100%;
+}
+
+.btn-yellow:hover {
+  box-shadow: 0 10px 30px rgba(244, 201, 93, 0.45), 0 2px 8px rgba(23, 50, 77, 0.1);
+  transform: translateY(-3px);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 10px 30px rgba(23, 50, 77, 0.28);
+  transform: translateY(-3px);
+}
+
+.btn-teal:hover {
+  box-shadow: 0 10px 30px rgba(79, 166, 160, 0.4);
+  transform: translateY(-3px);
+}
+
+/* 5. Modal Transitions */
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chatSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-bubble-row {
+  animation: chatSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 6. Confetti Bursts */
+.confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* 7. Hover Card Lift Utility */
 .hover-lift {
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform var(--transition-spring), box-shadow var(--transition-spring), border-color var(--transition-fast);
 }
 
 .hover-lift:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
 }
 
-/* Subtle Pulsing Status */
+/* 8. Pulsing Status Indicator */
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: #22C55E;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #22C55E;
+  animation: subtlePulse 2s infinite ease-in-out;
+}
+
 @keyframes subtlePulse {
   0%, 100% {
     opacity: 1;
     transform: scale(1);
   }
   50% {
-    opacity: 0.75;
-    transform: scale(0.96);
+    opacity: 0.6;
+    transform: scale(1.3);
   }
 }
 
-/* Shimmer Light */
-@keyframes softShimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+/* 9. Glowing Border Sweep */
+.glow-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-on-hover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(79, 166, 160, 0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.glow-on-hover:hover::before {
+  opacity: 1;
 }
