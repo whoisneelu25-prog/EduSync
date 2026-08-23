@@ -15,11 +15,33 @@
   gap: 48px;
 }
 
-/* Quicks Showcase Grid */
+/* Quicks Showcase Grid (Uniform 5-Card Layout) */
 .quicks-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 1200px) {
+  .quicks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .quicks-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 14px;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .quick-reel-card {
+    min-width: 240px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
 }
 
 .quick-reel-card {
@@ -28,14 +50,14 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   background: var(--color-navy);
-  border: 2px solid transparent;
+  border: 2px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   transition: all var(--transition-spring);
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px 16px;
+  padding: 18px 14px;
 }
 
 .quick-reel-card:hover {

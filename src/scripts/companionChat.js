@@ -9,26 +9,41 @@ import {
 } from './geminiAI.js';
 
 export const teacherPersonas = {
-  'maya': {
-    name: 'Teacher Maya',
+  'priya': {
+    name: 'Teacher Priya',
     title: 'Primary Educator & Storyteller',
     avatar: '🧑‍🏫',
     tag: 'Visual & Socratic Guide',
-    greeting: 'Hello there, curious learner! 🌟 I’m Teacher Maya. What wondrous concept would you like to explore today?'
+    greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. What wondrous concept would you like to explore today?'
   },
-  'leo': {
-    name: 'Coach Leo',
+  'rohan': {
+    name: 'Coach Rohan',
     title: 'STEM & Science Explorer',
     avatar: '🚀',
     tag: 'Hands-on Experiments',
-    greeting: 'Hey adventurer! ⚡ Coach Leo here! Ready to run experiments, test gravity, and unlock science secrets?'
+    greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock science secrets?'
   },
   'syncbuddy': {
     name: 'SyncBuddy AI',
     title: 'Adaptive Learning Companion',
     avatar: '✨',
     tag: 'Friendly Peer Tutor',
-    greeting: 'Hi friend! ✨ I’m SyncBuddy. Stuck on a tricky question or want a fun analogy? Ask me anything!'
+    greeting: 'Hi dost! ✨ I’m SyncBuddy. Stuck on a tricky question or want a fun analogy? Ask me anything!'
+  },
+  // Backward compatible aliases
+  'maya': {
+    name: 'Teacher Priya',
+    title: 'Primary Educator & Storyteller',
+    avatar: '🧑‍🏫',
+    tag: 'Visual & Socratic Guide',
+    greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. What wondrous concept would you like to explore today?'
+  },
+  'leo': {
+    name: 'Coach Rohan',
+    title: 'STEM & Science Explorer',
+    avatar: '🚀',
+    tag: 'Hands-on Experiments',
+    greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock science secrets?'
   }
 };
 
