@@ -9,14 +9,20 @@
   overflow: hidden;
 }
 
+.quicks-container {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
 /* Quicks Search & Filter Wrapper */
 .quicks-search-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   max-width: 680px;
-  margin: 0 auto;
+  margin: 0 auto 24px;
   width: 100%;
 }
 
@@ -27,7 +33,7 @@
   background: var(--color-white);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-full);
-  padding: 8px 18px;
+  padding: 10px 20px;
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
 }
@@ -83,6 +89,7 @@
   justify-content: center;
   gap: 8px;
   flex-wrap: wrap;
+  padding-top: 4px;
 }
 
 .chips-label {
@@ -96,7 +103,7 @@
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-full);
-  padding: 4px 12px;
+  padding: 5px 14px;
   font-family: var(--font-heading);
   font-size: 0.75rem;
   font-weight: 700;
@@ -134,6 +141,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 18px;
+  margin-top: 12px;
 }
 
 @media (max-width: 1200px) {
