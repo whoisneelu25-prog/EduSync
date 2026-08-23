@@ -2075,6 +2075,72 @@ export function initQuizEngine() {
     });
   }
 
+  const hideOptionsBtn = document.querySelector('#hideOptionsBtn');
+  const showHintBtn = document.querySelector('#showHintBtn');
+  const hintBanner = document.querySelector('#quizHintBanner');
+  const hintText = document.querySelector('#quizHintText');
+  const numberNavContainer = document.querySelector('#quizNumberNav');
+
+  function renderNumberNav() {
+    if (!numberNavContainer) return;
+    numberNavContainer.innerHTML = '';
+    const total = Math.min(filteredQuestions.length, 10);
+    for (let i = 0; i < total; i++) {
+      const pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = `quiz-nav-pill ${i === currentQuestionIndex ? 'active' : ''}`;
+      pill.textContent = i + 1;
+      pill.title = `Jump to Question ${i + 1}`;
+      pill.addEventListener('click', () => {
+        renderQuestion(i);
+      });
+      numberNavContainer.appendChild(pill);
+    }
+  }
+
+  function getEnrichedOptions(q) {
+    const letters = ['A', 'B', 'C', 'D'];
+    let opts = [...q.options];
+
+    // If question has only 2 options, add 2 smart distractors so user has 4 options to hide/choose
+    if (opts.length === 2) {
+      const themeDistractors = {
+        'nutrition': [
+          { id: 'dist-1', value: 'Soda Pop 🥤', sublabel: 'Carbonated drink with high refined syrup', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">🥤</span>' },
+          { id: 'dist-2', value: 'Sugar Candy 🍬', sublabel: 'Artificial sweetener without essential vitamins', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">🍬</span>' }
+        ],
+        'math': [
+          { id: 'dist-1', value: 'Straight 180° 📏', sublabel: 'A flat continuous line', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">📏</span>' },
+          { id: 'dist-2', value: 'Zero 0° ⭕', sublabel: 'No angle opening', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">⭕</span>' }
+        ],
+        'language': [
+          { id: 'dist-1', value: '-ing Action 🏃', sublabel: 'Present continuous tense', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">🏃</span>' },
+          { id: 'dist-2', value: '-ly Adverb 💨', sublabel: 'Describing how something is done', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">💨</span>' }
+        ],
+        'physics': [
+          { id: 'dist-1', value: 'Magnetic Repulsion 🧲', sublabel: 'Opposite poles pushing away', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">🧲</span>' },
+          { id: 'dist-2', value: 'Solar Wind ☀️', sublabel: 'Charged plasma stream from stars', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">☀️</span>' }
+        ],
+        'nature': [
+          { id: 'dist-1', value: 'Rock Minerals 🪨', sublabel: 'Non-living solid geological matter', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">🪨</span>' },
+          { id: 'dist-2', value: 'Plastic Foil 📦', sublabel: 'Synthetic human-made packaging', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">📦</span>' }
+        ],
+        'lifeskills': [
+          { id: 'dist-1', value: 'Share with Game Strangers 🎮', sublabel: 'Risky online disclosure', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">🎮</span>' },
+          { id: 'dist-2', value: 'Keep Screens on All Night 📱', sublabel: 'Disrupts natural sleep melatonin', isCorrect: false, graphic: '<span style="font-size: 2.2rem;">📱</span>' }
+        ]
+      };
+
+      const extra = themeDistractors[q.theme] || themeDistractors['nutrition'];
+      opts = [...opts, ...extra];
+    }
+
+    return opts.map((opt, idx) => ({
+      ...opt,
+      letter: letters[idx] || `${idx + 1}`
+    }));
+  }
+
   function renderQuestion(index) {
     if (filteredQuestions.length === 0) return;
     currentQuestionIndex = Math.max(0, Math.min(index, filteredQuestions.length - 1));
@@ -2086,21 +2152,34 @@ export function initQuizEngine() {
     if (questionNumText) questionNumText.textContent = `Question ${currentQuestionIndex + 1} of ${filteredQuestions.length}`;
     if (questionTitle) questionTitle.textContent = q.question;
 
-    // Reset feedback
+    // Reset feedback & hint
     if (feedbackBox) {
       feedbackBox.classList.remove('show', 'feedback-correct', 'feedback-incorrect');
     }
+    if (hintBanner) {
+      hintBanner.classList.remove('show');
+    }
+    if (hideOptionsBtn) {
+      hideOptionsBtn.classList.remove('active-lifeline');
+      hideOptionsBtn.innerHTML = '<span>🎭</span> 50:50 Hide Options';
+      hideOptionsBtn.disabled = false;
+    }
 
-    // Render interactive choices
+    renderNumberNav();
+
+    // Render interactive choices (4 options)
     if (optionsContainer) {
       optionsContainer.innerHTML = '';
-      q.options.forEach(opt => {
+      const enrichedOpts = getEnrichedOptions(q);
+
+      enrichedOpts.forEach(opt => {
         const btn = document.createElement('div');
         btn.className = 'quiz-interactive-opt';
         btn.dataset.id = opt.id;
         btn.dataset.correct = opt.isCorrect ? 'true' : 'false';
 
         btn.innerHTML = `
+          <div class="quiz-opt-letter">${opt.letter}</div>
           <div class="opt-fraction-graphic">${opt.graphic}</div>
           <div class="opt-value">${opt.value}</div>
           <div class="opt-sublabel">${opt.sublabel}</div>
@@ -2111,6 +2190,50 @@ export function initQuizEngine() {
       });
     }
   }
+
+  // 50:50 Lifeline - Hide 2 Wrong Options
+  hideOptionsBtn?.addEventListener('click', () => {
+    const wrongOptions = optionsContainer?.querySelectorAll('.quiz-interactive-opt[data-correct="false"]');
+    if (!wrongOptions || wrongOptions.length === 0) return;
+
+    let hiddenCount = 0;
+    wrongOptions.forEach(opt => {
+      if (hiddenCount < 2) {
+        opt.classList.add('state-hidden');
+        hiddenCount++;
+      }
+    });
+
+    hideOptionsBtn.classList.add('active-lifeline');
+    hideOptionsBtn.innerHTML = '<span>✨</span> 2 Options Hidden!';
+    hideOptionsBtn.disabled = true;
+
+    // Tactile sound effect
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.1, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+      }
+    } catch {}
+  });
+
+  // Clue / Hint Trigger
+  showHintBtn?.addEventListener('click', () => {
+    const q = filteredQuestions[currentQuestionIndex];
+    if (!q || !hintBanner || !hintText) return;
+    hintText.innerHTML = `<strong>Teacher Priya’s Clue:</strong> ${q.feedbackIncorrect?.explanation || 'Think about the natural patterns around us!'}`;
+    hintBanner.classList.toggle('show');
+  });
 
   // Audio synthesis helper for tactile learning feedback
   function playAudioChime(isCorrect) {

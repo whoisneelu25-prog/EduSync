@@ -483,12 +483,33 @@
               <!-- Dynamically rendered by quizEngine.js -->
             </div>
 
+            <!-- Quiz Lifelines & Question Jump Bar -->
+            <div class="quiz-helper-bar">
+              <div class="quiz-lifeline-group">
+                <button class="quiz-helper-btn hide-options-btn" id="hideOptionsBtn" type="button" title="Hide 2 wrong choices (50:50 Lifeline)">
+                  <span>🎭</span> 50:50 Hide Options
+                </button>
+                <button class="quiz-helper-btn show-hint-btn" id="showHintBtn" type="button" title="Get a hint from Teacher Priya">
+                  <span>💡</span> Clue
+                </button>
+              </div>
+              <div class="quiz-number-navigator" id="quizNumberNav">
+                <!-- 1..10 question pills dynamically rendered -->
+              </div>
+            </div>
+
+            <!-- Teacher Priya Clue Box -->
+            <div class="quiz-hint-banner" id="quizHintBanner">
+              <span style="font-size: 1.2rem;">💡</span>
+              <p id="quizHintText"><strong>Teacher Priya’s Clue:</strong> Think about what natural fruits grow on sunny trees with lots of citrus juice!</p>
+            </div>
+
             <div class="quiz-question-box">
               <div class="quiz-question-num">Question 1 of 18</div>
               <h3 class="quiz-question-title">Which of these is packed with Vitamin C and grows on trees?</h3>
             </div>
 
-            <!-- Interactive Choices -->
+            <!-- Interactive Choices (4 Dynamic Options) -->
             <div class="quiz-options-container">
               <!-- Dynamically populated by quizEngine.js -->
             </div>
