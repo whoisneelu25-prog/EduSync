@@ -9,6 +9,7 @@ import { initStoryToggle } from './storyToggle.js';
 import { initAuth } from './auth.js';
 import { initTopicsExplorer } from './topicsExplorer.js';
 import { initKidCircleSocial } from './kidCircleSocial.js';
+import { initFloatingEffects } from './floatingEffects.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize all interactive modules
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAuth();
   initTopicsExplorer();
   initKidCircleSocial();
+  initFloatingEffects();
 
   // Scroll reveal observer for subtle entrance animations
   const revealElements = document.querySelectorAll('.reveal-on-scroll');
