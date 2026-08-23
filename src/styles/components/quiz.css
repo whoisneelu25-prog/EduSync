@@ -1,5 +1,3 @@
-/* Feature 02: Adaptive Quiz Engine */
-
 .quiz-section {
   background-color: var(--color-white);
   position: relative;
@@ -7,20 +5,24 @@
 }
 
 .quiz-showcase-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: flex-start;
-  gap: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-/* Interactive Quiz Engine Console */
+/* Interactive Quiz Engine Console (Centered & Symmetrical) */
 .quiz-engine-card {
   background: var(--color-cream);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-xl);
-  padding: 32px;
-  box-shadow: var(--shadow-lg);
+  padding: 36px 40px;
+  box-shadow: var(--shadow-xl);
   position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .quiz-card-header {
