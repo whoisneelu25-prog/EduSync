@@ -1,8 +1,23 @@
-// Google Gemini AI Service for EduSync AI Teacher & Learning Companion
+// Google Gemini & Gemma Open-Source AI Service for EduSync
 
 const GEMINI_API_STORAGE_KEY = 'edusync_gemini_api_key';
+const ACTIVE_MODEL_STORAGE_KEY = 'edusync_active_ai_model';
 
-// System instructions tailored for each educator persona
+export const AI_MODELS = {
+  'gemini-1.5-flash': {
+    id: 'gemini-1.5-flash',
+    name: 'Gemini 1.5 Flash (Google Cloud)',
+    badge: '⚡ Gemini 1.5 Flash',
+    type: 'Cloud Free Tier'
+  },
+  'gemma-2-9b-it': {
+    id: 'gemma-2-9b-it',
+    name: 'Gemma 2 9B (Google DeepMind Open Source)',
+    badge: '🌐 Gemma 2 Open Source',
+    type: 'Open Weights / Open Source'
+  }
+};
+
 const SYSTEM_PROMPTS = {
   'maya': `You are Teacher Maya, a warm, patient, and creative primary school educator on EduSync.
 Your mission is to explain educational concepts to children (ages 6-12) using delightful everyday analogies (like fresh pizza, cartoon characters, nature, baking recipes, and LEGO blocks).
@@ -46,11 +61,26 @@ export function saveStoredGeminiKey(key) {
   }
 }
 
+export function getActiveModel() {
+  try {
+    return localStorage.getItem(ACTIVE_MODEL_STORAGE_KEY) || 'gemini-1.5-flash';
+  } catch {
+    return 'gemini-1.5-flash';
+  }
+}
+
+export function setActiveModel(modelId) {
+  try {
+    localStorage.setItem(ACTIVE_MODEL_STORAGE_KEY, modelId);
+  } catch {}
+}
+
 /**
- * Calls Google Gemini 1.5 Flash API with persona system instructions
+ * Calls Google Gemini or Gemma Open-Source API with persona system instructions
  */
-export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKey = '') {
+export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKey = '', modelId = '') {
   const apiKey = customApiKey || getStoredGeminiKey();
+  const activeModelId = modelId || getActiveModel();
   const systemInstruction = SYSTEM_PROMPTS[persona] || SYSTEM_PROMPTS['maya'];
 
   if (!apiKey) {
@@ -58,7 +88,7 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
     return null;
   }
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent?key=${apiKey}`;
 
   const payload = {
     contents: [
@@ -85,8 +115,19 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
     });
 
     if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      console.warn('Gemini API notice:', errData);
+      // If gemma model fails, retry automatically with gemini-1.5-flash
+      if (activeModelId !== 'gemini-1.5-flash') {
+        const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+        const fallbackResp = await fetch(fallbackEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (fallbackResp.ok) {
+          const fallbackData = await fallbackResp.json();
+          return fallbackData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+        }
+      }
       return null;
     }
 
@@ -94,7 +135,7 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
     const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
     return candidate ? candidate.trim() : null;
   } catch (error) {
-    console.warn('Gemini network call notice, using local knowledge engine:', error.message);
+    console.warn('AI call notice, using local pedagogical engine:', error.message);
     return null;
   }
 }

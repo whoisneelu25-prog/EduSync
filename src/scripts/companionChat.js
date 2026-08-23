@@ -1,5 +1,12 @@
 // SyncBuddy & AI Teacher Companion Chat Controller
-import { askGeminiTeacher, getStoredGeminiKey, saveStoredGeminiKey } from './geminiAI.js';
+import { 
+  askGeminiTeacher, 
+  getStoredGeminiKey, 
+  saveStoredGeminiKey, 
+  getActiveModel, 
+  setActiveModel,
+  AI_MODELS 
+} from './geminiAI.js';
 
 export const teacherPersonas = {
   'maya': {
@@ -439,14 +446,29 @@ export function initCompanionChat() {
     if (e.key === 'Enter') handleUserSubmit();
   });
 
+  // Model Selection (Gemini 1.5 Flash vs Gemma 2 Open Source)
+  const modelBtns = document.querySelectorAll('.ai-model-select-btn');
+  const currentModel = getActiveModel();
+  modelBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.model === currentModel);
+    btn.addEventListener('click', () => {
+      modelBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const selectedModel = btn.dataset.model || 'gemini-1.5-flash';
+      setActiveModel(selectedModel);
+      const modelMeta = AI_MODELS[selectedModel];
+      addTeacherMessage(`Switched AI Model to **${modelMeta.name}**! 🚀 Ready for your questions.`);
+    });
+  });
+
   // Gemini AI Key Config Trigger
   const geminiBtn = document.querySelector('#geminiConfigTriggerBtn');
   geminiBtn?.addEventListener('click', () => {
     const current = getStoredGeminiKey();
-    const input = prompt('⚡ Google Gemini 1.5 Flash AI is active!\n\nTo update your Google AI Studio API Key, paste it below (or leave empty to keep current):', current ? '••••••••' + current.slice(-4) : '');
+    const input = prompt('⚡ Google Gemini & Gemma AI Model Manager\n\nEnter your Google AI Studio API Key below:', current ? '••••••••' + current.slice(-4) : '');
     if (input !== null && input !== '' && !input.startsWith('••••')) {
       saveStoredGeminiKey(input);
-      alert('Google Gemini API Key saved! 🚀');
+      alert('Google AI Key saved! 🚀 Both Gemini 1.5 and Gemma 2 Open-Source are ready.');
     }
   });
 
