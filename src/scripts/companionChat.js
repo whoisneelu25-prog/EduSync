@@ -439,6 +439,17 @@ export function initCompanionChat() {
     if (e.key === 'Enter') handleUserSubmit();
   });
 
+  // Gemini AI Key Config Trigger
+  const geminiBtn = document.querySelector('#geminiConfigTriggerBtn');
+  geminiBtn?.addEventListener('click', () => {
+    const current = getStoredGeminiKey();
+    const input = prompt('⚡ Google Gemini 1.5 Flash AI is active!\n\nTo update your Google AI Studio API Key, paste it below (or leave empty to keep current):', current ? '••••••••' + current.slice(-4) : '');
+    if (input !== null && input !== '' && !input.startsWith('••••')) {
+      saveStoredGeminiKey(input);
+      alert('Google Gemini API Key saved! 🚀');
+    }
+  });
+
   // Initialize
   renderPromptChips();
 }

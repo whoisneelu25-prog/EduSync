@@ -30,7 +30,8 @@ Rules:
 
 export function getStoredGeminiKey() {
   try {
-    return localStorage.getItem(GEMINI_API_STORAGE_KEY) || '';
+    const envKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) ? import.meta.env.VITE_GEMINI_API_KEY : '';
+    return localStorage.getItem(GEMINI_API_STORAGE_KEY) || envKey || '';
   } catch {
     return '';
   }
@@ -53,7 +54,7 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
   const systemInstruction = SYSTEM_PROMPTS[persona] || SYSTEM_PROMPTS['maya'];
 
   if (!apiKey) {
-    // Return null to trigger the high-quality local pedagogical knowledge base fallback
+    // Graceful fallback to local high-quality pedagogical knowledge base
     return null;
   }
 
@@ -85,7 +86,7 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
 
     if (!response.ok) {
       const errData = await response.json().catch(() => ({}));
-      console.warn('Gemini API error:', errData);
+      console.warn('Gemini API notice:', errData);
       return null;
     }
 
@@ -93,7 +94,7 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
     const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
     return candidate ? candidate.trim() : null;
   } catch (error) {
-    console.warn('Gemini network call failed, switching to local knowledge engine:', error.message);
+    console.warn('Gemini network call notice, using local knowledge engine:', error.message);
     return null;
   }
 }
