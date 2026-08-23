@@ -101,6 +101,26 @@ export const quicksData = [
     quizTarget: 'nat-01',
     visualType: 'gravity',
     customBlobUrl: null
+  },
+  {
+    id: 'trig-trick',
+    title: 'Trigonometry Table Trick!',
+    category: 'Math & Trigonometry',
+    duration: '55s',
+    videoSources: [
+      '/videos/6.mp4',
+      '/videos/WhatsApp Video 2026-08-23 at 06.10.28.mp4',
+      '/videos/quick6.mp4',
+      '/videos/trigonometry.mp4'
+    ],
+    author: 'Teacher Priya & SyncBuddy',
+    caption: 'Master the famous square root trick (√(0/4) to √(4/4)) for Sin, Cos, and Tan angles (0°, 30°, 45°, 60°, 90°) in under 60 seconds!',
+    likes: 4210,
+    isLiked: false,
+    isSaved: false,
+    quizTarget: 'math-01',
+    visualType: 'angles',
+    customBlobUrl: null
   }
 ];
 
@@ -160,7 +180,7 @@ export function initQuicksPlayer() {
       const matchesChip = (activeChip === 'all') || 
                           (activeChip === 'fruits' && (reelId === 'fruits' || cardTitle.includes('fruit'))) ||
                           (activeChip === 'grammar' && (reelId === 'adjectives' || cardTag.includes('grammar'))) ||
-                          (activeChip === 'angles' && (reelId === 'angles' || cardTag.includes('geometry'))) ||
+                          (activeChip === 'angles' && (reelId === 'angles' || reelId === 'trig-trick' || cardTag.includes('geometry') || cardTag.includes('trig'))) ||
                           (activeChip === 'speed' && (reelId === 'fast-slow' || cardTag.includes('motion') || cardTitle.includes('speed'))) ||
                           (activeChip === 'heart' && (reelId === 'heart-pump' || cardTag.includes('biology') || cardTitle.includes('heart')));
 

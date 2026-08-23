@@ -136,17 +136,18 @@
   border: 2px dashed var(--color-border);
 }
 
-/* Quicks Showcase Grid (Uniform 5-Card Layout) */
+/* Quicks Showcase Grid (Uniform 6-Card Layout) */
 .quicks-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
   margin-top: 12px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
   .quicks-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
   }
 }
 
