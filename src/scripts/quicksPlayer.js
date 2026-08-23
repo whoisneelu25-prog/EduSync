@@ -63,9 +63,9 @@ export const quicksData = [
     customBlobUrl: null
   },
   {
-    id: 'photosynthesis',
-    title: 'How Plants Eat Sunlight',
-    category: 'Nature & Biology',
+    id: 'fast-slow',
+    title: 'Fast vs Slow: Animal Speeds!',
+    category: 'Motion & Opposites',
     duration: '32s',
     videoSources: [
       '/videos/4.mp4',
@@ -73,12 +73,12 @@ export const quicksData = [
       '/videos/quick4.mp4',
       '/videos/quick-photosynthesis.mp4'
     ],
-    author: 'Dr. Ananya & SyncBuddy',
-    caption: 'Chlorophyll traps sunlight photons, mixes with water and CO₂ to create plant food and oxygen!',
-    likes: 2150,
+    author: 'Coach Rohan & SyncBuddy',
+    caption: 'Cheetahs sprint fast like lightning 🐆 while foxes move stealthy and tortoises go slow! Master speed opposites with fun rhythm!',
+    likes: 2850,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'nat-01',
+    quizTarget: 'phys-01',
     visualType: 'photosynthesis',
     customBlobUrl: null
   },
