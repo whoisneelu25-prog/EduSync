@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="/src/styles/components/chatbot.css">
   <link rel="stylesheet" href="/src/styles/components/ecosystem.css">
   <link rel="stylesheet" href="/src/styles/components/topics.css">
+  <link rel="stylesheet" href="/src/styles/components/kidCircle.css">
   <link rel="stylesheet" href="/src/styles/components/footer.css">
   <link rel="stylesheet" href="/src/styles/components/auth.css">
   <link rel="stylesheet" href="/src/styles/animations.css">
@@ -53,6 +54,7 @@
           <li><a href="#chat" class="nav-link">Learning Chat</a></li>
           <li><a href="#ecosystem" class="nav-link">How It Works</a></li>
           <li><a href="#topics" class="nav-link">Topics</a></li>
+          <li><a href="#kidcircle" class="nav-link">KidCircle <span style="background: var(--color-coral); color: #fff; font-size: 0.625rem; padding: 2px 6px; border-radius: 999px; font-weight: 800; margin-left: 2px;">BETA</span></a></li>
         </ul>
       </nav>
 
@@ -289,6 +291,24 @@
           <p class="section-subtitle">
             Small lessons. Real understanding. Bite-sized vertical reels designed for young, curious minds.
           </p>
+        </div>
+
+        <!-- Quicks Search & Filter Controls -->
+        <div class="quicks-search-wrapper reveal-on-scroll">
+          <div class="quicks-search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="quicksSearchInput" class="quicks-search-input" placeholder="Search reels (e.g. Fruits, Angles, Speed, Heart, Coach Rohan...)" autocomplete="off">
+            <button type="button" id="quicksSearchClearBtn" class="quicks-search-clear" aria-label="Clear search" style="display: none;">✕</button>
+          </div>
+          <div class="quicks-search-chips">
+            <span class="chips-label">Quick filter:</span>
+            <button type="button" class="quick-chip active" data-filter="all">All (5)</button>
+            <button type="button" class="quick-chip" data-filter="fruits">🍎 Fruits</button>
+            <button type="button" class="quick-chip" data-filter="grammar">📏 Grammar</button>
+            <button type="button" class="quick-chip" data-filter="angles">📐 Angles</button>
+            <button type="button" class="quick-chip" data-filter="speed">🐆 Fast/Slow</button>
+            <button type="button" class="quick-chip" data-filter="heart">❤️ Heart</button>
+          </div>
         </div>
 
         <!-- Quicks Showcase Grid (5 Micro-Lessons) -->
@@ -854,6 +874,40 @@
       </div>
     </section>
 
+    <!-- Feature 05: KidCircle Child-Safe Social Achievement Feed (BETA) -->
+    <section class="section kidcircle-section" id="kidcircle">
+      <div class="container kidcircle-container">
+        <div class="kidcircle-header-row reveal-on-scroll">
+          <div>
+            <span class="kidcircle-beta-tag">🛡️ Child-Safe Social Hub • Beta</span>
+            <h2 class="section-title">EduSync KidCircle</h2>
+            <p class="section-subtitle">
+              A 100% positive, moderated space for young learners to celebrate sports goals, art medals, science competitions, and learning streaks!
+            </p>
+          </div>
+          <div class="kidcircle-actions-bar">
+            <button type="button" class="btn btn-yellow" id="openShareModalBtn" style="background-color: var(--color-yellow); color: var(--color-navy); box-shadow: 0 4px 14px rgba(244, 201, 93, 0.4);">
+              <span>➕</span> Share My Achievement
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Pills Bar -->
+        <div class="kidcircle-filter-group reveal-on-scroll delay-1">
+          <button type="button" class="kidcircle-filter-pill active" data-category="all">🏆 All Celebrations</button>
+          <button type="button" class="kidcircle-filter-pill" data-category="sports">⚽ Sports & Athletics</button>
+          <button type="button" class="kidcircle-filter-pill" data-category="science">🔬 Science & STEM</button>
+          <button type="button" class="kidcircle-filter-pill" data-category="art">🎨 Art & Creativity</button>
+          <button type="button" class="kidcircle-filter-pill" data-category="martialarts">🥋 Martial Arts</button>
+        </div>
+
+        <!-- Achievements Feed Grid -->
+        <div class="kidcircle-feed-grid reveal-on-scroll delay-2" id="kidCircleFeed">
+          <!-- Populated dynamically by kidCircleSocial.js -->
+        </div>
+      </div>
+    </section>
+
     <!-- Closing CTA -->
     <section class="closing-cta-section">
       <div class="container closing-cta-content reveal-on-scroll">
@@ -1100,6 +1154,80 @@
           <button type="button" id="customGoogleSubmitBtn" class="custom-email-btn">Sign In</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Share Achievement Modal (KidCircle Beta) -->
+  <div class="kidcircle-modal" id="shareAchievementModal" role="dialog" aria-modal="true" aria-label="Share Your Achievement">
+    <div class="kidcircle-modal-dialog">
+      <div class="kidcircle-modal-header">
+        <button type="button" class="kidcircle-modal-close" id="closeShareModalBtn" aria-label="Close modal">✕</button>
+        <h3>🏆 Celebrate Your Triumph!</h3>
+        <p>Share a recent sports medal, art creation, science project, or milestone with friends.</p>
+      </div>
+
+      <form id="shareAchievementForm" class="kidcircle-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="achievementAuthorName">Your Name</label>
+            <input type="text" id="achievementAuthorName" class="form-input" placeholder="e.g. Aarav Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="achievementAuthorGrade">Grade & City</label>
+            <input type="text" id="achievementAuthorGrade" class="form-input" placeholder="e.g. Class 4 • Bengaluru" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="achievementCategory">Category</label>
+            <select id="achievementCategory" class="form-select">
+              <option value="sports">⚽ Sports & Athletics</option>
+              <option value="science">🔬 Science & STEM</option>
+              <option value="art">🎨 Art & Creativity</option>
+              <option value="martialarts">🥋 Martial Arts</option>
+              <option value="edusync">⭐ EduSync Milestone</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="achievementIcon">Trophy Emblem</label>
+            <select id="achievementIcon" class="form-select">
+              <option value="🏆">🏆 Gold Trophy</option>
+              <option value="🥇">🥇 1st Medal</option>
+              <option value="⚽">⚽ Football</option>
+              <option value="🏏">🏏 Cricket</option>
+              <option value="🥋">🥋 Karate / Martial Arts</option>
+              <option value="🎨">🎨 Art & Painting</option>
+              <option value="🤖">🤖 Robot / STEM</option>
+              <option value="🎵">🎵 Music Recital</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="achievementTitle">Achievement Headline</label>
+          <input type="text" id="achievementTitle" class="form-input" placeholder="e.g. Won 1st Place in Inter-School Football Cup!" required>
+        </div>
+
+        <div class="form-group">
+          <label for="achievementMedal">Medal / Competition Tag</label>
+          <input type="text" id="achievementMedal" class="form-input" placeholder="e.g. 🥇 Gold Trophy • DPS Bengaluru" required>
+        </div>
+
+        <div class="form-group">
+          <label for="achievementStory">Tell Your Story</label>
+          <textarea id="achievementStory" class="form-textarea" rows="3" placeholder="How did you prepare? What made you proud?" required></textarea>
+        </div>
+
+        <div class="kidcircle-safety-note">
+          <span>🛡️</span>
+          <span>KidCircle is 100% positive and parent-moderated. Zero negativity tolerated!</span>
+        </div>
+
+        <button type="submit" class="btn btn-teal" style="width: 100%; justify-content: center; font-size: 1rem; padding: 12px;">
+          <span>🚀</span> Post Achievement (+50 ⭐)
+        </button>
+      </form>
     </div>
   </div>
 

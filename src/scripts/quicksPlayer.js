@@ -134,6 +134,81 @@ export function initQuicksPlayer() {
   let currentProgress = 0;
   const REEL_DURATION_MS = 15000; // 15 seconds per reel cycle for demonstration
 
+  // Search & Filter Controller
+  const searchInput = document.querySelector('#quicksSearchInput');
+  const clearBtn = document.querySelector('#quicksSearchClearBtn');
+  const chips = document.querySelectorAll('.quick-chip');
+  const quicksGrid = document.querySelector('.quicks-grid');
+
+  function filterReels() {
+    const query = searchInput?.value.trim().toLowerCase() || '';
+    const activeChip = document.querySelector('.quick-chip.active')?.dataset.filter || 'all';
+    let visibleCount = 0;
+
+    // Remove existing empty element if any
+    const existingEmpty = document.querySelector('.quicks-empty-search');
+    if (existingEmpty) existingEmpty.remove();
+
+    reelCards.forEach(card => {
+      const reelId = card.dataset.reelId || '';
+      const cardTitle = card.querySelector('.quick-card-title')?.textContent.toLowerCase() || '';
+      const cardDesc = card.querySelector('.quick-card-desc')?.textContent.toLowerCase() || '';
+      const cardTag = card.querySelector('.quick-topic-tag')?.textContent.toLowerCase() || '';
+      const cardMentor = card.querySelector('.quick-mentor-pill')?.textContent.toLowerCase() || '';
+
+      const matchesQuery = !query || cardTitle.includes(query) || cardDesc.includes(query) || cardTag.includes(query) || cardMentor.includes(query) || reelId.includes(query);
+      const matchesChip = (activeChip === 'all') || 
+                          (activeChip === 'fruits' && (reelId === 'fruits' || cardTitle.includes('fruit'))) ||
+                          (activeChip === 'grammar' && (reelId === 'adjectives' || cardTag.includes('grammar'))) ||
+                          (activeChip === 'angles' && (reelId === 'angles' || cardTag.includes('geometry'))) ||
+                          (activeChip === 'speed' && (reelId === 'fast-slow' || cardTag.includes('motion') || cardTitle.includes('speed'))) ||
+                          (activeChip === 'heart' && (reelId === 'heart-pump' || cardTag.includes('biology') || cardTitle.includes('heart')));
+
+      if (matchesQuery && matchesChip) {
+        card.classList.remove('is-hidden');
+        visibleCount++;
+      } else {
+        card.classList.add('is-hidden');
+      }
+    });
+
+    if (clearBtn) {
+      clearBtn.style.display = query.length > 0 ? 'flex' : 'none';
+    }
+
+    if (visibleCount === 0 && quicksGrid) {
+      const emptyDiv = document.createElement('div');
+      emptyDiv.className = 'quicks-empty-search';
+      emptyDiv.innerHTML = `
+        <div style="font-size: 2.5rem; margin-bottom: 8px;">🔍</div>
+        <h4 style="font-size: 1.1rem; color: var(--color-navy); margin-bottom: 4px;">No matching micro-lessons found</h4>
+        <p style="font-size: 0.875rem; color: var(--color-text-secondary); margin-bottom: 12px;">Try searching for "Fruits", "Angles", "Heart", or "Coach Rohan"!</p>
+        <button type="button" class="btn btn-teal" id="resetQuicksSearchBtn" style="padding: 6px 16px; font-size: 0.8125rem;">Reset Filter</button>
+      `;
+      quicksGrid.appendChild(emptyDiv);
+      emptyDiv.querySelector('#resetQuicksSearchBtn')?.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        chips.forEach(c => c.classList.toggle('active', c.dataset.filter === 'all'));
+        filterReels();
+      });
+    }
+  }
+
+  searchInput?.addEventListener('input', filterReels);
+  clearBtn?.addEventListener('click', () => {
+    if (searchInput) searchInput.value = '';
+    filterReels();
+    searchInput?.focus();
+  });
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterReels();
+    });
+  });
+
   // Open modal on card click
   reelCards.forEach((card, index) => {
     card.addEventListener('click', () => {

@@ -9,10 +9,124 @@
   overflow: hidden;
 }
 
-.quicks-container {
+/* Quicks Search & Filter Wrapper */
+.quicks-search-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  align-items: center;
+  gap: 14px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.quicks-search-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: var(--color-white);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 8px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.quicks-search-box:focus-within {
+  border-color: var(--color-teal);
+  box-shadow: 0 6px 20px rgba(79, 166, 160, 0.2);
+}
+
+.quicks-search-box .search-icon {
+  font-size: 1.1rem;
+  margin-right: 10px;
+  color: var(--color-teal);
+}
+
+.quicks-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-navy);
+}
+
+.quicks-search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.quicks-search-clear {
+  background: var(--color-border);
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.quicks-search-clear:hover {
+  background: var(--color-coral-light);
+  color: var(--color-coral-dark);
+}
+
+.quicks-search-chips {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chips-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+}
+
+.quick-chip {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.quick-chip:hover {
+  border-color: var(--color-teal);
+  transform: translateY(-2px);
+}
+
+.quick-chip.active {
+  background: var(--color-navy);
+  color: var(--color-white);
+  border-color: var(--color-navy);
+}
+
+.quick-reel-card.is-hidden {
+  display: none !important;
+}
+
+.quicks-empty-search {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  border: 2px dashed var(--color-border);
 }
 
 /* Quicks Showcase Grid (Uniform 5-Card Layout) */
