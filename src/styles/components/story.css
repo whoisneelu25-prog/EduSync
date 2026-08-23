@@ -48,6 +48,7 @@
   font-weight: 700;
   color: var(--color-text-secondary);
   transition: all var(--transition-normal);
+  cursor: pointer;
 }
 
 .story-toggle-btn.active {
@@ -84,6 +85,9 @@
   padding: 36px 32px;
   position: relative;
   transition: all var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .pathway-card.active-pathway {
@@ -131,6 +135,7 @@
 .pathway-title-meta h3 {
   font-size: 1.25rem;
   margin-bottom: 3px;
+  color: var(--color-navy);
 }
 
 .pathway-tag {
@@ -154,6 +159,7 @@
   flex-direction: column;
   gap: 16px;
   position: relative;
+  margin-bottom: 20px;
 }
 
 .pathway-steps::before {
@@ -212,11 +218,99 @@
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 2px;
+  color: var(--color-navy);
 }
 
 .step-info p {
   font-size: 0.875rem;
   color: var(--color-text-secondary);
+}
+
+/* Interactive Concept Simulator Card */
+.pathway-interactive-box {
+  background: var(--color-white);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.interactive-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.interactive-box-header span {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.interactive-pizza-grid {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+.interactive-pizza-slice {
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.interactive-pizza-slice:hover {
+  transform: scale(1.15);
+  border-color: var(--color-coral);
+}
+
+.interactive-pizza-slice.selected {
+  background: var(--color-coral-light);
+  border-color: var(--color-coral);
+  box-shadow: 0 4px 12px var(--color-coral-glow);
+}
+
+.interactive-readout {
+  font-size: 0.8125rem;
+  text-align: center;
+  color: var(--color-navy);
+}
+
+.story-chat-bridge-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  background: var(--color-cream);
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 4px;
+}
+
+.story-chat-bridge-btn:hover {
+  border-color: var(--color-teal);
+  background: var(--color-teal-light);
+  color: var(--color-teal-dark);
 }
 
 /* Story Bottom Banner */

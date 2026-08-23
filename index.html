@@ -207,69 +207,108 @@
         <div class="pathways-grid reveal-on-scroll delay-1">
           <!-- STUDENT A PATHWAY: ARJUN -->
           <div class="pathway-card student-a active-pathway">
-            <div class="pathway-header">
-              <div class="pathway-avatar">🎒</div>
-              <div class="pathway-title-meta">
-                <h3>Arjun (Class 4)</h3>
-                <span class="pathway-tag">“Needs a little more help”</span>
+            <div>
+              <div class="pathway-header">
+                <div class="pathway-avatar">🎒</div>
+                <div class="pathway-title-meta">
+                  <h3>Arjun (Class 4)</h3>
+                  <span class="pathway-tag">“Needs a little more help”</span>
+                </div>
+              </div>
+              <div class="pathway-steps">
+                <div class="path-step">
+                  <div class="step-num">1</div>
+                  <div class="step-info">
+                    <h4>Simple Visual Breakdown</h4>
+                    <p>Breaks fraction concepts down using tactile pizza & roti slice visuals.</p>
+                  </div>
+                </div>
+                <div class="path-step">
+                  <div class="step-num">2</div>
+                  <div class="step-info">
+                    <h4>Guided Mentor Step</h4>
+                    <p>Teacher Priya steps in to walk through the problem together step-by-step.</p>
+                  </div>
+                </div>
+                <div class="path-step">
+                  <div class="step-num">3</div>
+                  <div class="step-info">
+                    <h4>Confidence Practice</h4>
+                    <p>Reinforcing mini-quizzes that build mastery without classroom stress.</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="pathway-steps">
-              <div class="path-step">
-                <div class="step-num">1</div>
-                <div class="step-info">
-                  <h4>Simple Visual Breakdown</h4>
-                  <p>Breaks fraction concept down using relatable pizza & roti slice visuals.</p>
-                </div>
+
+            <!-- Interactive Fraction Sandbox -->
+            <div class="pathway-interactive-box">
+              <div class="interactive-box-header">
+                <span>🍕 Interactive Sandbox</span>
+                <span style="color: var(--color-coral); font-size: 0.75rem; font-weight: 700;">Tap Slices!</span>
               </div>
-              <div class="path-step">
-                <div class="step-num">2</div>
-                <div class="step-info">
-                  <h4>Guided Mentor Step</h4>
-                  <p>Teacher Priya steps in to walk through the problem together step-by-step.</p>
-                </div>
+              <div class="interactive-pizza-grid">
+                <span class="interactive-pizza-slice selected" data-idx="0">🍕</span>
+                <span class="interactive-pizza-slice" data-idx="1">🍕</span>
+                <span class="interactive-pizza-slice" data-idx="2">🍕</span>
+                <span class="interactive-pizza-slice" data-idx="3">🍕</span>
               </div>
-              <div class="path-step">
-                <div class="step-num">3</div>
-                <div class="step-info">
-                  <h4>Confidence Practice</h4>
-                  <p>Reinforcing mini-quizzes that build mastery without classroom stress.</p>
-                </div>
+              <div class="interactive-readout" id="pizzaFractionReadout">
+                <strong>1/4 Slices</strong> (25% of the Pizza)
               </div>
+              <button type="button" class="story-chat-bridge-btn" data-prompt="Teacher Priya, how do I explain 1/2 vs 1/4 fractions?">
+                <span>💬</span> Ask Teacher Priya to Explain
+              </button>
             </div>
           </div>
 
           <!-- STUDENT B PATHWAY: ANANYA -->
           <div class="pathway-card student-b">
-            <div class="pathway-header">
-              <div class="pathway-avatar">🚀</div>
-              <div class="pathway-title-meta">
-                <h3>Ananya (Class 4)</h3>
-                <span class="pathway-tag">“Ready for a challenge”</span>
+            <div>
+              <div class="pathway-header">
+                <div class="pathway-avatar">🚀</div>
+                <div class="pathway-title-meta">
+                  <h3>Ananya (Class 4)</h3>
+                  <span class="pathway-tag">“Ready for a challenge”</span>
+                </div>
+              </div>
+              <div class="pathway-steps">
+                <div class="path-step">
+                  <div class="step-num">1</div>
+                  <div class="step-info">
+                    <h4>Deeper Concept</h4>
+                    <p>Fast-tracks past basics into ratios, geometry, and proportional thinking.</p>
+                  </div>
+                </div>
+                <div class="path-step">
+                  <div class="step-num">2</div>
+                  <div class="step-info">
+                    <h4>Real-World Application</h4>
+                    <p>Applies science concepts to Indian space missions and architectural scale models.</p>
+                  </div>
+                </div>
+                <div class="path-step">
+                  <div class="step-num">3</div>
+                  <div class="step-info">
+                    <h4>Stretch Challenge</h4>
+                    <p>Complex multi-step problems designed to spark deep critical thought.</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="pathway-steps">
-              <div class="path-step">
-                <div class="step-num">1</div>
-                <div class="step-info">
-                  <h4>Deeper Concept</h4>
-                  <p>Fast-tracks past basics into ratios, geometry, and proportional thinking.</p>
-                </div>
+
+            <!-- Interactive Space Ratio Sandbox -->
+            <div class="pathway-interactive-box">
+              <div class="interactive-box-header">
+                <span>🚀 Space Physics Ratio</span>
+                <span style="color: var(--color-teal); font-size: 0.75rem; font-weight: 700;">Chandrayaan Leap</span>
               </div>
-              <div class="path-step">
-                <div class="step-num">2</div>
-                <div class="step-info">
-                  <h4>Real-World Application</h4>
-                  <p>Applies science concepts to Indian space missions and architectural models.</p>
-                </div>
+              <div style="background: var(--color-navy); color: #fff; padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.8125rem; line-height: 1.4;">
+                <span style="color: var(--color-yellow); font-weight: 800;">Moon Gravity:</span> 1.62 m/s² (1/6 Earth)<br>
+                <span style="color: #8be0da;">A 1-meter Earth jump = 6-meter Moon leap!</span>
               </div>
-              <div class="path-step">
-                <div class="step-num">3</div>
-                <div class="step-info">
-                  <h4>Stretch Challenge</h4>
-                  <p>Complex multi-step problems designed to spark deep critical thought.</p>
-                </div>
-              </div>
+              <button type="button" class="story-chat-bridge-btn" data-prompt="Coach Rohan, why is gravity weaker on the Moon than Earth?">
+                <span>⚡</span> Ask Coach Rohan a Physics Stretch
+              </button>
             </div>
           </div>
         </div>
