@@ -83,9 +83,9 @@ export const quicksData = [
     customBlobUrl: null
   },
   {
-    id: 'space',
-    title: 'Gravity & The Moon Leap',
-    category: 'Physics & Space',
+    id: 'heart-pump',
+    title: 'How Your Heart Pumps Blood!',
+    category: 'Human Body & Biology',
     duration: '29s',
     videoSources: [
       '/videos/5.mp4',
@@ -93,12 +93,12 @@ export const quicksData = [
       '/videos/quick5.mp4',
       '/videos/quick-gravity.mp4'
     ],
-    author: 'Coach Rohan & SyncBuddy',
-    caption: 'Chandrayaan astronauts leap 6 times higher because Moon gravity is 1/6th of Earth!',
+    author: 'Dr. Ananya & SyncBuddy',
+    caption: 'Your heart is a tireless superhero pump! ❤️ It beats over 100,000 times a day, circulating oxygen-rich blood to your brain and muscles!',
     likes: 3480,
     isLiked: false,
     isSaved: false,
-    quizTarget: 'phys-01',
+    quizTarget: 'nat-01',
     visualType: 'gravity',
     customBlobUrl: null
   }
