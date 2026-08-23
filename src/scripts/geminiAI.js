@@ -20,20 +20,19 @@ export const AI_MODELS = {
 
 const SYSTEM_PROMPTS = {
   'maya': `You are Teacher Maya, a warm, patient, and creative primary school educator on EduSync.
-Your mission is to explain educational concepts to children (ages 6-12) using delightful everyday analogies (like fresh pizza, cartoon characters, nature, baking recipes, and LEGO blocks).
+Your mission is to explain educational concepts and solve questions for children (ages 6-12) using delightful everyday analogies (like fresh pizza, cartoon characters, nature, baking recipes, and LEGO blocks).
 Rules:
-1. Keep explanations friendly, encouraging, and under 3-4 sentences.
-2. Avoid confusing technical jargon unless you immediately explain it with a fun metaphor.
+1. If the student asks a math question (e.g. 3+2), give the exact answer clearly first, then explain with a fun visual counting example.
+2. Keep explanations friendly, encouraging, and under 3-4 sentences.
 3. Always include 2-3 relevant emojis.
 4. End with an inspiring, short question to keep the child curious.`,
 
   'leo': `You are Coach Leo, an energetic, enthusiastic STEM and sports-science coach on EduSync.
 Your mission is to turn science, math, and space concepts into exciting hands-on action (like rocket launches, athletic speed, gravity experiments, and playground physics).
 Rules:
-1. Be high-energy, motivating, and action-oriented!
-2. Use sports, racing, mechanics, or astronaut analogies.
-3. Keep responses under 3-4 sentences with dynamic emojis (🚀, ⚡, 🏃, 🪐).
-4. Challenge the student with a quick 1-sentence brain puzzle at the end.`,
+1. If asked a math or science problem, solve it with high-energy sports or speed analogies.
+2. Keep responses under 3-4 sentences with dynamic emojis (🚀, ⚡, 🏃, 🪐).
+3. Challenge the student with a quick 1-sentence brain puzzle at the end.`,
 
   'syncbuddy': `You are SyncBuddy AI, a cheerful, supportive peer learning companion on EduSync.
 Your mission is to help your fellow student friend understand confusing homework and classroom concepts with pure intuition and zero stress.
@@ -79,16 +78,24 @@ export function setActiveModel(modelId) {
  * Calls Google Gemini or Gemma Open-Source API with persona system instructions
  */
 export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKey = '', modelId = '') {
-  const apiKey = customApiKey || getStoredGeminiKey();
+  const apiKey = (customApiKey || getStoredGeminiKey()).trim();
   const activeModelId = modelId || getActiveModel();
   const systemInstruction = SYSTEM_PROMPTS[persona] || SYSTEM_PROMPTS['maya'];
 
   if (!apiKey) {
-    // Graceful fallback to local high-quality pedagogical knowledge base
     return null;
   }
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent?key=${apiKey}`;
+  // Handle both standard AI Studio API keys (AIza...) and Google Cloud OAuth/Bearer tokens
+  const isBearerToken = apiKey.startsWith('AQ.') || apiKey.startsWith('ya29.');
+  const url = isBearerToken 
+    ? `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent`
+    : `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent?key=${apiKey}`;
+
+  const headers = { 'Content-Type': 'application/json' };
+  if (isBearerToken) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
 
   const payload = {
     contents: [
@@ -108,24 +115,24 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
   };
 
   try {
-    const response = await fetch(endpoint, {
+    const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers,
       body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
-      // If gemma model fails, retry automatically with gemini-1.5-flash
-      if (activeModelId !== 'gemini-1.5-flash') {
-        const fallbackEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-        const fallbackResp = await fetch(fallbackEndpoint, {
+      // Fallback attempt with query parameter if header wasn't accepted
+      if (isBearerToken) {
+        const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent?key=${apiKey}`;
+        const fbResp = await fetch(fallbackUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (fallbackResp.ok) {
-          const fallbackData = await fallbackResp.json();
-          return fallbackData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
+        if (fbResp.ok) {
+          const fbData = await fbResp.json();
+          return fbData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
         }
       }
       return null;
@@ -135,7 +142,7 @@ export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKe
     const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
     return candidate ? candidate.trim() : null;
   } catch (error) {
-    console.warn('AI call notice, using local pedagogical engine:', error.message);
+    console.warn('AI call notice, using pedagogical engine:', error.message);
     return null;
   }
 }

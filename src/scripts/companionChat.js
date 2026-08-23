@@ -395,15 +395,72 @@ export function initCompanionChat() {
   }
 
   function generateAIResponse(query) {
-    const lower = query.toLowerCase();
+    const lower = query.toLowerCase().trim();
 
-    if (lower.includes('fraction') || lower.includes('half') || lower.includes('quarter') || lower.includes('pizza')) {
+    // 1. Interactive Math Arithmetic Solver (e.g. 3+2, 5*4, 10-3, 12/4)
+    const mathClean = lower.replace(/\s+/g, '').replace(/plus/g, '+').replace(/minus/g, '-').replace(/times|multipliedby|x/g, '*').replace(/dividedby|over/g, '/');
+    const mathMatch = mathClean.match(/^(-?\d+(\.\d+)?)([\+\-\*\/])(-?\d+(\.\d+)?)$/);
+
+    if (mathMatch) {
+      const num1 = parseFloat(mathMatch[1]);
+      const op = mathMatch[3];
+      const num2 = parseFloat(mathMatch[4]);
+      let result = 0;
+      let opName = 'added to';
+      let icon = '🔢';
+      let analogy = '';
+
+      if (op === '+') {
+        result = num1 + num2;
+        opName = '+';
+        icon = '🍎';
+        analogy = `If you start with ${num1} items and add ${num2} more, you get a grand total of ${result}!`;
+      } else if (op === '-') {
+        result = num1 - num2;
+        opName = '-';
+        icon = '🎯';
+        analogy = `If you have ${num1} items and take away ${num2}, you have ${result} remaining!`;
+      } else if (op === '*') {
+        result = num1 * num2;
+        opName = '×';
+        icon = '⚡';
+        analogy = `That is ${num1} equal groups of ${num2}, which multiply together to make ${result}!`;
+      } else if (op === '/') {
+        if (num2 === 0) {
+          addTeacherMessage(`Whoa! You cannot divide by zero! 🌀 Dividing by zero is like trying to share cookies among zero friends — the math universe gets dizzy!`);
+          return;
+        }
+        result = Math.round((num1 / num2) * 100) / 100;
+        opName = '÷';
+        icon = '🍕';
+        analogy = `Splitting ${num1} equally into ${num2} portions gives ${result} in each piece!`;
+      }
+
+      addTeacherMessage(`**${num1} ${opName} ${num2} = ${result}!** 🌟 ${analogy} What other numbers would you like to calculate? ✨`, {
+        icon: icon,
+        desc: `<strong>Math Solution:</strong> ${num1} ${opName} ${num2} = ${result}`
+      });
+      return;
+    }
+
+    // 2. Conceptual Science, Math, Nature, and Language Questions
+    if (lower.includes('sky') && lower.includes('blue')) {
+      addTeacherMessage('The sky is blue because of sunlight scattering! ☀️ Sunlight looks white, but it holds every color of the rainbow. Blue light travels in short, tiny waves that bounce and scatter across our atmosphere more than any other color!', {
+        icon: '🌤️',
+        desc: '<strong>Rayleigh Scattering:</strong> Blue waves scatter 10x more across nitrogen & oxygen air particles.'
+      });
+    } else if (lower.includes('rainbow')) {
+      addTeacherMessage('Rainbows are water prisms! 🌈 When sunlight shines into raindrops, the water bends (refracts) the light, splitting it into Red, Orange, Yellow, Green, Blue, Indigo, and Violet!', {
+        icon: '🌈',
+        desc: '<strong>Light Refraction:</strong> Raindrops act as mini glass prisms bending white sunlight.'
+      });
+    } else if (lower.includes('fraction') || lower.includes('half') || lower.includes('quarter') || lower.includes('pizza')) {
       addTeacherMessage('Fractions are just equal sharing! 🍕 When you break a whole into 2 parts, you get 1/2. When you break it into 4 parts, you get 1/4. 1/2 is twice as big as 1/4!', {
         icon: '🍕',
         desc: '<strong>Fraction Rule:</strong> Fewer pieces = Bigger slices (1/2 > 1/4)!'
       });
     } else if (lower.includes('fruit') || lower.includes('apple') || lower.includes('orange') || lower.includes('vitamin')) {
-      addTeacherMessage('Fruits are nature’s energy candy! 🍎 They grow from flowers and carry seeds inside. Their sweet fructose sugars give your brain steady focus without artificial chemicals!', {
+      addTeacherMessage('Fruits are nature’s energy candy! 🍎 They grow from flowers and carry seeds inside. Their sweet natural fructose sugars give your brain steady focus without artificial chemicals!', {
         icon: '🍊',
         desc: '<strong>Fruit Power:</strong> Clean energy, vitamins, and hydrating water.'
       });
@@ -422,8 +479,21 @@ export function initCompanionChat() {
         icon: '🔐',
         desc: '<strong>Safe Rule:</strong> Keep passwords private from game chats and friends.'
       });
+    } else if (lower.includes('angle') || lower.includes('acute') || lower.includes('obtuse') || lower.includes('triangle')) {
+      addTeacherMessage('Angles measure corners! 📐 An **Acute angle** is sharp and cute (less than 90°). A **Right angle** is a perfect square corner (exactly 90°), and an **Obtuse angle** opens wide (greater than 90°)!', {
+        icon: '📐',
+        desc: '<strong>Angle Guide:</strong> Acute (<90°) • Right (90°) • Obtuse (>90°)'
+      });
+    } else if (lower.includes('adjective') || lower.includes('short') || lower.includes('tall') || lower.includes('big')) {
+      addTeacherMessage('Adjectives describe things! 📏 When comparing 2 things, add **-er** (e.g. *taller, faster*). When comparing 3 or more things across a group, add **-est** (e.g. *tallest, fastest*)!', {
+        icon: '📏',
+        desc: '<strong>Comparison Rule:</strong> Base ➔ -er (2 items) ➔ -est (3+ items)'
+      });
     } else {
-      addTeacherMessage(`That is an awesome, curious question! 💡 In science and learning, everything connects back to simple everyday patterns. Would you like to test a quick experiment or see a visual example? ✨`);
+      addTeacherMessage(`That is an awesome, curious question about "${query}"! 💡 In learning and discovery, everything connects back to simple everyday patterns. Would you like to explore a fun visual example or test a quick quiz on this topic? ✨`, {
+        icon: '💡',
+        desc: `<strong>Exploration Topic:</strong> ${query}`
+      });
     }
   }
 
