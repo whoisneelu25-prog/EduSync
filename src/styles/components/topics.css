@@ -1,6 +1,6 @@
 /* ==========================================================================
    BEYOND ACADEMICS — HOLISTIC GROWTH TOPICS
-   "Learning goes beyond the textbook."
+   Interactive Topic Deep-Dive & Skills Explorer
    ========================================================================== */
 
 .topics-section {
@@ -8,38 +8,73 @@
   position: relative;
 }
 
+.topics-container {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
 .topics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 18px;
 }
 
 .topic-card {
   background: var(--color-white);
-  border: 1.5px solid var(--color-border);
+  border: 2px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 28px 24px;
+  padding: 22px 20px;
   display: flex;
   align-items: flex-start;
-  gap: 18px;
-  transition: all var(--transition-normal);
+  gap: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-spring);
+  box-shadow: var(--shadow-sm);
 }
 
 .topic-card:hover {
   transform: translateY(-4px);
   border-color: var(--color-teal);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 12px 28px rgba(23, 50, 77, 0.12);
+}
+
+.topic-card.active {
+  border-color: var(--color-teal);
+  background: var(--color-teal-light);
+  box-shadow: 0 10px 24px rgba(79, 166, 160, 0.25);
+  transform: translateY(-3px);
+}
+
+.topic-card.active::after {
+  content: '✦ Active';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-teal-dark);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
 }
 
 .topic-icon-box {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.35rem;
   flex-shrink: 0;
+  transition: transform var(--transition-spring);
+}
+
+.topic-card:hover .topic-icon-box {
+  transform: scale(1.12) rotate(5deg);
 }
 
 .topic-icon-box.teal {
@@ -63,26 +98,179 @@
 }
 
 .topic-details h3 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   margin-bottom: 4px;
   color: var(--color-navy);
 }
 
 .topic-details p {
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   color: var(--color-text-secondary);
   line-height: 1.45;
+}
+
+/* ==========================================================================
+   TOPIC SPOTLIGHT SHOWCASE BOX
+   ========================================================================== */
+
+.topic-spotlight-container {
+  margin-top: 10px;
+}
+
+.topic-spotlight-card {
+  background: linear-gradient(135deg, var(--color-navy) 0%, #1c3c5c 100%);
+  border-radius: var(--radius-xl);
+  padding: 32px 36px;
+  color: var(--color-white);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  animation: spotlightFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.topic-spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 201, 93, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.spotlight-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spotlight-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.spotlight-icon {
+  font-size: 2.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.spotlight-kicker {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+}
+
+.spotlight-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--color-white);
+  line-height: 1.2;
+}
+
+.spotlight-tagline {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 4px;
+}
+
+.spotlight-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.spotlight-skills-box,
+.spotlight-activity-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+}
+
+.spotlight-skills-box h4,
+.spotlight-activity-box h4 {
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: var(--color-yellow);
+  margin-bottom: 10px;
+}
+
+.spotlight-skills-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-pill {
+  background: rgba(79, 166, 160, 0.25);
+  color: #8be0da;
+  border: 1px solid rgba(79, 166, 160, 0.4);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+}
+
+.spotlight-activity-box p {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+.spotlight-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes spotlightFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 900px) {
   .topics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .spotlight-body-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 600px) {
   .topics-grid {
     grid-template-columns: 1fr;
+  }
+  .topic-spotlight-card {
+    padding: 24px 20px;
   }
 }

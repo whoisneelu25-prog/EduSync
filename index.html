@@ -759,71 +759,76 @@
       </div>
     </section>
 
-    <!-- Beyond Academics Topics -->
+    <!-- Beyond Academics Topics (Interactive Explorer) -->
     <section class="section topics-section" id="topics">
-      <div class="container">
+      <div class="container topics-container">
         <div class="section-header reveal-on-scroll">
           <span class="section-tag coral">Holistic Learning</span>
           <h2 class="section-title">Learning goes beyond the textbook.</h2>
           <p class="section-subtitle">
-            EduSync can grow with the child — helping them build knowledge and skills beyond academics.
+            EduSync grows with your child — tap any topic below to unlock interactive skill cards and mentor challenges!
           </p>
         </div>
 
         <div class="topics-grid reveal-on-scroll delay-1">
           <!-- 1. Academics -->
-          <div class="topic-card">
+          <div class="topic-card topic-interactive-card active" data-topic="academics">
             <div class="topic-icon-box navy">📐</div>
             <div class="topic-details">
-              <h3>Academics</h3>
+              <h3>Academics & STEM</h3>
               <p>Foundational Math, Science, Language, and Critical Reasoning made intuitive.</p>
             </div>
           </div>
 
           <!-- 2. Life Skills -->
-          <div class="topic-card">
+          <div class="topic-card topic-interactive-card" data-topic="lifeskills">
             <div class="topic-icon-box yellow">🧭</div>
             <div class="topic-details">
-              <h3>Life Skills</h3>
-              <p>Problem-solving, emotional regulation, curiosity, and smart time management.</p>
+              <h3>Life Skills & Discovery</h3>
+              <p>Problem-solving, emotional regulation, patience, and smart time management.</p>
             </div>
           </div>
 
           <!-- 3. Health & Fitness -->
-          <div class="topic-card">
+          <div class="topic-card topic-interactive-card" data-topic="fitness">
             <div class="topic-icon-box teal">🍎</div>
             <div class="topic-details">
-              <h3>Health & Fitness</h3>
-              <p>Nutrition basics, movement fun, healthy sleep habits, and body wellness.</p>
+              <h3>Health & Nutrition</h3>
+              <p>Nutrition basics, movement fun, healthy hydration, and natural energy.</p>
             </div>
           </div>
 
           <!-- 4. Cyber Safety -->
-          <div class="topic-card">
+          <div class="topic-card topic-interactive-card" data-topic="cyber">
             <div class="topic-icon-box coral">🛡️</div>
             <div class="topic-details">
               <h3>Cyber Safety</h3>
-              <p>Safe browsing rules, password strength, and identifying online scams.</p>
+              <p>Safe browsing rules, 3-word passphrases, and identifying online game scams.</p>
             </div>
           </div>
 
           <!-- 5. Digital Responsibility -->
-          <div class="topic-card">
+          <div class="topic-card topic-interactive-card" data-topic="digital">
             <div class="topic-icon-box yellow">📱</div>
             <div class="topic-details">
               <h3>Digital Responsibility</h3>
-              <p>Healthy screen time balance, positive digital footprint, and digital kindness.</p>
+              <p>The 20-20-20 eye protection rule, screen balance, and digital empathy.</p>
             </div>
           </div>
 
           <!-- 6. Child Safety -->
-          <div class="topic-card">
+          <div class="topic-card topic-interactive-card" data-topic="child-safety">
             <div class="topic-icon-box teal">🤝</div>
             <div class="topic-details">
               <h3>Child Safety</h3>
               <p>Personal boundaries, trusted adults, emergency awareness, and self-advocacy.</p>
             </div>
           </div>
+        </div>
+
+        <!-- Dynamic Interactive Spotlight Box -->
+        <div class="topic-spotlight-container reveal-on-scroll delay-2" id="topicSpotlightContainer">
+          <!-- Rendered dynamically by topicsExplorer.js -->
         </div>
       </div>
     </section>
