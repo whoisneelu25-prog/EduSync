@@ -129,9 +129,9 @@ export function setActiveModel(modelId) {
 }
 
 /**
- * Direct call to OpenRouter API
+ * Direct call to OpenRouter API with multi-turn conversation history
  */
-export async function askOpenRouterAI(userPrompt, persona = 'priya', customApiKey = '', modelId = '') {
+export async function askOpenRouterAI(userPrompt, persona = 'priya', customApiKey = '', modelId = '', conversationHistory = []) {
   const apiKey = (customApiKey || getStoredOpenRouterKey()).trim();
   const activeModelId = modelId || getActiveModel();
   const systemInstruction = SYSTEM_PROMPTS[persona] || SYSTEM_PROMPTS['priya'];
@@ -141,18 +141,32 @@ export async function askOpenRouterAI(userPrompt, persona = 'priya', customApiKe
     return null;
   }
 
+  // Format recent chat history (last 6 turns for conversational context like ChatGPT)
+  const pastTurns = Array.isArray(conversationHistory)
+    ? conversationHistory
+        .filter(msg => msg && (msg.text || msg.content))
+        .slice(-6)
+        .map(msg => ({
+          role: msg.role === 'student' || msg.role === 'user' ? 'user' : 'assistant',
+          content: (msg.text || msg.content || '').replace(/<[^>]*>?/gm, '')
+        }))
+    : [];
+
+  const messages = [
+    {
+      role: 'system',
+      content: systemInstruction
+    },
+    ...pastTurns,
+    {
+      role: 'user',
+      content: userPrompt
+    }
+  ];
+
   const payload = {
     model: activeModelId,
-    messages: [
-      {
-        role: 'system',
-        content: systemInstruction
-      },
-      {
-        role: 'user',
-        content: userPrompt
-      }
-    ],
+    messages: messages,
     temperature: 0.7,
     max_tokens: 350
   };

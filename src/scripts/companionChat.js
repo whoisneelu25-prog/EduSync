@@ -1,4 +1,4 @@
-// SyncBuddy & AI Teacher Companion Chat Controller with 6 Specialized Mentors & OpenRouter AI
+// SyncBuddy & AI Teacher Companion Chat Controller with Per-Teacher Isolated Chat Threads (ChatGPT Style)
 import { 
   askOpenRouterAI,
   getStoredOpenRouterKey, 
@@ -9,6 +9,8 @@ import {
   AI_MODELS 
 } from './geminiAI.js';
 
+const CHAT_THREADS_STORAGE_KEY = 'edusync_teacher_chat_threads';
+
 export const teacherPersonas = {
   'priya': {
     id: 'priya',
@@ -17,9 +19,10 @@ export const teacherPersonas = {
     avatar: '🧑‍🏫',
     badge: '📖 English & Stories',
     superpower: '⭐ #1 in Grammar, Similes & Creative Writing',
-    tag: 'Visual & Socratic Guide',
+    tag: 'Language & Story Mentor',
     defaultSubject: 'language',
-    greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. I turn tricky grammar and words into delightful stories. What wondrous concept shall we explore?'
+    placeholder: 'Ask Teacher Priya about stories, words, or grammar (e.g. why use metaphors?)...',
+    greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. I turn tricky grammar and words into delightful stories. What wondrous concept shall we explore today?'
   },
   'rohan': {
     id: 'rohan',
@@ -27,10 +30,11 @@ export const teacherPersonas = {
     title: 'STEM & Rocket Physics Coach',
     avatar: '🚀',
     badge: '⚡ STEM & Space',
-    superpower: '⭐ #1 in Speed, Gravity & Rocket Experiments',
-    tag: 'Hands-on Experiments',
+    superpower: '⭐ #1 in Rocket Physics, Gravity & Speed',
+    tag: 'STEM & Space Coach',
     defaultSubject: 'physics',
-    greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock cosmic science secrets?'
+    placeholder: 'Ask Coach Rohan about rockets, speed, or gravity (e.g. why do planets orbit?)...',
+    greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to launch experiments, test gravity, and unlock cosmic science secrets?'
   },
   'arya': {
     id: 'arya',
@@ -38,10 +42,11 @@ export const teacherPersonas = {
     title: 'Visual Math & Geometry Wizard',
     avatar: '🧮',
     badge: '🍕 Visual Math',
-    superpower: '⭐ #1 in Fractions, Arithmetic & Geometry Tricks',
-    tag: 'Math Magician',
+    superpower: '⭐ #1 in Fractions, Arithmetic & Geometry',
+    tag: 'Visual Math Wizard',
     defaultSubject: 'math',
-    greeting: 'Welcome to the Math Arena! 🍕 I’m Arya Sir. I turn fractions into pizza slices and numbers into LEGO magic! What calculation shall we conquer?'
+    placeholder: 'Ask Arya Sir a calculation or math concept (e.g. 18 * 4 or 1/2 vs 1/4)...',
+    greeting: 'Welcome to the Math Arena! 🍕 I’m Arya Sir. I turn fractions into pizza slices and numbers into LEGO magic! What calculation shall we crunch?'
   },
   'tara': {
     id: 'tara',
@@ -49,20 +54,22 @@ export const teacherPersonas = {
     title: 'Wildlife, Plants & Eco Explorer',
     avatar: '🌿',
     badge: '🦋 Nature & Biology',
-    superpower: '⭐ #1 in Animals, Photosynthesis & Human Body',
-    tag: 'Ecosystem Scientist',
+    superpower: '⭐ #1 in Animals, Rainforests & Human Body',
+    tag: 'Nature & Wildlife Explorer',
     defaultSubject: 'nature',
-    greeting: 'Hello nature explorer! 🌿 I’m Dr. Tara. From deep ocean secrets to how plants cook sunlight, what nature mystery shall we investigate?'
+    placeholder: 'Ask Dr. Tara about animals, plants, or the human body (e.g. how do leaves eat sunlight?)...',
+    greeting: 'Hello nature explorer! 🌿 I’m Dr. Tara. From deep ocean mysteries to how plants cook sunlight, what nature wonder shall we investigate?'
   },
   'alex': {
     id: 'alex',
     name: 'Captain Alex',
     title: 'Cyber Safety & Mindset Guardian',
     avatar: '🛡️',
-    badge: '🔐 Cyber & Wellness',
-    superpower: '⭐ #1 in Unbreakable Passwords & Screen Balance',
-    tag: 'Digital Shield Coach',
+    badge: '🔐 Cyber & Habits',
+    superpower: '⭐ #1 in Passwords, Screen Balance & Focus',
+    tag: 'Cyber Shield & Habits Coach',
     defaultSubject: 'lifeskills',
+    placeholder: 'Ask Captain Alex about online safety or focus (e.g. how to build strong passwords?)...',
     greeting: 'Greetings, digital hero! 🛡️ Captain Alex here. Ready to build unbreakable password armor and master calm focus habits?'
   },
   'syncbuddy': {
@@ -71,9 +78,10 @@ export const teacherPersonas = {
     title: 'Adaptive Peer Study Buddy',
     avatar: '✨',
     badge: '💡 Peer Homework Buddy',
-    superpower: '⭐ #1 in 3-Step Intuitive Explanations',
-    tag: 'Friendly Peer Tutor',
+    superpower: '⭐ #1 in 3-Step Intuitive Homework Tutoring',
+    tag: 'All-Round Study Companion',
     defaultSubject: 'nutrition',
+    placeholder: 'Ask SyncBuddy any confusing homework question for a simple 3-step explanation...',
     greeting: 'Hi dost! ✨ I’m SyncBuddy. Stuck on tricky homework or want a crystal-clear 3-step analogy? Ask me anything!'
   },
   // Backward compatibility aliases
@@ -84,8 +92,9 @@ export const teacherPersonas = {
     avatar: '🧑‍🏫',
     badge: '📖 English & Stories',
     superpower: '⭐ #1 in Grammar & Stories',
-    tag: 'Visual & Socratic Guide',
+    tag: 'Language & Story Mentor',
     defaultSubject: 'language',
+    placeholder: 'Ask Teacher Priya anything...',
     greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. What wondrous concept would you like to explore today?'
   },
   'leo': {
@@ -95,8 +104,9 @@ export const teacherPersonas = {
     avatar: '🚀',
     badge: '⚡ STEM & Space',
     superpower: '⭐ #1 in Speed & Physics',
-    tag: 'Hands-on Experiments',
+    tag: 'STEM & Space Coach',
     defaultSubject: 'physics',
+    placeholder: 'Ask Coach Rohan anything...',
     greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock science secrets?'
   }
 };
@@ -311,10 +321,48 @@ export const knowledgeResponses = {
   }
 };
 
+// Thread Storage Helper Functions
+function loadSavedThreads() {
+  try {
+    const raw = localStorage.getItem(CHAT_THREADS_STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.warn('Could not load chat threads:', e);
+  }
+  return {};
+}
+
+function persistThreads(threads) {
+  try {
+    localStorage.setItem(CHAT_THREADS_STORAGE_KEY, JSON.stringify(threads));
+  } catch (e) {
+    console.warn('Could not persist chat threads:', e);
+  }
+}
+
 export function initCompanionChat() {
   let activePersona = 'priya';
   let activeSubject = 'language';
   let isTyping = false;
+
+  // In-memory conversation store for each teacher
+  const teacherThreads = loadSavedThreads();
+
+  // Ensure every teacher persona has an initialized thread
+  Object.keys(teacherPersonas).forEach(k => {
+    const canonicalKey = teacherPersonas[k].id;
+    if (!teacherThreads[canonicalKey] || teacherThreads[canonicalKey].length === 0) {
+      teacherThreads[canonicalKey] = [
+        {
+          role: 'teacher',
+          personaId: canonicalKey,
+          text: teacherPersonas[canonicalKey].greeting,
+          visual: null,
+          timestamp: Date.now()
+        }
+      ];
+    }
+  });
 
   // DOM Elements
   const personaCards = document.querySelectorAll('.teacher-specialist-card, .teacher-persona-btn');
@@ -327,6 +375,7 @@ export function initCompanionChat() {
   const chatBody = document.querySelector('.companion-chat-body');
   const chatInput = document.querySelector('.companion-input');
   const sendBtn = document.querySelector('.companion-send-btn');
+  const newChatBtn = document.querySelector('#newTeacherChatBtn');
 
   function scrollToBottom() {
     if (chatBody) {
@@ -334,75 +383,31 @@ export function initCompanionChat() {
     }
   }
 
-  function setActiveTeacher(personaKey) {
-    activePersona = personaKey || 'priya';
-    const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
-
-    // Update active states on cards and buttons
-    personaCards.forEach(card => {
-      card.classList.toggle('active', card.dataset.persona === activePersona);
-    });
-
-    // Update header identity
-    if (personaAvatarEl) personaAvatarEl.textContent = persona.avatar;
-    if (personaNameEl) {
-      personaNameEl.innerHTML = `${persona.name} <span class="companion-mode-tag">${persona.tag}</span>`;
-    }
-    if (personaStatusEl) {
-      personaStatusEl.textContent = persona.title;
-    }
-    if (personaSuperpowerEl) {
-      personaSuperpowerEl.textContent = persona.superpower;
-    }
-
-    // Auto-align default subject tab if appropriate
-    if (persona.defaultSubject) {
-      activeSubject = persona.defaultSubject;
-      subjectPills.forEach(tab => {
-        tab.classList.toggle('active', tab.dataset.subject === activeSubject);
-      });
-      renderPromptChips();
-    }
-
-    addTeacherMessage(persona.greeting);
+  function getActiveThreadKey() {
+    return teacherPersonas[activePersona]?.id || 'priya';
   }
 
-  // Persona Switcher Listeners
-  personaCards.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const personaKey = btn.dataset.persona || 'priya';
-      setActiveTeacher(personaKey);
-    });
-  });
+  // Render all messages in the active teacher's thread
+  function renderActiveThread() {
+    if (!chatBody) return;
+    const threadKey = getActiveThreadKey();
+    const thread = teacherThreads[threadKey] || [];
 
-  // Render Prompt Chips for Active Subject
-  function renderPromptChips() {
-    if (!chipsContainer) return;
-    chipsContainer.innerHTML = '';
+    // Clear current DOM stream
+    chatBody.innerHTML = '';
 
-    const prompts = subjectPrompts[activeSubject] || subjectPrompts['language'];
-    prompts.forEach(p => {
-      const chip = document.createElement('button');
-      chip.type = 'button';
-      chip.className = 'prompt-chip';
-      chip.textContent = p.text;
-      chip.dataset.prompt = p.id;
-      chip.addEventListener('click', () => handlePromptClick(p.id, p.text));
-      chipsContainer.appendChild(chip);
+    thread.forEach(msg => {
+      if (msg.role === 'student' || msg.role === 'user') {
+        renderStudentBubble(msg.text, false);
+      } else {
+        renderTeacherBubble(msg.text, msg.visual, msg.personaId || threadKey, false);
+      }
     });
+
+    scrollToBottom();
   }
 
-  // Subject Tab Switcher
-  subjectPills.forEach(tab => {
-    tab.addEventListener('click', () => {
-      subjectPills.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      activeSubject = tab.dataset.subject || 'language';
-      renderPromptChips();
-    });
-  });
-
-  function addStudentMessage(text) {
+  function renderStudentBubble(text, shouldScroll = true) {
     if (!chatBody) return;
     const row = document.createElement('div');
     row.className = 'chat-bubble-row student-row';
@@ -411,31 +416,13 @@ export function initCompanionChat() {
       <div class="chat-message-bubble">${escapeHtml(text)}</div>
     `;
     chatBody.appendChild(row);
-    scrollToBottom();
+    if (shouldScroll) scrollToBottom();
   }
 
-  function formatAiMarkdown(text) {
-    if (!text) return '';
-    return text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>')
-      .replace(/\n\n/g, '<br><br>')
-      .replace(/\n/g, '<br>');
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  function addTeacherMessage(text, visual = null) {
+  function renderTeacherBubble(text, visual = null, personaKey = null, shouldScroll = true) {
     if (!chatBody) return;
-    const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
+    const key = personaKey || getActiveThreadKey();
+    const persona = teacherPersonas[key] || teacherPersonas['priya'];
     const row = document.createElement('div');
     row.className = 'chat-bubble-row companion-row';
 
@@ -487,7 +474,154 @@ export function initCompanionChat() {
     });
 
     chatBody.appendChild(row);
-    scrollToBottom();
+    if (shouldScroll) scrollToBottom();
+  }
+
+  function addStudentMessage(text) {
+    const threadKey = getActiveThreadKey();
+    if (!teacherThreads[threadKey]) teacherThreads[threadKey] = [];
+    teacherThreads[threadKey].push({
+      role: 'student',
+      text: text,
+      timestamp: Date.now()
+    });
+    persistThreads(teacherThreads);
+    renderStudentBubble(text, true);
+  }
+
+  function addTeacherMessage(text, visual = null) {
+    const threadKey = getActiveThreadKey();
+    if (!teacherThreads[threadKey]) teacherThreads[threadKey] = [];
+    teacherThreads[threadKey].push({
+      role: 'teacher',
+      personaId: threadKey,
+      text: text,
+      visual: visual,
+      timestamp: Date.now()
+    });
+    persistThreads(teacherThreads);
+    renderTeacherBubble(text, visual, threadKey, true);
+  }
+
+  function setActiveTeacher(personaKey) {
+    activePersona = personaKey || 'priya';
+    const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
+
+    // Update active states on teacher cards
+    personaCards.forEach(card => {
+      card.classList.toggle('active', card.dataset.persona === activePersona);
+    });
+
+    // Update header identity
+    if (personaAvatarEl) personaAvatarEl.textContent = persona.avatar;
+    if (personaNameEl) {
+      personaNameEl.innerHTML = `${persona.name} <span class="companion-mode-tag">${persona.tag}</span>`;
+    }
+    if (personaStatusEl) {
+      personaStatusEl.textContent = persona.title;
+    }
+    if (personaSuperpowerEl) {
+      personaSuperpowerEl.textContent = persona.superpower;
+    }
+
+    // Update input placeholder for that specific teacher
+    if (chatInput && persona.placeholder) {
+      chatInput.placeholder = persona.placeholder;
+    }
+
+    // Auto-align default subject tab
+    if (persona.defaultSubject) {
+      activeSubject = persona.defaultSubject;
+      subjectPills.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.subject === activeSubject);
+      });
+      renderPromptChips();
+    }
+
+    // Load and render this teacher's dedicated conversation thread!
+    renderActiveThread();
+  }
+
+  // Teacher Selection Listener
+  personaCards.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const personaKey = btn.dataset.persona || 'priya';
+      setActiveTeacher(personaKey);
+    });
+  });
+
+  // "New Chat" Button Handler
+  newChatBtn?.addEventListener('click', () => {
+    const threadKey = getActiveThreadKey();
+    const persona = teacherPersonas[threadKey] || teacherPersonas['priya'];
+
+    // Reset this teacher's thread to fresh greeting
+    teacherThreads[threadKey] = [
+      {
+        role: 'teacher',
+        personaId: threadKey,
+        text: persona.greeting,
+        visual: null,
+        timestamp: Date.now()
+      }
+    ];
+    persistThreads(teacherThreads);
+    renderActiveThread();
+
+    // Show temporary confirmation
+    const origText = newChatBtn.innerHTML;
+    newChatBtn.innerHTML = '<span>✨</span> Started!';
+    newChatBtn.classList.add('flash-active');
+    setTimeout(() => {
+      newChatBtn.innerHTML = origText;
+      newChatBtn.classList.remove('flash-active');
+    }, 1200);
+  });
+
+  // Render Prompt Chips for Active Subject
+  function renderPromptChips() {
+    if (!chipsContainer) return;
+    chipsContainer.innerHTML = '';
+
+    const prompts = subjectPrompts[activeSubject] || subjectPrompts['language'];
+    prompts.forEach(p => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'prompt-chip';
+      chip.textContent = p.text;
+      chip.dataset.prompt = p.id;
+      chip.addEventListener('click', () => handlePromptClick(p.id, p.text));
+      chipsContainer.appendChild(chip);
+    });
+  }
+
+  // Subject Tab Switcher
+  subjectPills.forEach(tab => {
+    tab.addEventListener('click', () => {
+      subjectPills.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeSubject = tab.dataset.subject || 'language';
+      renderPromptChips();
+    });
+  });
+
+  function formatAiMarkdown(text) {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
   }
 
   function readTextAloud(rawText) {
@@ -508,8 +642,11 @@ export function initCompanionChat() {
     showTypingIndicator(true);
 
     try {
-      // First try live OpenRouter AI with active persona
-      const aiReply = await askOpenRouterAI(userText, activePersona);
+      const threadKey = getActiveThreadKey();
+      const historyContext = teacherThreads[threadKey] || [];
+
+      // Try live OpenRouter AI with active persona and conversation history
+      const aiReply = await askOpenRouterAI(userText, activePersona, '', '', historyContext);
       showTypingIndicator(false);
       isTyping = false;
 
@@ -529,7 +666,7 @@ export function initCompanionChat() {
         }
       }
 
-      // Sync chat curiosity point
+      // Sync chat curiosity points
       window.dispatchEvent(new CustomEvent('edusync_update_progress', {
         detail: { addPoints: 15, preferredTeacher: activePersona }
       }));
@@ -554,8 +691,11 @@ export function initCompanionChat() {
     showTypingIndicator(true);
 
     try {
-      // 1. Call OpenRouter AI
-      const aiReply = await askOpenRouterAI(text, activePersona);
+      const threadKey = getActiveThreadKey();
+      const historyContext = teacherThreads[threadKey] || [];
+
+      // 1. Call OpenRouter AI with contextual history
+      const aiReply = await askOpenRouterAI(text, activePersona, '', '', historyContext);
       showTypingIndicator(false);
       isTyping = false;
 
@@ -564,7 +704,7 @@ export function initCompanionChat() {
         const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
         addTeacherMessage(aiReply, {
           icon: '⚡',
-          desc: `<strong>${modMeta.name}:</strong> Live pedagogical response from ${teacherPersonas[activePersona]?.name}.`
+          desc: `<strong>${modMeta.name}:</strong> Live response from ${teacherPersonas[activePersona]?.name}.`
         });
       } else {
         // 2. Fallback to rich built-in pedagogical knowledge engine
@@ -723,6 +863,7 @@ export function initCompanionChat() {
   setupAiConfigModal();
 
   // Initialize Default State
+  setActiveTeacher('priya');
   renderPromptChips();
 }
 

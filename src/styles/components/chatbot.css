@@ -318,22 +318,83 @@
   box-shadow: 0 0 8px #55DC9C;
 }
 
-/* Superpower Sub-Banner */
+/* Superpower Sub-Banner with Multi-Thread Controls */
 .companion-superpower-banner {
   background: linear-gradient(90deg, #FBF4E4 0%, #EBF6F5 100%);
-  padding: 6px 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--color-navy);
 }
 
+.banner-left-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
 .companion-superpower-badge {
   color: var(--color-navy);
   letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-thread-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.chat-memory-indicator {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-teal-dark);
+  background: rgba(79, 166, 160, 0.15);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-new-chat {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-navy);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(23, 50, 77, 0.06);
+  transition: all var(--transition-fast);
+}
+
+.btn-new-chat:hover {
+  background: var(--color-teal-light);
+  border-color: var(--color-teal);
+  color: var(--color-teal-dark);
+  transform: translateY(-1px);
+}
+
+.btn-new-chat.flash-active {
+  background: var(--color-yellow);
+  color: var(--color-navy);
+  border-color: var(--color-yellow-dark);
+  box-shadow: 0 0 10px rgba(244, 201, 93, 0.6);
 }
 
 /* Subject Category Filter Tabs */
