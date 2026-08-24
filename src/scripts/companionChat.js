@@ -1,4 +1,4 @@
-// SyncBuddy & AI Teacher Companion Chat Controller with OpenRouter AI
+// SyncBuddy & AI Teacher Companion Chat Controller with 6 Specialized Mentors & OpenRouter AI
 import { 
   askOpenRouterAI,
   getStoredOpenRouterKey, 
@@ -11,77 +11,276 @@ import {
 
 export const teacherPersonas = {
   'priya': {
+    id: 'priya',
     name: 'Teacher Priya',
-    title: 'Primary Educator & Storyteller',
+    title: 'Language, Grammar & Storyteller',
     avatar: '🧑‍🏫',
+    badge: '📖 English & Stories',
+    superpower: '⭐ #1 in Grammar, Similes & Creative Writing',
     tag: 'Visual & Socratic Guide',
-    greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. What wondrous concept would you like to explore today?'
+    defaultSubject: 'language',
+    greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. I turn tricky grammar and words into delightful stories. What wondrous concept shall we explore?'
   },
   'rohan': {
+    id: 'rohan',
     name: 'Coach Rohan',
-    title: 'STEM & Science Explorer',
+    title: 'STEM & Rocket Physics Coach',
     avatar: '🚀',
+    badge: '⚡ STEM & Space',
+    superpower: '⭐ #1 in Speed, Gravity & Rocket Experiments',
     tag: 'Hands-on Experiments',
-    greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock science secrets?'
+    defaultSubject: 'physics',
+    greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock cosmic science secrets?'
+  },
+  'arya': {
+    id: 'arya',
+    name: 'Arya Sir',
+    title: 'Visual Math & Geometry Wizard',
+    avatar: '🧮',
+    badge: '🍕 Visual Math',
+    superpower: '⭐ #1 in Fractions, Arithmetic & Geometry Tricks',
+    tag: 'Math Magician',
+    defaultSubject: 'math',
+    greeting: 'Welcome to the Math Arena! 🍕 I’m Arya Sir. I turn fractions into pizza slices and numbers into LEGO magic! What calculation shall we conquer?'
+  },
+  'tara': {
+    id: 'tara',
+    name: 'Dr. Tara',
+    title: 'Wildlife, Plants & Eco Explorer',
+    avatar: '🌿',
+    badge: '🦋 Nature & Biology',
+    superpower: '⭐ #1 in Animals, Photosynthesis & Human Body',
+    tag: 'Ecosystem Scientist',
+    defaultSubject: 'nature',
+    greeting: 'Hello nature explorer! 🌿 I’m Dr. Tara. From deep ocean secrets to how plants cook sunlight, what nature mystery shall we investigate?'
+  },
+  'alex': {
+    id: 'alex',
+    name: 'Captain Alex',
+    title: 'Cyber Safety & Mindset Guardian',
+    avatar: '🛡️',
+    badge: '🔐 Cyber & Wellness',
+    superpower: '⭐ #1 in Unbreakable Passwords & Screen Balance',
+    tag: 'Digital Shield Coach',
+    defaultSubject: 'lifeskills',
+    greeting: 'Greetings, digital hero! 🛡️ Captain Alex here. Ready to build unbreakable password armor and master calm focus habits?'
   },
   'syncbuddy': {
+    id: 'syncbuddy',
     name: 'SyncBuddy AI',
-    title: 'Adaptive Learning Companion',
+    title: 'Adaptive Peer Study Buddy',
     avatar: '✨',
+    badge: '💡 Peer Homework Buddy',
+    superpower: '⭐ #1 in 3-Step Intuitive Explanations',
     tag: 'Friendly Peer Tutor',
-    greeting: 'Hi dost! ✨ I’m SyncBuddy. Stuck on a tricky question or want a fun analogy? Ask me anything!'
+    defaultSubject: 'nutrition',
+    greeting: 'Hi dost! ✨ I’m SyncBuddy. Stuck on tricky homework or want a crystal-clear 3-step analogy? Ask me anything!'
   },
-  // Backward compatible aliases
+  // Backward compatibility aliases
   'maya': {
+    id: 'priya',
     name: 'Teacher Priya',
-    title: 'Primary Educator & Storyteller',
+    title: 'Language, Grammar & Storyteller',
     avatar: '🧑‍🏫',
+    badge: '📖 English & Stories',
+    superpower: '⭐ #1 in Grammar & Stories',
     tag: 'Visual & Socratic Guide',
+    defaultSubject: 'language',
     greeting: 'Namaste, curious learner! 🌟 I’m Teacher Priya. What wondrous concept would you like to explore today?'
   },
   'leo': {
+    id: 'rohan',
     name: 'Coach Rohan',
-    title: 'STEM & Science Explorer',
+    title: 'STEM & Rocket Physics Coach',
     avatar: '🚀',
+    badge: '⚡ STEM & Space',
+    superpower: '⭐ #1 in Speed & Physics',
     tag: 'Hands-on Experiments',
+    defaultSubject: 'physics',
     greeting: 'Hey champion! ⚡ Coach Rohan here! Ready to run experiments, test gravity, and unlock science secrets?'
   }
 };
 
 export const subjectPrompts = {
-  'nutrition': [
-    { id: 'nut-water', text: '💧 Why do we need so much water?' },
-    { id: 'nut-avocado', text: '🥑 Is an avocado a fruit or vegetable?' },
-    { id: 'nut-rainbow', text: '🌈 What is the "Eat the Rainbow" rule?' }
-  ],
-  'math': [
-    { id: 'math-pizza', text: '🍕 Explain 1/2 vs 1/4 with pizza' },
-    { id: 'math-angles', text: '📐 What is the difference between acute and obtuse?' },
-    { id: 'math-multiply', text: '⚡ How does multiplication work visually?' }
-  ],
   'language': [
-    { id: 'lang-er-est', text: '📏 When do I use -er vs -est?' },
-    { id: 'lang-verbs', text: '⚡ How can I spot action verbs in stories?' },
-    { id: 'lang-simile', text: '🎭 What is the difference between a simile and a metaphor?' }
+    { id: 'lang-er-est', text: '📏 When do I use -er vs -est in writing?' },
+    { id: 'lang-verbs', text: '⚡ How can I spot dynamic action verbs?' },
+    { id: 'lang-simile', text: '🎭 What is the difference between simile & metaphor?' },
+    { id: 'lang-adjectives', text: '🌟 How do adjectives make my stories magical?' }
   ],
   'physics': [
     { id: 'phys-gravity', text: '🌍 Why do things fall down instead of floating?' },
-    { id: 'phys-moon', text: '🌕 Why can we jump higher on the Moon?' },
-    { id: 'phys-light', text: '⚡ Why does lightning strike before thunder sounds?' }
+    { id: 'phys-moon', text: '🌕 Why can we jump 6x higher on the Moon?' },
+    { id: 'phys-light', text: '⚡ Why does lightning strike before thunder sounds?' },
+    { id: 'phys-rocket', text: '🚀 How does rocket fuel push against gravity?' }
+  ],
+  'math': [
+    { id: 'math-pizza', text: '🍕 Explain 1/2 vs 1/4 with pizza slices' },
+    { id: 'math-angles', text: '📐 Acute vs Right vs Obtuse angles simply' },
+    { id: 'math-multiply', text: '⚡ How does 6 × 7 work with visual grouping?' },
+    { id: 'math-shortcuts', text: '🧮 What is a quick trick for multiplying by 9?' }
   ],
   'nature': [
-    { id: 'nat-sunlight', text: '🌿 How do green plants eat sunlight?' },
-    { id: 'nat-bees', text: '🐝 Why are honeybees so important to flowers?' },
-    { id: 'nat-caterpillar', text: '🦋 How does a caterpillar turn into a butterfly?' }
+    { id: 'nat-sunlight', text: '🌿 How do green plant leaves eat sunlight?' },
+    { id: 'nat-bees', text: '🐝 Why are honeybees so important for fruits?' },
+    { id: 'nat-caterpillar', text: '🦋 How does a caterpillar transform into a butterfly?' },
+    { id: 'nat-dolphin', text: '🐬 How do dolphins breathe while swimming?' }
   ],
   'lifeskills': [
-    { id: 'safe-password', text: '🔐 How do I create a super strong password?' },
-    { id: 'safe-breathe', text: '🧘 How does deep breathing calm my brain?' },
-    { id: 'safe-screentime', text: '📱 What is the 20-20-20 screen rule?' }
+    { id: 'safe-password', text: '🔐 How do I create an unhackable password?' },
+    { id: 'safe-breathe', text: '🧘 How does 4-4-4 box breathing calm my brain?' },
+    { id: 'safe-screentime', text: '📱 What is the 20-20-20 screen rule for sharp eyes?' },
+    { id: 'safe-bully', text: '🛡️ What should I do if someone is unkind online?' }
+  ],
+  'nutrition': [
+    { id: 'nut-water', text: '💧 Why is 60% of our body pure water?' },
+    { id: 'nut-avocado', text: '🥑 Is an avocado secretly a giant fruit?' },
+    { id: 'nut-rainbow', text: '🌈 What is the "Eat the Rainbow" plate rule?' },
+    { id: 'nut-energy', text: '🍎 How does natural fruit sugar power brain focus?' }
   ]
 };
 
 export const knowledgeResponses = {
+  'lang-er-est': {
+    reply: 'Here is Teacher Priya’s golden rule! 📏 When comparing **only 2 items**, crown them with **-ER**: *"A cheetah is fast**er** than a turtle."* But when comparing **3 or more items** (the whole kingdom!), crown the champion with **-EST**: *"The cheetah is the fast**est** land animal on Earth!"*',
+    visual: {
+      icon: '🐆',
+      desc: '<strong>Comparison Formula:</strong> 2 items = -ER (Faster) • 3+ items = -EST (Fastest).'
+    }
+  },
+  'lang-verbs': {
+    reply: 'Verbs are the superhero engines of every sentence! ⚡ Ask yourself: *"Can a person, creature, or robot DO this physical action?"* Words like **sprinted, leaped, roared, whispered, painted, and solved** are all dynamic action verbs!',
+    visual: {
+      icon: '🏃',
+      desc: '<strong>Verb Detective:</strong> If you can act it out or draw motion blur lines, it’s an action verb!'
+    }
+  },
+  'lang-simile': {
+    reply: 'Both make your writing sparkle like diamonds! 🎭 A **Simile** compares using "LIKE" or "AS": *"He ran as fast AS lightning."* A **Metaphor** makes a bold direct identity: *"His heart IS pure gold."*',
+    visual: {
+      icon: '🌟',
+      desc: '<strong>Figurative Guide:</strong> Simile uses "like/as" • Metaphor says one thing IS another.'
+    }
+  },
+  'lang-adjectives': {
+    reply: 'Adjectives are the colorful paintbrushes of your imagination! 🎨 Without adjectives: *"The dog ate food."* With sparkling adjectives: *"The **fluffy, energetic** dog munched **crunchy, delicious** biscuits!"* They describe color, size, shape, and feeling!',
+    visual: {
+      icon: '🎨',
+      desc: '<strong>Story Brush:</strong> Adjectives describe HOW things look, feel, taste, sound, and smell.'
+    }
+  },
+  'phys-gravity': {
+    reply: 'Planet Earth is so colossal (6 sextillion kilograms!) that its invisible gravitational pull reaches out and pulls all matter — including you, the oceans, and basketballs — straight toward its center core! 🌍 Without gravity, we’d float right into space!',
+    visual: {
+      icon: '🌍',
+      desc: '<strong>Earth Gravity:</strong> Giant mass pulls everything down at 9.8 m/s².'
+    }
+  },
+  'phys-moon': {
+    reply: 'Because the Moon is much smaller than Earth (only 1% of Earth’s mass), its gravitational pull is only **1/6th as strong**! 🌕 That means if you can jump 1 foot on Earth, on the Moon you will float up **6 whole feet** into the starry sky!',
+    visual: {
+      icon: '🚀',
+      desc: '<strong>Moon Leap:</strong> 1/6th gravity = 6 times higher jumps!'
+    }
+  },
+  'phys-light': {
+    reply: 'Light travels at the absolute cosmic speed limit — **300,000 kilometers every single second**! ⚡ Sound waves through air only travel at 0.34 km/s. So the lightning flash reaches your eyes instantly, while acoustic thunder takes 5 seconds per mile to reach your ears!',
+    visual: {
+      icon: '🌩️',
+      desc: '<strong>Speed Race:</strong> Light (Instantaneous) vs Sound (Takes 5 seconds per mile).'
+    }
+  },
+  'phys-rocket': {
+    reply: 'Rocket propulsion works by **Newton’s Third Law of Motion**: For every action, there is an equal and opposite reaction! 🚀 When burning rocket fuel blasts downward at extreme speed, it pushes the rocket blasting upward straight into orbit!',
+    visual: {
+      icon: '🚀',
+      desc: '<strong>Thrust Power:</strong> Blasting gas down ⬇️ shoots the rocket UP ⬆️!'
+    }
+  },
+  'math-pizza': {
+    reply: 'Imagine a piping hot cheese pizza fresh out of the oven! 🍕 If you share with 1 best friend, you cut it down the middle into 2 equal halves. You get **1/2**! But if 4 friends share, you cut it into 4 pieces: **1/4**. 1/2 gives you twice as much pizza as 1/4!',
+    visual: {
+      icon: '🍕',
+      desc: '<strong>Fraction Rule:</strong> Fewer pieces = Bigger slices (1/2 > 1/4)!'
+    }
+  },
+  'math-angles': {
+    reply: 'Look at a door corner or a book edge: that sharp square corner is a **90° Right Angle** 📐. If an angle is narrower and sharper, it’s an **Acute Angle** (think "a cute little puppy"). If it opens wide like a comfy recliner chair, it’s an **Obtuse Angle**!',
+    visual: {
+      icon: '📐',
+      desc: '<strong>Angle Guide:</strong> Acute (<90°) • Right (90° corner) • Obtuse (>90° wide open).'
+    }
+  },
+  'math-multiply': {
+    reply: 'Multiplication is super-speed grouping! ⚡ **6 × 7** means you have **6 baskets with 7 apples in each**. Count by sevens: 7, 14, 21, 28, 35, **42**! You instantly have 42 apples without adding one by one!',
+    visual: {
+      icon: '🧺',
+      desc: '<strong>Grouping Power:</strong> 6 groups of 7 = 42 total items!'
+    }
+  },
+  'math-shortcuts': {
+    reply: 'Here is Arya Sir’s famous 9s Finger Trick! 🧮 To find **9 × 4**, hold out both hands with 10 fingers. Bend down your **4th finger** from the left. You have 3 fingers on the left and 6 on the right: **36**! Magic!',
+    visual: {
+      icon: '🖐️',
+      desc: '<strong>Finger Magic:</strong> 9 × 4 ➔ 3 fingers left + 6 fingers right = 36!'
+    }
+  },
+  'nat-sunlight': {
+    reply: 'Plants have microscopic green solar factories called **chlorophyll**! 🌿 Leaves absorb carbon dioxide from the air and water from the soil. When sunlight hits chlorophyll, it cooks sweet glucose food and releases clean oxygen for us to breathe!',
+    visual: {
+      icon: '🌿',
+      desc: '<strong>Photosynthesis:</strong> Sunlight + Water + CO₂ ➔ Sweet Food + Fresh Oxygen (O₂)!'
+    }
+  },
+  'nat-bees': {
+    reply: 'Bees are nature’s master pollination heroes! 🐝 When a bee sips sweet nectar, fuzzy yellow pollen dust sticks to its body. When it flies to the next flower, it pollinates the plant so it can grow into juicy apples, mangoes, and berries!',
+    visual: {
+      icon: '🐝',
+      desc: '<strong>Pollination Hero:</strong> 1 out of every 3 bites of human food relies directly on bees!'
+    }
+  },
+  'nat-caterpillar': {
+    reply: 'Inside the silky chrysalis, something miraculous happens! 🦋 The caterpillar releases natural enzymes that rearrange its crawling cells into brand new wings, delicate antennae, and nectar-sipping eyes! It emerges as a flying butterfly.',
+    visual: {
+      icon: '🦋',
+      desc: '<strong>Metamorphosis:</strong> Egg ➔ Caterpillar ➔ Chrysalis ➔ Butterfly!'
+    }
+  },
+  'nat-dolphin': {
+    reply: 'Dolphins are not fish — they are warm-blooded mammals just like us! 🐬 They have a blowhole on the top of their head. They come to the ocean surface every few minutes to exhale old air and inhale a fresh lungful of oxygen!',
+    visual: {
+      icon: '🐬',
+      desc: '<strong>Mammal Wonder:</strong> Dolphins breathe air through a blowhole, not gills!'
+    }
+  },
+  'safe-password': {
+    reply: 'Think of passwords like impenetrable superhero shields! 🔐 Pick 3 random favorite words + a lucky number + a special symbol: like `GoldenEagle77!`. Never share it in gaming chats or with friends — only your parents or guardians should know your login!',
+    visual: {
+      icon: '🛡️',
+      desc: '<strong>Cyber Shield:</strong> 3 Words + Number + Symbol = Unhackable passphrase.'
+    }
+  },
+  'safe-breathe': {
+    reply: 'When you take slow, deep 4-second belly breaths (Inhale 4s ➔ Hold 4s ➔ Exhale 4s ➔ Hold 4s), it sends a direct signal to the **vagus nerve** in your brain 🧘. This calms your stress amygdala and gives full superpower back to your prefrontal thinking brain!',
+    visual: {
+      icon: '🌬️',
+      desc: '<strong>Box Breathing:</strong> 4s Inhale ➔ 4s Hold ➔ 4s Exhale ➔ 4s Hold.'
+    }
+  },
+  'safe-screentime': {
+    reply: 'To keep eyes sparkling and prevent digital strain, eye doctors recommend the **20-20-20 Rule**! 👀 Every 20 minutes of screen time, look up at an object at least 20 feet away for 20 seconds. It lets your eye focus muscles relax completely!',
+    visual: {
+      icon: '👀',
+      desc: '<strong>20-20-20 Vision Care:</strong> Every 20 mins, look 20 ft away for 20 seconds.'
+    }
+  },
+  'safe-bully': {
+    reply: 'Always follow the 3-Step Hero Protocol: 1. **Do not retaliate.** 2. **Take a screenshot.** 3. **Tell a trusted adult immediately!** 🛡️ Never suffer in silence — great guardians always have your back!',
+    visual: {
+      icon: '🛡️',
+      desc: '<strong>Shield Protocol:</strong> Stop ➔ Screenshot ➔ Tell a Trusted Adult.'
+    }
+  },
   'nut-water': {
     reply: 'Our bodies are like super-powered water machines! 💧 About 60% of your body and 75% of your brain is made of pure water. When you drink water, it carries vitamins to your muscles and keeps your brain sharp and energetic without any sugar crashes!',
     visual: {
@@ -97,129 +296,32 @@ export const knowledgeResponses = {
     }
   },
   'nut-rainbow': {
-    reply: 'Eating the rainbow means loading your plate with different natural colors! 🌈 Red tomatoes protect your heart, orange carrots give you eagle eyesight, green broccoli builds iron stamina, and purple blueberries protect memory cells!',
+    reply: 'Eating the rainbow means loading your plate with natural vibrant colors! 🌈 Red tomatoes protect your heart, orange carrots give you eagle eyesight, green broccoli builds iron stamina, and purple blueberries protect brain memory!',
     visual: {
       icon: '🥗',
       desc: '<strong>Rainbow Plate:</strong> Red (Heart) • Orange (Eyes) • Green (Stamina) • Blue/Purple (Brain).'
     }
   },
-  'math-pizza': {
-    reply: 'Imagine a warm cheesy pizza fresh out of the oven! 🍕 If you share with 1 best friend, you cut it down the middle into 2 equal halves. You get <strong>1/2</strong>! But if 4 friends share, you cut it into 4 pieces. You get <strong>1/4</strong>. 1/2 gives you twice as much pizza as 1/4!',
+  'nut-energy': {
+    reply: 'Natural fruits contain fructose, vitamins, and dietary fiber that release energy slowly into your bloodstream! 🍎 Unlike candy which causes a spike and sleepy crash, whole fruits keep you energized all afternoon!',
     visual: {
-      icon: '🍕',
-      desc: '<strong>Fraction Rule:</strong> 1/2 gives a huge half-pizza slice; 1/4 gives a smaller quarter piece.'
-    }
-  },
-  'math-angles': {
-    reply: 'Look at a door corner or a book page: that perfect square corner is a <strong>90° Right Angle</strong> 📐. If an angle is narrower and sharper than a square corner, it’s an <strong>Acute Angle</strong> (think "a cute little puppy"). If it opens wide like a reclining chair, it’s an <strong>Obtuse Angle</strong>!',
-    visual: {
-      icon: '📐',
-      desc: '<strong>Angle Guide:</strong> Acute (<90° sharp) | Right (=90° corner) | Obtuse (>90° wide open).'
-    }
-  },
-  'math-multiply': {
-    reply: 'Multiplication is just super-speed addition! ⚡ Instead of counting 3 + 3 + 3 + 3 + 3 one by one, <strong>3 × 5</strong> means you have <strong>5 groups of 3</strong>. Imagine 5 egg cartons with 3 eggs in each — you instantly have 15 eggs!',
-    visual: {
-      icon: '🥚',
-      desc: '<strong>Multiplication Magic:</strong> 3 × 5 = 5 groups of 3 = 15 total items!'
-    }
-  },
-  'lang-er-est': {
-    reply: 'Here is the golden rule! 📏 When comparing <strong>only 2 items</strong>, use <strong>-ER</strong>: <em>"A cheetah is fast<strong>er</strong> than a turtle."</em> But when comparing <strong>3 or more items</strong> (the whole group), crown the winner with <strong>-EST</strong>: <em>"The cheetah is the fast<strong>est</strong> land animal on Earth!"</em>',
-    visual: {
-      icon: '🐆',
-      desc: '<strong>Comparison Formula:</strong> 2 items = -ER (Faster) | 3+ items = -EST (Fastest).'
-    }
-  },
-  'lang-verbs': {
-    reply: 'Verbs are the engine of every sentence! ⚡ Ask yourself: <em>"Can a person or creature DO this physical action?"</em> Words like <strong>sprinted, leaped, roared, whispered, painted, and solved</strong> are all dynamic action verbs!',
-    visual: {
-      icon: '🏃',
-      desc: '<strong>Verb Detective:</strong> If you can act it out or draw motion lines, it’s an action verb!'
-    }
-  },
-  'lang-simile': {
-    reply: 'Both make writing sparkle with imagination! 🎭 A <strong>Simile</strong> uses "LIKE" or "AS": <em>"He ran as fast AS lightning."</em> A 0<strong>Metaphor</strong> makes a direct bold identity: <em>"His heart IS pure gold."</em>',
-    visual: {
-      icon: '🌟',
-      desc: '<strong>Figurative Guide:</strong> Simile uses "like/as" | Metaphor says one thing IS another.'
-    }
-  },
-  'phys-gravity': {
-    reply: 'Planet Earth is so gigantic (6 sextillion kilograms!) that its invisible gravitational pull reaches out and pulls all matter — including you, oceans, and basketballs — straight toward its center core! 🌍 Without gravity, we would float away into space!',
-    visual: {
-      icon: '🌍',
-      desc: '<strong>Earth Gravity:</strong> Giant mass pulls everything down at 9.8 meters per second squared.'
-    }
-  },
-  'phys-moon': {
-    reply: 'Because the Moon is much smaller than Earth (only 1% of Earth’s mass), its gravitational pull is only <strong>1/6th as strong</strong>! 🌕 That means if you can jump 1 foot on Earth, on the Moon you will float up 6 whole feet into the black starry sky!',
-    visual: {
-      icon: '🚀',
-      desc: '<strong>Moon Leap:</strong> 1/6th gravity = 6 times higher jumps!'
-    }
-  },
-  'phys-light': {
-    reply: 'Light travels at the universal speed limit — 300,000 kilometers every single second! ⚡ Sound waves through air only travel at 0.34 km/s. So the lightning flash reaches your eyes instantly, while the acoustic thunder rumble takes 5 seconds for every mile to reach your ears!',
-    visual: {
-      icon: '🌩️',
-      desc: '<strong>Speed Race:</strong> Light (Instantaneous) vs Sound (Takes 5 seconds per mile).'
-    }
-  },
-  'nat-sunlight': {
-    reply: 'Plants possess a magical green solar panel called <strong>chlorophyll</strong>! 🌿 Leaves absorb carbon dioxide from the air and water from soil. When sunlight hits chlorophyll, it cooks up sweet glucose food and releases clean oxygen for us to breathe!',
-    visual: {
-      icon: '🌿',
-      desc: '<strong>Photosynthesis:</strong> Sun + Water + CO₂ ➔ Glucose Food + Fresh Oxygen (O₂)!'
-    }
-  },
-  'nat-bees': {
-    reply: 'Bees are nature’s master agricultural workers! 🐝 As bees sip sweet flower nectar, yellow pollen dust sticks to their fuzzy jackets. When they visit the next blossom, that pollen fertilizes the flower so it can grow into juicy apples, cherries, and berries!',
-    visual: {
-      icon: '🐝',
-      desc: '<strong>Pollination Power:</strong> 1 out of every 3 bites of human food relies directly on bees!'
-    }
-  },
-  'nat-caterpillar': {
-    reply: 'Inside the silky chrysalis cocoon, something incredible happens: the caterpillar releases natural enzymes that transform its crawling body into brand new wings, delicate antennae, and nectar-sipping eyes! 🦋 It emerges as an adult flying butterfly.',
-    visual: {
-      icon: '🦋',
-      desc: '<strong>Metamorphosis:</strong> Egg ➔ Caterpillar (Larva) ➔ Chrysalis (Pupa) ➔ Butterfly!'
-    }
-  },
-  'safe-password': {
-    reply: 'Think of passwords like unbreakable secret passphrases! 🔐 Pick 3 random favorite words + a lucky number + an emoji: like <code>BlueDolphin99!</code>. Never share it with gaming chats or friends — only trusted parents or guardians should know your login!',
-    visual: {
-      icon: '🛡️',
-      desc: '<strong>Cyber Shield:</strong> 3 Words + Number + Symbol = Unhackable passphrase.'
-    }
-  },
-  'safe-breathe': {
-    reply: 'When you take slow, deep belly breaths (4 seconds in, 4 seconds out), it sends a direct signal to the <strong>vagus nerve</strong> in your brain 🧘. This turns off your stress alarm (the amygdala) and brings control back to your prefrontal thinking brain!',
-    visual: {
-      icon: '🌬️',
-      desc: '<strong>Box Breathing:</strong> 4s Inhale ➔ 4s Hold ➔ 4s Exhale ➔ 4s Hold.'
-    }
-  },
-  'safe-screentime': {
-    reply: 'To keep eyes sparkling and prevent headaches, optometrists recommend the <strong>20-20-20 Rule</strong>! 👀 Every 20 minutes of screen time, look up at an object at least 20 feet away for 20 seconds. It lets your eye focus muscles relax completely!',
-    visual: {
-      icon: '👀',
-      desc: '<strong>20-20-20 Eye Care:</strong> Every 20 mins, look 20 ft away for 20 seconds.'
+      icon: '🍎',
+      desc: '<strong>Clean Energy:</strong> Fiber + Natural Fructose = Steady All-Day Brain Focus.'
     }
   }
 };
 
 export function initCompanionChat() {
   let activePersona = 'priya';
-  let activeSubject = 'nutrition';
+  let activeSubject = 'language';
   let isTyping = false;
 
   // DOM Elements
-  const personaBtns = document.querySelectorAll('.teacher-persona-btn');
+  const personaCards = document.querySelectorAll('.teacher-specialist-card, .teacher-persona-btn');
   const personaAvatarEl = document.querySelector('.companion-pulse-avatar');
   const personaNameEl = document.querySelector('.companion-name-title');
   const personaStatusEl = document.querySelector('.companion-status-text');
+  const personaSuperpowerEl = document.querySelector('.companion-superpower-badge');
   const subjectPills = document.querySelectorAll('.chat-subject-tab');
   const chipsContainer = document.querySelector('.companion-prompt-chips');
   const chatBody = document.querySelector('.companion-chat-body');
@@ -232,19 +334,44 @@ export function initCompanionChat() {
     }
   }
 
-  // Persona Switcher
-  personaBtns.forEach(btn => {
+  function setActiveTeacher(personaKey) {
+    activePersona = personaKey || 'priya';
+    const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
+
+    // Update active states on cards and buttons
+    personaCards.forEach(card => {
+      card.classList.toggle('active', card.dataset.persona === activePersona);
+    });
+
+    // Update header identity
+    if (personaAvatarEl) personaAvatarEl.textContent = persona.avatar;
+    if (personaNameEl) {
+      personaNameEl.innerHTML = `${persona.name} <span class="companion-mode-tag">${persona.tag}</span>`;
+    }
+    if (personaStatusEl) {
+      personaStatusEl.textContent = persona.title;
+    }
+    if (personaSuperpowerEl) {
+      personaSuperpowerEl.textContent = persona.superpower;
+    }
+
+    // Auto-align default subject tab if appropriate
+    if (persona.defaultSubject) {
+      activeSubject = persona.defaultSubject;
+      subjectPills.forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.subject === activeSubject);
+      });
+      renderPromptChips();
+    }
+
+    addTeacherMessage(persona.greeting);
+  }
+
+  // Persona Switcher Listeners
+  personaCards.forEach(btn => {
     btn.addEventListener('click', () => {
-      personaBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activePersona = btn.dataset.persona || 'priya';
-
-      const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
-      if (personaAvatarEl) personaAvatarEl.textContent = persona.avatar;
-      if (personaNameEl) personaNameEl.innerHTML = `${persona.name} <span class="companion-mode-tag">${persona.tag}</span>`;
-      if (personaStatusEl) personaStatusEl.textContent = persona.title;
-
-      addTeacherMessage(persona.greeting);
+      const personaKey = btn.dataset.persona || 'priya';
+      setActiveTeacher(personaKey);
     });
   });
 
@@ -253,7 +380,7 @@ export function initCompanionChat() {
     if (!chipsContainer) return;
     chipsContainer.innerHTML = '';
 
-    const prompts = subjectPrompts[activeSubject] || subjectPrompts['nutrition'];
+    const prompts = subjectPrompts[activeSubject] || subjectPrompts['language'];
     prompts.forEach(p => {
       const chip = document.createElement('button');
       chip.type = 'button';
@@ -270,7 +397,7 @@ export function initCompanionChat() {
     tab.addEventListener('click', () => {
       subjectPills.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      activeSubject = tab.dataset.subject || 'nutrition';
+      activeSubject = tab.dataset.subject || 'language';
       renderPromptChips();
     });
   });
@@ -327,12 +454,16 @@ export function initCompanionChat() {
     row.innerHTML = `
       <div class="chat-avatar-mini">${persona.avatar}</div>
       <div class="chat-message-bubble">
+        <div class="chat-teacher-identity-header">
+          <span class="chat-teacher-badge-pill">${persona.badge}</span>
+          <span class="chat-teacher-superpower-sub">${persona.superpower}</span>
+        </div>
         <p>${formattedContent}</p>
         ${visualHtml}
         <div class="chat-msg-actions">
           <button class="chat-action-btn read-aloud-btn" type="button" title="Read Aloud">🔊 Read Aloud</button>
-          <button class="chat-action-btn simpler-btn" type="button">🌱 Simpler</button>
-          <button class="chat-action-btn example-btn" type="button">💡 Another Example</button>
+          <button class="chat-action-btn simpler-btn" type="button">🌱 Simpler Analogy</button>
+          <button class="chat-action-btn example-btn" type="button">💡 Another Real Example</button>
         </div>
       </div>
     `;
@@ -347,12 +478,12 @@ export function initCompanionChat() {
 
     const simplerBtn = row.querySelector('.simpler-btn');
     simplerBtn?.addEventListener('click', () => {
-      addTeacherMessage(`Here is the simplest way to picture it: Imagine explaining this to a 5-year-old friend with cartoon drawings! Focus on the core shape and everyday objects you see in your kitchen or playground! ✨`);
+      addTeacherMessage(`Here is the simplest way to picture it: Imagine explaining this with everyday cartoon drawings! Focus on the main shape or everyday objects like pizza slices, LEGO bricks, or toy racecars! ✨`);
     });
 
     const exampleBtn = row.querySelector('.example-btn');
     exampleBtn?.addEventListener('click', () => {
-      addTeacherMessage(`Here is another fun real-world example! 🌟 Think of building with colorful LEGO bricks: when you stack blocks together, you are visualizing volume, ratios, and fractions all at once! 🧱`);
+      addTeacherMessage(`Here is another fun real-world example! 🌟 Look around you: everything in our world connects back to shapes, patterns, and natural curiosity! 🧱🚀`);
     });
 
     chatBody.appendChild(row);
@@ -377,7 +508,7 @@ export function initCompanionChat() {
     showTypingIndicator(true);
 
     try {
-      // First try live OpenRouter AI with persona
+      // First try live OpenRouter AI with active persona
       const aiReply = await askOpenRouterAI(userText, activePersona);
       showTypingIndicator(false);
       isTyping = false;
@@ -387,7 +518,7 @@ export function initCompanionChat() {
         const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
         addTeacherMessage(aiReply, {
           icon: '⚡',
-          desc: `<strong>${modMeta.name}:</strong> Real-time pedagogical response via OpenRouter.`
+          desc: `<strong>${modMeta.name}:</strong> Live pedagogical answer calibrated for ${teacherPersonas[activePersona]?.name}.`
         });
       } else {
         const resp = knowledgeResponses[promptId];
@@ -398,7 +529,7 @@ export function initCompanionChat() {
         }
       }
 
-      // Sync chat curiosity point to Google Cloud
+      // Sync chat curiosity point
       window.dispatchEvent(new CustomEvent('edusync_update_progress', {
         detail: { addPoints: 15, preferredTeacher: activePersona }
       }));
@@ -423,7 +554,7 @@ export function initCompanionChat() {
     showTypingIndicator(true);
 
     try {
-      // 1. Call OpenRouter AI (Gemini 2.5 Flash / Gemma / DeepSeek)
+      // 1. Call OpenRouter AI
       const aiReply = await askOpenRouterAI(text, activePersona);
       showTypingIndicator(false);
       isTyping = false;
@@ -433,14 +564,14 @@ export function initCompanionChat() {
         const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
         addTeacherMessage(aiReply, {
           icon: '⚡',
-          desc: `<strong>${modMeta.name}:</strong> Real-time child-friendly pedagogical response.`
+          desc: `<strong>${modMeta.name}:</strong> Live pedagogical response from ${teacherPersonas[activePersona]?.name}.`
         });
       } else {
         // 2. Fallback to rich built-in pedagogical knowledge engine
         generateAIResponse(text);
       }
 
-      // Sync user question points to Google Cloud
+      // Sync user question points
       window.dispatchEvent(new CustomEvent('edusync_update_progress', {
         detail: { addPoints: 20, preferredTeacher: activePersona }
       }));
@@ -588,10 +719,10 @@ export function initCompanionChat() {
     });
   });
 
-  // AI Configuration Modal Manager
+  // Setup Config Modal
   setupAiConfigModal();
 
-  // Initialize Prompt Chips
+  // Initialize Default State
   renderPromptChips();
 }
 

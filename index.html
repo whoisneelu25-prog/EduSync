@@ -679,52 +679,104 @@
           </p>
         </div>
 
-        <div class="companion-grid">
+        <div class="companion-grid companion-grid-expanded">
           <!-- Left: Narrative & Teacher Explanations -->
-          <div class="reveal-on-scroll">
-            <span class="section-tag yellow">Safe & Child-Friendly</span>
-            <h3 style="font-size: 2.1rem; line-height: 1.2; margin-bottom: 16px;">
-              Not generic AI. A dedicated teacher & buddy.
+          <div class="reveal-on-scroll companion-left-panel">
+            <span class="section-tag yellow">⚡ Powered by OpenRouter AI</span>
+            <h3 style="font-size: 2.25rem; line-height: 1.2; margin-bottom: 14px; font-weight: 800; color: var(--color-navy);">
+              Meet Your AI Faculty. Each Master of Their Domain.
             </h3>
-            <p style="font-size: 1.0625rem; line-height: 1.6; margin-bottom: 24px;">
-              Calibrated specifically for young minds. Switch between gentle primary storytelling with <strong>Teacher Maya</strong>, thrilling STEM experiments with <strong>Coach Leo</strong>, or peer tutoring with <strong>SyncBuddy</strong>.
+            <p style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 24px; color: var(--color-text-secondary);">
+              Not generic AI. Select any specialized mentor below — each educator is deeply calibrated with unique pedagogical superpowers to turn complex questions into playful, intuitive breakthroughs.
             </p>
 
-            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px;">
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="feature-icon-badge teal">✓</div>
-                <span style="font-weight: 700; color: var(--color-navy);">Visual analogies (pizzas, LEGO bricks, solar models)</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="feature-icon-badge yellow">✓</div>
-                <span style="font-weight: 700; color: var(--color-navy);">🔊 Real-time "Read Aloud" voice for early readers</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="feature-icon-badge coral">✓</div>
-                <span style="font-weight: 700; color: var(--color-navy);">6 Subject domains with instant prompt exploration</span>
-              </div>
+            <!-- 6 Specialized Teacher Cards Grid -->
+            <div class="specialist-teachers-roster">
+              <button class="teacher-specialist-card active" data-persona="priya" type="button">
+                <div class="specialist-avatar-wrap">🧑‍🏫</div>
+                <div class="specialist-card-info">
+                  <div class="specialist-card-name-row">
+                    <span class="specialist-name">Teacher Priya</span>
+                    <span class="specialist-tag-pill teal">English & Stories</span>
+                  </div>
+                  <span class="specialist-superpower">⭐ #1 in Grammar, Similes & Creative Writing</span>
+                </div>
+              </button>
+
+              <button class="teacher-specialist-card" data-persona="rohan" type="button">
+                <div class="specialist-avatar-wrap">🚀</div>
+                <div class="specialist-card-info">
+                  <div class="specialist-card-name-row">
+                    <span class="specialist-name">Coach Rohan</span>
+                    <span class="specialist-tag-pill coral">STEM & Space</span>
+                  </div>
+                  <span class="specialist-superpower">⭐ #1 in Rocket Physics, Gravity & Speed</span>
+                </div>
+              </button>
+
+              <button class="teacher-specialist-card" data-persona="arya" type="button">
+                <div class="specialist-avatar-wrap">🧮</div>
+                <div class="specialist-card-info">
+                  <div class="specialist-card-name-row">
+                    <span class="specialist-name">Arya Sir</span>
+                    <span class="specialist-tag-pill yellow">Visual Math</span>
+                  </div>
+                  <span class="specialist-superpower">⭐ #1 in Fractions, Arithmetic & Geometry</span>
+                </div>
+              </button>
+
+              <button class="teacher-specialist-card" data-persona="tara" type="button">
+                <div class="specialist-avatar-wrap">🌿</div>
+                <div class="specialist-card-info">
+                  <div class="specialist-card-name-row">
+                    <span class="specialist-name">Dr. Tara</span>
+                    <span class="specialist-tag-pill teal">Nature & Biology</span>
+                  </div>
+                  <span class="specialist-superpower">⭐ #1 in Animals, Rainforests & Human Body</span>
+                </div>
+              </button>
+
+              <button class="teacher-specialist-card" data-persona="alex" type="button">
+                <div class="specialist-avatar-wrap">🛡️</div>
+                <div class="specialist-card-info">
+                  <div class="specialist-card-name-row">
+                    <span class="specialist-name">Captain Alex</span>
+                    <span class="specialist-tag-pill navy">Cyber & Habits</span>
+                  </div>
+                  <span class="specialist-superpower">⭐ #1 in Passwords, Screen Balance & Focus</span>
+                </div>
+              </button>
+
+              <button class="teacher-specialist-card" data-persona="syncbuddy" type="button">
+                <div class="specialist-avatar-wrap">✨</div>
+                <div class="specialist-card-info">
+                  <div class="specialist-card-name-row">
+                    <span class="specialist-name">SyncBuddy AI</span>
+                    <span class="specialist-tag-pill yellow">Study Buddy</span>
+                  </div>
+                  <span class="specialist-superpower">⭐ #1 in 3-Step Intuitive Homework Tutoring</span>
+                </div>
+              </button>
             </div>
 
-            <p style="font-size: 0.875rem; color: var(--color-text-secondary);">
-              👉 <em>Try selecting a teacher persona or tapping any question below to see the interactive explanation!</em>
-            </p>
+            <div class="companion-feature-checklist">
+              <div class="checklist-item">
+                <div class="feature-icon-badge teal">✓</div>
+                <span>Child-friendly visual analogies (pizzas, LEGO blocks, rocket launches)</span>
+              </div>
+              <div class="checklist-item">
+                <div class="feature-icon-badge yellow">✓</div>
+                <span>🔊 Real-time "Read Aloud" voice synthesis for young learners</span>
+              </div>
+              <div class="checklist-item">
+                <div class="feature-icon-badge coral">✓</div>
+                <span>⚡ Powered by OpenRouter AI (Gemini 2.5 Flash / Gemma Free)</span>
+              </div>
+            </div>
           </div>
 
           <!-- Right: Interactive Teacher Chat Console -->
-          <div class="companion-chat-device reveal-on-scroll delay-1">
-            <!-- Persona Switcher Bar -->
-            <div class="teacher-persona-bar">
-              <button class="teacher-persona-btn active" data-persona="priya" type="button">
-                <span>🧑‍🏫</span> Teacher Priya
-              </button>
-              <button class="teacher-persona-btn" data-persona="rohan" type="button">
-                <span>🚀</span> Coach Rohan
-              </button>
-              <button class="teacher-persona-btn" data-persona="syncbuddy" type="button">
-                <span>✨</span> SyncBuddy AI
-              </button>
-            </div>
-
+          <div class="companion-chat-device companion-chat-device-large reveal-on-scroll delay-1">
             <!-- Header -->
             <div class="companion-chat-header">
               <div class="companion-header-identity">
@@ -733,7 +785,7 @@
                   <h4 class="companion-name-title">Teacher Priya <span class="companion-mode-tag">Visual & Socratic Guide</span></h4>
                   <div class="companion-status">
                     <span class="status-indicator"></span>
-                    <span class="companion-status-text">Primary Educator & Storyteller</span>
+                    <span class="companion-status-text">Language, Grammar & Storyteller</span>
                   </div>
                 </div>
               </div>
@@ -751,14 +803,20 @@
               </div>
             </div>
 
+            <!-- Specialty Sub-Banner -->
+            <div class="companion-superpower-banner">
+              <span class="banner-sparkle">✨</span>
+              <span class="companion-superpower-badge">⭐ #1 in Grammar, Similes & Creative Writing</span>
+            </div>
+
             <!-- Subject Category Tabs -->
             <div class="chat-subject-nav" role="tablist" aria-label="Subject Exploration">
-              <button class="chat-subject-tab active" data-subject="nutrition" type="button">🍎 Nutrition</button>
-              <button class="chat-subject-tab" data-subject="math" type="button">📐 Math</button>
-              <button class="chat-subject-tab" data-subject="language" type="button">📏 Grammar</button>
+              <button class="chat-subject-tab active" data-subject="language" type="button">📚 Grammar</button>
               <button class="chat-subject-tab" data-subject="physics" type="button">🚀 Physics</button>
+              <button class="chat-subject-tab" data-subject="math" type="button">📐 Math</button>
               <button class="chat-subject-tab" data-subject="nature" type="button">🌿 Nature</button>
               <button class="chat-subject-tab" data-subject="lifeskills" type="button">🛡️ Safety</button>
+              <button class="chat-subject-tab" data-subject="nutrition" type="button">🍎 Nutrition</button>
             </div>
 
             <!-- Messages Stream -->
@@ -767,11 +825,15 @@
               <div class="chat-bubble-row companion-row">
                 <div class="chat-avatar-mini">🧑‍🏫</div>
                 <div class="chat-message-bubble">
-                  <p>Namaste, curious learner! 🌟 I’m Teacher Priya. What wondrous concept would you like to explore today?</p>
+                  <div class="chat-teacher-identity-header">
+                    <span class="chat-teacher-badge-pill">📖 English & Stories</span>
+                    <span class="chat-teacher-superpower-sub">⭐ #1 in Grammar, Similes & Creative Writing</span>
+                  </div>
+                  <p>Namaste, curious learner! 🌟 I’m Teacher Priya. I turn tricky grammar and words into delightful stories. What wondrous concept shall we explore?</p>
                   <div class="chat-msg-actions">
                     <button class="chat-action-btn read-aloud-btn" type="button">🔊 Read Aloud</button>
-                    <button class="chat-action-btn simpler-btn" type="button">🌱 Simpler</button>
-                    <button class="chat-action-btn example-btn" type="button">💡 Another Example</button>
+                    <button class="chat-action-btn simpler-btn" type="button">🌱 Simpler Analogy</button>
+                    <button class="chat-action-btn example-btn" type="button">💡 Another Real Example</button>
                   </div>
                 </div>
               </div>
@@ -791,7 +853,7 @@
 
             <!-- Interactive Input Bar -->
             <div class="companion-input-bar">
-              <input type="text" class="companion-input" placeholder="Ask Teacher Maya anything (e.g. why is the sky blue?)..." aria-label="Type your question">
+              <input type="text" class="companion-input" placeholder="Ask your AI teacher anything (e.g. why do stars twinkle?)..." aria-label="Type your question">
               <button class="companion-send-btn" aria-label="Send message" type="button">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
