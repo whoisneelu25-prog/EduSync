@@ -442,8 +442,7 @@ export function initCompanionChat() {
       <div class="chat-avatar-mini">${persona.avatar}</div>
       <div class="chat-message-bubble">
         <div class="chat-teacher-identity-header">
-          <span class="chat-teacher-badge-pill">${persona.badge}</span>
-          <span class="chat-teacher-superpower-sub">${persona.superpower}</span>
+          <span class="chat-teacher-badge-pill">${persona.avatar} ${persona.name}</span>
         </div>
         <p>${formattedContent}</p>
         ${visualHtml}
@@ -651,12 +650,7 @@ export function initCompanionChat() {
       isTyping = false;
 
       if (aiReply) {
-        const activeMod = getActiveModel();
-        const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
-        addTeacherMessage(aiReply, {
-          icon: '⚡',
-          desc: `<strong>${modMeta.name}:</strong> Live pedagogical answer calibrated for ${teacherPersonas[activePersona]?.name}.`
-        });
+        addTeacherMessage(aiReply);
       } else {
         const resp = knowledgeResponses[promptId];
         if (resp) {
@@ -700,12 +694,7 @@ export function initCompanionChat() {
       isTyping = false;
 
       if (aiReply) {
-        const activeMod = getActiveModel();
-        const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
-        addTeacherMessage(aiReply, {
-          icon: '⚡',
-          desc: `<strong>${modMeta.name}:</strong> Live response from ${teacherPersonas[activePersona]?.name}.`
-        });
+        addTeacherMessage(aiReply);
       } else {
         // 2. Fallback to rich built-in pedagogical knowledge engine
         generateAIResponse(text);
@@ -854,8 +843,6 @@ export function initCompanionChat() {
       btn.classList.add('active');
       const selectedModel = btn.dataset.model || 'google/gemini-2.5-flash';
       setActiveModel(selectedModel);
-      const modelMeta = AI_MODELS[selectedModel] || { name: selectedModel };
-      addTeacherMessage(`Switched AI Model to **${modelMeta.name}**! 🚀 Ready for your questions.`);
     });
   });
 

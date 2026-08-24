@@ -6,27 +6,15 @@ const ACTIVE_MODEL_STORAGE_KEY = 'edusync_active_ai_model';
 export const AI_MODELS = {
   'google/gemini-2.5-flash': {
     id: 'google/gemini-2.5-flash',
-    name: 'Gemini 2.5 Flash (OpenRouter)',
-    badge: '⚡ Gemini 2.5 Flash',
-    type: 'High Speed & Precision'
+    name: 'Smart AI',
+    badge: '✨ Smart',
+    type: 'High Precision'
   },
   'google/gemini-2.5-flash-lite': {
     id: 'google/gemini-2.5-flash-lite',
-    name: 'Gemini 2.5 Flash Lite',
-    badge: '🚀 Gemini Flash Lite',
+    name: 'Fast AI',
+    badge: '⚡ Fast',
     type: 'Ultra Fast'
-  },
-  'google/gemma-4-26b-a4b-it:free': {
-    id: 'google/gemma-4-26b-a4b-it:free',
-    name: 'Gemma 4 26B (Free)',
-    badge: '🌐 Gemma 4 Free Tier',
-    type: 'Open Weights'
-  },
-  'deepseek/deepseek-r1:free': {
-    id: 'deepseek/deepseek-r1:free',
-    name: 'DeepSeek R1 (Free Reasoning)',
-    badge: '🧠 DeepSeek R1',
-    type: 'Reasoning Model'
   }
 };
 
