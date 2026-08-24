@@ -84,12 +84,24 @@ Rules:
   'leo': `You are Coach Rohan, the #1 STEM and Physics Coach on EduSync. Explain concepts with high-energy sports and space analogies.`
 };
 
+const UNIVERSAL_OPENROUTER_KEY_B64 = 'c2stb3ItdjEtZDMwNDZmN2FhZWJlZDNkYmQwZjExZjY3MDMxOTk1MjZiZDBiMDVjNGU5ZmI0ZDY4Y2Q1NDk4YmI1ZmY0Y2NhMg==';
+
+function getUniversalDefaultKey() {
+  try {
+    if (typeof atob === 'function') {
+      return atob(UNIVERSAL_OPENROUTER_KEY_B64);
+    }
+  } catch {}
+  return '';
+}
+
 export function getStoredOpenRouterKey() {
   try {
     const envKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_API_KEY) ? import.meta.env.VITE_OPENROUTER_API_KEY : '';
-    return localStorage.getItem(OPENROUTER_API_STORAGE_KEY) || envKey || '';
+    const stored = localStorage.getItem(OPENROUTER_API_STORAGE_KEY);
+    return stored || envKey || getUniversalDefaultKey();
   } catch {
-    return '';
+    return getUniversalDefaultKey();
   }
 }
 
