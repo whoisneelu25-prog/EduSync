@@ -1,10 +1,11 @@
-// SyncBuddy & AI Teacher Companion Chat Controller
+// SyncBuddy & AI Teacher Companion Chat Controller with OpenRouter AI
 import { 
-  askGeminiTeacher, 
-  getStoredGeminiKey, 
-  saveStoredGeminiKey, 
+  askOpenRouterAI,
+  getStoredOpenRouterKey, 
+  saveStoredOpenRouterKey, 
   getActiveModel, 
   setActiveModel,
+  testOpenRouterConnection,
   AI_MODELS 
 } from './geminiAI.js';
 
@@ -138,7 +139,7 @@ export const knowledgeResponses = {
     }
   },
   'lang-simile': {
-    reply: 'Both make writing sparkle with imagination! 🎭 A <strong>Simile</strong> uses "LIKE" or "AS": <em>"He ran as fast AS lightning."</em> A <strong>Metaphor</strong> makes a direct bold identity: <em>"His heart IS pure gold."</em>',
+    reply: 'Both make writing sparkle with imagination! 🎭 A <strong>Simile</strong> uses "LIKE" or "AS": <em>"He ran as fast AS lightning."</em> A 0<strong>Metaphor</strong> makes a direct bold identity: <em>"His heart IS pure gold."</em>',
     visual: {
       icon: '🌟',
       desc: '<strong>Figurative Guide:</strong> Simile uses "like/as" | Metaphor says one thing IS another.'
@@ -210,7 +211,7 @@ export const knowledgeResponses = {
 };
 
 export function initCompanionChat() {
-  let activePersona = 'maya';
+  let activePersona = 'priya';
   let activeSubject = 'nutrition';
   let isTyping = false;
 
@@ -236,9 +237,9 @@ export function initCompanionChat() {
     btn.addEventListener('click', () => {
       personaBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      activePersona = btn.dataset.persona || 'maya';
+      activePersona = btn.dataset.persona || 'priya';
 
-      const persona = teacherPersonas[activePersona];
+      const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
       if (personaAvatarEl) personaAvatarEl.textContent = persona.avatar;
       if (personaNameEl) personaNameEl.innerHTML = `${persona.name} <span class="companion-mode-tag">${persona.tag}</span>`;
       if (personaStatusEl) personaStatusEl.textContent = persona.title;
@@ -280,15 +281,34 @@ export function initCompanionChat() {
     row.className = 'chat-bubble-row student-row';
     row.innerHTML = `
       <div class="chat-avatar-mini">🎒</div>
-      <div class="chat-message-bubble">${text}</div>
+      <div class="chat-message-bubble">${escapeHtml(text)}</div>
     `;
     chatBody.appendChild(row);
     scrollToBottom();
   }
 
+  function formatAiMarkdown(text) {
+    if (!text) return '';
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\n\n/g, '<br><br>')
+      .replace(/\n/g, '<br>');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   function addTeacherMessage(text, visual = null) {
     if (!chatBody) return;
-    const persona = teacherPersonas[activePersona] || teacherPersonas['maya'];
+    const persona = teacherPersonas[activePersona] || teacherPersonas['priya'];
     const row = document.createElement('div');
     row.className = 'chat-bubble-row companion-row';
 
@@ -302,10 +322,12 @@ export function initCompanionChat() {
       `;
     }
 
+    const formattedContent = formatAiMarkdown(text);
+
     row.innerHTML = `
       <div class="chat-avatar-mini">${persona.avatar}</div>
       <div class="chat-message-bubble">
-        <p>${text}</p>
+        <p>${formattedContent}</p>
         ${visualHtml}
         <div class="chat-msg-actions">
           <button class="chat-action-btn read-aloud-btn" type="button" title="Read Aloud">🔊 Read Aloud</button>
@@ -347,29 +369,47 @@ export function initCompanionChat() {
     }
   }
 
-  function handlePromptClick(promptId, userText) {
+  async function handlePromptClick(promptId, userText) {
     if (isTyping) return;
     addStudentMessage(userText);
 
     isTyping = true;
     showTypingIndicator(true);
 
-    setTimeout(() => {
+    try {
+      // First try live OpenRouter AI with persona
+      const aiReply = await askOpenRouterAI(userText, activePersona);
       showTypingIndicator(false);
       isTyping = false;
 
-      const resp = knowledgeResponses[promptId];
-      if (resp) {
-        addTeacherMessage(resp.reply, resp.visual);
+      if (aiReply) {
+        const activeMod = getActiveModel();
+        const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
+        addTeacherMessage(aiReply, {
+          icon: '⚡',
+          desc: `<strong>${modMeta.name}:</strong> Real-time pedagogical response via OpenRouter.`
+        });
       } else {
-        addTeacherMessage(`That is a fantastic question! 🌟 Let's explore how this concept connects to the world around us. What part would you like to dive into first?`);
+        const resp = knowledgeResponses[promptId];
+        if (resp) {
+          addTeacherMessage(resp.reply, resp.visual);
+        } else {
+          addTeacherMessage(`That is a fantastic question! 🌟 Let's explore how this concept connects to the world around us. What part would you like to dive into first?`);
+        }
       }
 
       // Sync chat curiosity point to Google Cloud
       window.dispatchEvent(new CustomEvent('edusync_update_progress', {
         detail: { addPoints: 15, preferredTeacher: activePersona }
       }));
-    }, 700);
+    } catch {
+      showTypingIndicator(false);
+      isTyping = false;
+      const resp = knowledgeResponses[promptId];
+      if (resp) {
+        addTeacherMessage(resp.reply, resp.visual);
+      }
+    }
   }
 
   async function handleUserSubmit() {
@@ -383,15 +423,17 @@ export function initCompanionChat() {
     showTypingIndicator(true);
 
     try {
-      // 1. Try Google Gemini Flash AI
-      const geminiReply = await askGeminiTeacher(text, activePersona);
+      // 1. Call OpenRouter AI (Gemini 2.5 Flash / Gemma / DeepSeek)
+      const aiReply = await askOpenRouterAI(text, activePersona);
       showTypingIndicator(false);
       isTyping = false;
 
-      if (geminiReply) {
-        addTeacherMessage(geminiReply, {
+      if (aiReply) {
+        const activeMod = getActiveModel();
+        const modMeta = AI_MODELS[activeMod] || { name: 'OpenRouter AI' };
+        addTeacherMessage(aiReply, {
           icon: '⚡',
-          desc: `<strong>Google Gemini 1.5 Flash AI:</strong> Real-time child-friendly pedagogical response.`
+          desc: `<strong>${modMeta.name}:</strong> Real-time child-friendly pedagogical response.`
         });
       } else {
         // 2. Fallback to rich built-in pedagogical knowledge engine
@@ -531,7 +573,7 @@ export function initCompanionChat() {
     if (e.key === 'Enter') handleUserSubmit();
   });
 
-  // Model Selection (Gemini 1.5 Flash vs Gemma 2 Open Source)
+  // Model Selection Buttons
   const modelBtns = document.querySelectorAll('.ai-model-select-btn');
   const currentModel = getActiveModel();
   modelBtns.forEach(btn => {
@@ -539,24 +581,91 @@ export function initCompanionChat() {
     btn.addEventListener('click', () => {
       modelBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const selectedModel = btn.dataset.model || 'gemini-1.5-flash';
+      const selectedModel = btn.dataset.model || 'google/gemini-2.5-flash';
       setActiveModel(selectedModel);
-      const modelMeta = AI_MODELS[selectedModel];
+      const modelMeta = AI_MODELS[selectedModel] || { name: selectedModel };
       addTeacherMessage(`Switched AI Model to **${modelMeta.name}**! 🚀 Ready for your questions.`);
     });
   });
 
-  // Gemini AI Key Config Trigger
-  const geminiBtn = document.querySelector('#geminiConfigTriggerBtn');
-  geminiBtn?.addEventListener('click', () => {
-    const current = getStoredGeminiKey();
-    const input = prompt('⚡ Google Gemini & Gemma AI Model Manager\n\nEnter your Google AI Studio API Key below:', current ? '••••••••' + current.slice(-4) : '');
-    if (input !== null && input !== '' && !input.startsWith('••••')) {
-      saveStoredGeminiKey(input);
-      alert('Google AI Key saved! 🚀 Both Gemini 1.5 and Gemma 2 Open-Source are ready.');
+  // AI Configuration Modal Manager
+  setupAiConfigModal();
+
+  // Initialize Prompt Chips
+  renderPromptChips();
+}
+
+function setupAiConfigModal() {
+  const triggerBtn = document.querySelector('#geminiConfigTriggerBtn');
+  const modal = document.querySelector('#aiSettingsModal');
+  const closeBtn = document.querySelector('#closeAiSettingsModalBtn');
+  const saveBtn = document.querySelector('#saveAiSettingsBtn');
+  const testBtn = document.querySelector('#testAiConnectionBtn');
+  const keyInput = document.querySelector('#openrouterApiKeyInput');
+  const modelSelect = document.querySelector('#aiModelSelectDropdown');
+  const testStatus = document.querySelector('#aiTestStatus');
+
+  if (!triggerBtn) return;
+
+  function openModal() {
+    if (modal) {
+      modal.classList.add('is-open');
+      if (keyInput) keyInput.value = getStoredOpenRouterKey();
+      if (modelSelect) modelSelect.value = getActiveModel();
+      if (testStatus) testStatus.innerHTML = '';
     }
+  }
+
+  function closeModal() {
+    if (modal) modal.classList.remove('is-open');
+  }
+
+  triggerBtn.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
   });
 
-  // Initialize
-  renderPromptChips();
+  saveBtn?.addEventListener('click', () => {
+    const keyVal = keyInput?.value?.trim();
+    const modelVal = modelSelect?.value;
+    if (keyVal) saveStoredOpenRouterKey(keyVal);
+    if (modelVal) {
+      setActiveModel(modelVal);
+      // Also update top model button active state
+      document.querySelectorAll('.ai-model-select-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.model === modelVal);
+      });
+    }
+    if (testStatus) {
+      testStatus.innerHTML = `<span style="color: #4fa6a0;">✅ Settings saved successfully!</span>`;
+    }
+    setTimeout(closeModal, 800);
+  });
+
+  testBtn?.addEventListener('click', async () => {
+    const keyVal = keyInput?.value?.trim() || getStoredOpenRouterKey();
+    const modelVal = modelSelect?.value || getActiveModel();
+
+    if (testStatus) {
+      testStatus.innerHTML = `<span style="color: #e59934;">🔄 Connecting to OpenRouter API...</span>`;
+    }
+    testBtn.disabled = true;
+
+    const res = await testOpenRouterConnection(keyVal, modelVal);
+    testBtn.disabled = false;
+
+    if (testStatus) {
+      if (res.success) {
+        testStatus.innerHTML = `<span style="color: #27ae60; font-weight: 600;">✅ Connected! AI says: "${escapeHtmlSimple(res.reply)}"</span>`;
+      } else {
+        testStatus.innerHTML = `<span style="color: #e74c3c; font-weight: 600;">❌ Connection failed: ${escapeHtmlSimple(res.error)}</span>`;
+      }
+    }
+  });
+}
+
+function escapeHtmlSimple(str) {
+  if (!str) return '';
+  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }

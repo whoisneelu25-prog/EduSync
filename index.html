@@ -738,13 +738,16 @@
                 </div>
               </div>
               <div class="ai-model-toggle-group">
-                <button class="ai-model-select-btn active" data-model="gemini-1.5-flash" type="button" title="Google Gemini 1.5 Flash">
-                  <span>⚡</span> Gemini 1.5
+                <button class="ai-model-select-btn active" data-model="google/gemini-2.5-flash" type="button" title="Gemini 2.5 Flash via OpenRouter">
+                  <span>⚡</span> Gemini 2.5
                 </button>
-                <button class="ai-model-select-btn" data-model="gemma-2-9b-it" type="button" title="Google Gemma 2 (100% Open Source)">
-                  <span>🌐</span> Gemma 2 (Open Source)
+                <button class="ai-model-select-btn" data-model="google/gemini-2.5-flash-lite" type="button" title="Gemini 2.5 Flash Lite (Fast & Lightweight)">
+                  <span>🚀</span> Flash Lite
                 </button>
-                <button class="gemini-key-gear-btn" id="geminiConfigTriggerBtn" type="button" title="AI Key & Model Settings">⚙️</button>
+                <button class="ai-model-select-btn" data-model="google/gemma-4-26b-a4b-it:free" type="button" title="Google Gemma 4 Free Tier">
+                  <span>🌐</span> Gemma (Free)
+                </button>
+                <button class="gemini-key-gear-btn" id="geminiConfigTriggerBtn" type="button" title="OpenRouter AI Key & Diagnostic Settings">⚙️</button>
               </div>
             </div>
 
@@ -1294,6 +1297,57 @@
           <span>🚀</span> Post Achievement (+50 ⭐)
         </button>
       </form>
+    </div>
+  </div>
+
+  <!-- OpenRouter AI Settings & Diagnostic Modal -->
+  <div class="ai-settings-modal" id="aiSettingsModal" role="dialog" aria-modal="true" aria-label="OpenRouter AI Settings">
+    <div class="ai-settings-dialog">
+      <div class="ai-settings-header">
+        <button type="button" class="ai-modal-close-btn" id="closeAiSettingsModalBtn" aria-label="Close modal">✕</button>
+        <div class="ai-modal-header-title">
+          <div class="ai-modal-header-icon">⚡</div>
+          <div>
+            <h3>OpenRouter AI Engine</h3>
+            <p>Configure API Key, select default models, and test live pedagogical generation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-settings-body">
+        <div class="form-group">
+          <label for="openrouterApiKeyInput">OpenRouter API Key</label>
+          <div class="api-key-input-wrapper">
+            <input type="password" id="openrouterApiKeyInput" class="form-input" placeholder="sk-or-v1-..." autocomplete="off">
+            <button type="button" class="toggle-key-visibility-btn" id="toggleKeyVisibilityBtn" title="Toggle visibility" onclick="const input = document.getElementById('openrouterApiKeyInput'); input.type = input.type === 'password' ? 'text' : 'password';">👁️</button>
+          </div>
+          <span class="form-help-text">Your API key connects EduSync directly to OpenRouter's high-speed AI cluster.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="aiModelSelectDropdown">Active AI Learning Model</label>
+          <select id="aiModelSelectDropdown" class="form-select">
+            <option value="google/gemini-2.5-flash">⚡ Gemini 2.5 Flash (Fast, High Quality)</option>
+            <option value="google/gemini-2.5-flash-lite">🚀 Gemini 2.5 Flash Lite (Low Latency)</option>
+            <option value="google/gemma-4-26b-a4b-it:free">🌐 Gemma 4 26B (Free Tier)</option>
+            <option value="deepseek/deepseek-r1:free">🧠 DeepSeek R1 (Free Reasoning)</option>
+          </select>
+        </div>
+
+        <div class="ai-diagnostic-box">
+          <div class="ai-diagnostic-header">
+            <span class="diag-title">Live Diagnostics & Verification</span>
+            <button type="button" class="btn-diagnostic-test" id="testAiConnectionBtn">⚡ Test API Connection</button>
+          </div>
+          <div id="aiTestStatus" class="ai-test-status-area"></div>
+        </div>
+
+        <div class="ai-settings-actions">
+          <button type="button" class="btn btn-teal" id="saveAiSettingsBtn" style="width: 100%; justify-content: center;">
+            <span>💾</span> Save & Apply AI Settings
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 

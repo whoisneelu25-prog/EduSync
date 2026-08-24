@@ -1,36 +1,64 @@
-// Google Gemini & Gemma Open-Source AI Service for EduSync
+// OpenRouter & Google AI Service for EduSync
 
-const GEMINI_API_STORAGE_KEY = 'edusync_gemini_api_key';
+const OPENROUTER_API_STORAGE_KEY = 'edusync_openrouter_api_key';
 const ACTIVE_MODEL_STORAGE_KEY = 'edusync_active_ai_model';
 
+
 export const AI_MODELS = {
-  'gemini-1.5-flash': {
-    id: 'gemini-1.5-flash',
-    name: 'Gemini 1.5 Flash (Google Cloud)',
-    badge: '⚡ Gemini 1.5 Flash',
-    type: 'Cloud Free Tier'
+  'google/gemini-2.5-flash': {
+    id: 'google/gemini-2.5-flash',
+    name: 'Gemini 2.5 Flash (OpenRouter)',
+    badge: '⚡ Gemini 2.5 Flash',
+    type: 'High Speed & Precision'
   },
-  'gemma-2-9b-it': {
-    id: 'gemma-2-9b-it',
-    name: 'Gemma 2 9B (Google DeepMind Open Source)',
-    badge: '🌐 Gemma 2 Open Source',
-    type: 'Open Weights / Open Source'
+  'google/gemini-2.5-flash-lite': {
+    id: 'google/gemini-2.5-flash-lite',
+    name: 'Gemini 2.5 Flash Lite',
+    badge: '🚀 Gemini Flash Lite',
+    type: 'Ultra Fast'
+  },
+  'google/gemma-4-26b-a4b-it:free': {
+    id: 'google/gemma-4-26b-a4b-it:free',
+    name: 'Gemma 4 26B (Free)',
+    badge: '🌐 Gemma 4 Free Tier',
+    type: 'Open Weights'
+  },
+  'deepseek/deepseek-r1:free': {
+    id: 'deepseek/deepseek-r1:free',
+    name: 'DeepSeek R1 (Free Reasoning)',
+    badge: '🧠 DeepSeek R1',
+    type: 'Reasoning Model'
   }
 };
 
 const SYSTEM_PROMPTS = {
-  'maya': `You are Teacher Maya, a warm, patient, and creative primary school educator on EduSync.
+  'priya': `You are Teacher Priya (also known as Teacher Maya), a warm, patient, and creative primary school educator on EduSync.
 Your mission is to explain educational concepts and solve questions for children (ages 6-12) using delightful everyday analogies (like fresh pizza, cartoon characters, nature, baking recipes, and LEGO blocks).
 Rules:
-1. If the student asks a math question (e.g. 3+2), give the exact answer clearly first, then explain with a fun visual counting example.
+1. If the student asks a math problem (e.g. 18+7 or 3*5), give the clear final answer first, then explain with a fun visual counting example.
 2. Keep explanations friendly, encouraging, and under 3-4 sentences.
 3. Always include 2-3 relevant emojis.
 4. End with an inspiring, short question to keep the child curious.`,
 
-  'leo': `You are Coach Leo, an energetic, enthusiastic STEM and sports-science coach on EduSync.
+  'maya': `You are Teacher Priya, a warm, patient, and creative primary school educator on EduSync.
+Your mission is to explain educational concepts and solve questions for children (ages 6-12) using delightful everyday analogies (like fresh pizza, cartoon characters, nature, baking recipes, and LEGO blocks).
+Rules:
+1. If the student asks a math question, give the exact answer clearly first, then explain with a fun visual counting example.
+2. Keep explanations friendly, encouraging, and under 3-4 sentences.
+3. Always include 2-3 relevant emojis.
+4. End with an inspiring, short question to keep the child curious.`,
+
+  'rohan': `You are Coach Rohan (also known as Coach Leo), an energetic, enthusiastic STEM and sports-science coach on EduSync.
 Your mission is to turn science, math, and space concepts into exciting hands-on action (like rocket launches, athletic speed, gravity experiments, and playground physics).
 Rules:
-1. If asked a math or science problem, solve it with high-energy sports or speed analogies.
+1. If asked a math or science problem, solve it with high-energy sports, rocket, or speed analogies.
+2. Keep responses under 3-4 sentences with dynamic emojis (🚀, ⚡, 🏃, 🪐).
+3. Challenge the student with a quick 1-sentence brain puzzle at the end.`,
+
+  'leo': `You are Coach Rohan, an energetic, enthusiastic STEM and sports-science coach on EduSync.
+Your mission is to turn science, math, and space concepts into exciting hands-on action (like rocket launches, athletic speed, gravity experiments, and playground physics).
+Rules:
+1. If asked a math or science problem, solve it with high-energy sports, rocket, or speed analogies.
 2. Keep responses under 3-4 sentences with dynamic emojis (🚀, ⚡, 🏃, 🪐).
 3. Challenge the student with a quick 1-sentence brain puzzle at the end.`,
 
@@ -39,110 +67,156 @@ Your mission is to help your fellow student friend understand confusing homework
 Rules:
 1. Speak like a smart, friendly peer tutor who loves discovering how things work.
 2. Keep explanations simple, visual, and concise (under 3 sentences).
-3. Use encouraging praise like "You've got this!" or "Look at it this way! ✨".`
+3. Use encouraging praise like "You've got this! ✨" or "Look at it this way! 🌟".`
 };
 
-export function getStoredGeminiKey() {
+export function getStoredOpenRouterKey() {
   try {
-    const envKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) ? import.meta.env.VITE_GEMINI_API_KEY : '';
-    return localStorage.getItem(GEMINI_API_STORAGE_KEY) || envKey || '';
+    const envKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_API_KEY) ? import.meta.env.VITE_OPENROUTER_API_KEY : '';
+    return localStorage.getItem(OPENROUTER_API_STORAGE_KEY) || envKey || '';
   } catch {
     return '';
   }
 }
 
-export function saveStoredGeminiKey(key) {
+export function saveStoredOpenRouterKey(key) {
   try {
-    if (key) localStorage.setItem(GEMINI_API_STORAGE_KEY, key.trim());
-    else localStorage.removeItem(GEMINI_API_STORAGE_KEY);
+    if (key && key.trim()) {
+      localStorage.setItem(OPENROUTER_API_STORAGE_KEY, key.trim());
+    } else {
+      localStorage.removeItem(OPENROUTER_API_STORAGE_KEY);
+    }
   } catch (e) {
-    console.error('Failed to save Gemini key:', e);
+    console.error('Failed to save OpenRouter key:', e);
   }
 }
 
+// Backward compatibility alias for Gemini Key functions
+export const getStoredGeminiKey = getStoredOpenRouterKey;
+export const saveStoredGeminiKey = saveStoredOpenRouterKey;
+
 export function getActiveModel() {
   try {
-    return localStorage.getItem(ACTIVE_MODEL_STORAGE_KEY) || 'gemini-1.5-flash';
+    const envModel = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_OPENROUTER_DEFAULT_MODEL) ? import.meta.env.VITE_OPENROUTER_DEFAULT_MODEL : '';
+    const stored = localStorage.getItem(ACTIVE_MODEL_STORAGE_KEY);
+    if (stored && AI_MODELS[stored]) return stored;
+    return envModel || 'google/gemini-2.5-flash';
   } catch {
-    return 'gemini-1.5-flash';
+    return 'google/gemini-2.5-flash';
   }
 }
 
 export function setActiveModel(modelId) {
   try {
-    localStorage.setItem(ACTIVE_MODEL_STORAGE_KEY, modelId);
+    if (AI_MODELS[modelId]) {
+      localStorage.setItem(ACTIVE_MODEL_STORAGE_KEY, modelId);
+    }
   } catch {}
 }
 
 /**
- * Calls Google Gemini or Gemma Open-Source API with persona system instructions
+ * Direct call to OpenRouter API
  */
-export async function askGeminiTeacher(userPrompt, persona = 'maya', customApiKey = '', modelId = '') {
-  const apiKey = (customApiKey || getStoredGeminiKey()).trim();
+export async function askOpenRouterAI(userPrompt, persona = 'priya', customApiKey = '', modelId = '') {
+  const apiKey = (customApiKey || getStoredOpenRouterKey()).trim();
   const activeModelId = modelId || getActiveModel();
-  const systemInstruction = SYSTEM_PROMPTS[persona] || SYSTEM_PROMPTS['maya'];
+  const systemInstruction = SYSTEM_PROMPTS[persona] || SYSTEM_PROMPTS['priya'];
 
   if (!apiKey) {
+    console.warn('No OpenRouter API key found.');
     return null;
   }
 
-  // Handle both standard AI Studio API keys (AIza...) and Google Cloud OAuth/Bearer tokens
-  const isBearerToken = apiKey.startsWith('AQ.') || apiKey.startsWith('ya29.');
-  const url = isBearerToken 
-    ? `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent`
-    : `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent?key=${apiKey}`;
-
-  const headers = { 'Content-Type': 'application/json' };
-  if (isBearerToken) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
-
   const payload = {
-    contents: [
+    model: activeModelId,
+    messages: [
+      {
+        role: 'system',
+        content: systemInstruction
+      },
       {
         role: 'user',
-        parts: [
-          { text: `${systemInstruction}\n\nStudent asks: "${userPrompt}"` }
-        ]
+        content: userPrompt
       }
     ],
-    generationConfig: {
-      temperature: 0.7,
-      topK: 40,
-      topP: 0.95,
-      maxOutputTokens: 250
-    }
+    temperature: 0.7,
+    max_tokens: 350
   };
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': typeof window !== 'undefined' ? window.location.origin : 'https://edusync.app',
+        'X-Title': 'EduSync Learning Platform'
+      },
       body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
-      // Fallback attempt with query parameter if header wasn't accepted
-      if (isBearerToken) {
-        const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/${activeModelId}:generateContent?key=${apiKey}`;
-        const fbResp = await fetch(fallbackUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (fbResp.ok) {
-          const fbData = await fbResp.json();
-          return fbData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || null;
-        }
-      }
+      const errText = await response.text();
+      console.warn(`OpenRouter API response status ${response.status}:`, errText);
       return null;
     }
 
     const data = await response.json();
-    const candidate = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    return candidate ? candidate.trim() : null;
+    const reply = data.choices?.[0]?.message?.content;
+    return reply ? reply.trim() : null;
   } catch (error) {
-    console.warn('AI call notice, using pedagogical engine:', error.message);
+    console.warn('OpenRouter API call notice:', error.message);
     return null;
+  }
+}
+
+/**
+ * Backward compatible alias for askGeminiTeacher
+ */
+export async function askGeminiTeacher(userPrompt, persona = 'priya', customApiKey = '', modelId = '') {
+  return askOpenRouterAI(userPrompt, persona, customApiKey, modelId);
+}
+
+/**
+ * Health check / API verification utility
+ */
+export async function testOpenRouterConnection(apiKey = '', modelId = 'google/gemini-2.5-flash') {
+  const key = (apiKey || getStoredOpenRouterKey()).trim();
+  try {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`,
+        'HTTP-Referer': typeof window !== 'undefined' ? window.location.origin : 'https://edusync.app',
+        'X-Title': 'EduSync Diagnostics'
+      },
+      body: JSON.stringify({
+        model: modelId,
+        messages: [{ role: 'user', content: 'Say "EduSync AI is active and ready!" in 1 quick sentence.' }],
+        max_tokens: 50
+      })
+    });
+
+    if (!response.ok) {
+      const errData = await response.json().catch(() => ({}));
+      return {
+        success: false,
+        error: errData?.error?.message || `HTTP ${response.status}: Failed to authenticate`
+      };
+    }
+
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content?.trim();
+    return {
+      success: true,
+      reply: reply || 'Connected successfully!',
+      model: modelId
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: err.message || 'Network error'
+    };
   }
 }
